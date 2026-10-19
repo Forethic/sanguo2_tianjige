@@ -98,6 +98,10 @@ public class LauncherViewModel : ViewModelBase
     public event Action<DisplayGeometry>? OnLaunchGameRequested;
     public event Action? OnOpenOfflineLoreRequested;
 
+    public LauncherViewModel() : this(null, null)
+    {
+    }
+
     public LauncherViewModel(UserSettingsService? settingsService = null, GameLauncherService? launcherService = null)
     {
         _settingsService = settingsService ?? new UserSettingsService();

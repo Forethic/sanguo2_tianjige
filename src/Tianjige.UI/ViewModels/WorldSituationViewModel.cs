@@ -66,6 +66,10 @@ public class WorldSituationViewModel : ViewModelBase
     public ICommand SelectLordFilterCommand { get; }
     public ICommand RefreshCommand { get; }
 
+    public WorldSituationViewModel() : this(null)
+    {
+    }
+
     public WorldSituationViewModel(IMemoryReader? memoryReader = null)
     {
         _memoryReader = memoryReader ?? new MockMemoryReader();

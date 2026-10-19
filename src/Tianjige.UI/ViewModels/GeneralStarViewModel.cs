@@ -60,6 +60,10 @@ public sealed class GeneralStarViewModel : ViewModelBase
     public ICommand LookupSkillCommand { get; }
     public ICommand CloseReverseLookupCommand { get; }
 
+    public GeneralStarViewModel() : this(null)
+    {
+    }
+
     public GeneralStarViewModel(StaticRepository? repository = null)
     {
         _repository = repository ?? new StaticRepository();

@@ -67,6 +67,10 @@ public class MainViewModel : ViewModelBase
     public ICommand SwitchTabCommand { get; }
     public ICommand ToggleTopmostCommand { get; }
 
+    public MainViewModel() : this(null, null)
+    {
+    }
+
     public MainViewModel(StaticRepository? repository = null, IMemoryReader? memoryReader = null)
     {
         _repository = repository ?? new StaticRepository();

@@ -85,6 +85,10 @@ public class TroopCompassViewModel : ViewModelBase
     public ICommand SelectTroopCommand { get; }
     public ICommand SelectFormationCommand { get; }
 
+    public TroopCompassViewModel() : this(null)
+    {
+    }
+
     public TroopCompassViewModel(StaticRepository? repository = null)
     {
         _repository = repository ?? new StaticRepository();
