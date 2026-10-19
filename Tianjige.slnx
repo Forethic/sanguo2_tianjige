@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Tianjige.Core/Tianjige.Core.csproj" />
+    <Project Path="src/Tianjige.Data/Tianjige.Data.csproj" />
+    <Project Path="src/Tianjige.UI/Tianjige.UI.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Tianjige.Tests/Tianjige.Tests.csproj" />
+  </Folder>
+</Solution>

@@ -5,12 +5,12 @@
 ### Task 1.1: 基础工程架构搭建
 - **Description:** 创建 .NET 解决方案体系，包含核心领域库 `Tianjige.Core`、数据解析库 `Tianjige.Data`、表现层 `Tianjige.UI` (WPF) 以及单元测试工程 `Tianjige.Tests`。
 - **Acceptance criteria:**
-  - [ ] 解决方案 `Tianjige.sln` 包含四个工程且项目依赖关系清晰
-  - [ ] 启用 Nullable 检查与 C# 12/13 最新语言特性
-  - [ ] `dotnet build` 编译 0 警告 0 错误
+  - [x] 解决方案 `Tianjige.slnx` 包含四个工程且项目依赖关系清晰
+  - [x] 启用 Nullable 检查与 C# 13 最新语言特性
+  - [x] `dotnet build` 编译 0 警告 0 错误
 - **Verification:**
-  - [ ] Build succeeds: `dotnet build`
-  - [ ] Test succeeds: `dotnet test`
+  - [x] Build succeeds: `dotnet build` (0 warnings, 0 errors)
+  - [x] Test succeeds: `dotnet test` (Passed: 1, Failed: 0)
 - **Dependencies:** None
 - **Files likely touched:**
   - `Tianjige.sln`
