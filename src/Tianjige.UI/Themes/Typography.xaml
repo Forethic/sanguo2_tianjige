@@ -1,0 +1,59 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- 字体族定义（古风隶书优先，优雅降级） -->
+    <FontFamily x:Key="FontAncient">LiSu, 隶书, STZhongsong, 华文中宋, KaiTi, 楷体, Microsoft YaHei</FontFamily>
+    <FontFamily x:Key="FontReading">Microsoft YaHei, 微软雅黑, Segoe UI, sans-serif</FontFamily>
+
+    <!-- 标题文字：大卷轴主名 -->
+    <Style x:Key="StyleTitleLarge" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource FontAncient}" />
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="Foreground" Value="{StaticResource BrushGoldLight}" />
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+        <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
+    </Style>
+
+    <!-- 标题文字：模块标题 / 武将名 -->
+    <Style x:Key="StyleTitleMedium" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource FontAncient}" />
+        <Setter Property="FontSize" Value="17" />
+        <Setter Property="Foreground" Value="{StaticResource BrushTextPrimary}" />
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+        <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
+    </Style>
+
+    <!-- 小标题：分段小节 -->
+    <Style x:Key="StyleTitleSmall" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource FontAncient}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="{StaticResource BrushGoldBorder}" />
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+    </Style>
+
+    <!-- 正文文字：技能释义 / 评语 -->
+    <Style x:Key="StyleBody" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource FontReading}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Foreground" Value="{StaticResource BrushTextPrimary}" />
+        <Setter Property="LineHeight" Value="18" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+
+    <!-- 次要文本：消耗 / 辅助说明 -->
+    <Style x:Key="StyleBodySecondary" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource FontReading}" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="Foreground" Value="{StaticResource BrushTextSecondary}" />
+    </Style>
+
+    <!-- 属性数值：武力 / 智力 / 忠诚 -->
+    <Style x:Key="StyleStatNumber" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource FontReading}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{StaticResource BrushGoldLight}" />
+    </Style>
+
+</ResourceDictionary>

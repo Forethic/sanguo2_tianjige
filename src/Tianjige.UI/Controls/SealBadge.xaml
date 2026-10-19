@@ -1,0 +1,32 @@
+<UserControl x:Class="Tianjige.UI.Controls.SealBadge"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="70">
+    <Grid x:Name="RootGrid">
+        <!-- 外层朱砂印框 -->
+        <Border x:Name="OuterBorder" 
+                BorderThickness="1.5" 
+                CornerRadius="3"
+                Padding="3,1"
+                Background="#2B1410">
+            <!-- 内层双线印泥细边框 -->
+            <Border x:Name="InnerBorder"
+                    BorderThickness="1"
+                    CornerRadius="2"
+                    Padding="4,1">
+                <TextBlock x:Name="SealText"
+                           Text="{Binding TierText, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                           FontFamily="{StaticResource FontAncient}"
+                           FontSize="12"
+                           FontWeight="Bold"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           TextOptions.TextFormattingMode="Display"
+                           TextOptions.TextRenderingMode="ClearType" />
+            </Border>
+        </Border>
+    </Grid>
+</UserControl>

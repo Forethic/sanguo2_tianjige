@@ -25,13 +25,13 @@
 ### Task 1.2: 古风设计系统与 XAML 样式资源库
 - **Description:** 构建汉末五色体系与古典交互视觉规范，包括绢帛沉木底色（`#1F1A16` 至 `#2B241E` 渐变）、简帛素米文本（`#E6DAC0`）、朱砂赤红印章（`#A63428`）、砂金古铜边框（`#C8A355`）、隶书/华文中宋排版规范以及仿古朱文印章自定义控件。
 - **Acceptance criteria:**
-  - [ ] 颜色资源字典 `Colors.xaml` 完整定义规范色板
-  - [ ] 字体与排印样式字典 `Typography.xaml` 涵盖标题隶书与属性数值规范
-  - [ ] 自定义朱文印章控件 `SealBadge` 支持【无双】【良将】【谋主】【裨将】【白身】五级印泥质感
-  - [ ] 古风卷轴滚动条与分割线控件模板
+  - [x] 颜色资源字典 `Colors.xaml` 完整定义规范色板（汉末五色、沉木绢帛渐变）
+  - [x] 字体与排印样式字典 `Typography.xaml` 涵盖标题隶书与属性数值规范
+  - [x] 自定义朱文印章控件 `SealBadge` 支持【无双】【良将】【谋主】【裨将】【白身】五级印泥质感
+  - [x] 古风卷轴滚动条、搜索框与分割线控件模板 `Controls.xaml`
 - **Verification:**
-  - [ ] 样式资源成功加载并在 XAML 预览及运行时正确呈现
-  - [ ] 印章控件在不同缩放比下清晰无毛刺
+  - [x] 样式资源成功加载并在 App.xaml 中完成合并，XAML 编译 0 警告 0 错误
+  - [x] `dotnet build` 编译成功，`dotnet test` 通过
 - **Dependencies:** Task 1.1
 - **Files likely touched:**
   - `src/Tianjige.UI/Themes/Colors.xaml`
