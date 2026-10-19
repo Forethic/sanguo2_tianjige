@@ -183,21 +183,32 @@
   1. `LauncherWindow`（聚贤议政台）：作为日常管理与启动主窗，提供游戏路径选择、多屏可视化磁贴选屏（屏幕1/屏幕2）、HUD 尺寸与位置滑动条微调预览、离线典籍入口与“启程入局”一键启动。
   2. `TacticalHudWindow`（军师参谋屏风）：点击启程后无缝拉起，精准吸附至所选屏幕右侧黑边（`X = monitor.Bounds.Left + W_game`），随游戏生命周期自动绑定。
 - **Acceptance criteria:**
-  - [ ] 启动配置窗可视化呈现多屏拓扑与 HUD 尺寸/位置微调滑块，配置可保存
-  - [ ] 点击“启程入局”，自动生成配置、启动 `Sango2.exe` 并于右侧升起 `TacticalHudWindow`
-  - [ ] 游戏关闭时 HUD 自动平滑解绑并返回启动配置窗
+  - [x] 启动配置窗可视化呈现多屏拓扑与 HUD 尺寸/位置微调滑块，配置可保存 (`UserSettingsService`)
+  - [x] 点击“启程入局”，自动生成配置、启动 `Sango2.exe` 并于右侧升起 `TacticalHudWindow`
+  - [x] 游戏关闭时 HUD 自动平滑解绑并返回启动配置窗
+- **Verification:**
+  - [x] 单元测试覆盖：`UserSettingsTests` (2 tests) + `GameLauncherServiceTests` (2 tests) (33 tests total)
+  - [x] 进程端到端拉起与稳定性测试验证通过
 - **Dependencies:** Task 2.1
 - **Files likely touched:**
-  - `src/Tianjige.UI/Views/LauncherWindow.xaml`
+  - `src/Tianjige.Core/Models/UserSettings.cs`
+  - `src/Tianjige.Core/Services/UserSettingsService.cs`
+  - `src/Tianjige.Core/Services/GameLauncherService.cs`
   - `src/Tianjige.UI/ViewModels/LauncherViewModel.cs`
-  - `src/Tianjige.UI/Controls/MonitorSelector.xaml`
-  - `src/Tianjige.UI/Controls/HudGeometryConfigControl.xaml`
-- **Estimated scope:** Medium (4-5 files)
+  - `src/Tianjige.UI/Views/LauncherWindow.xaml`
+  - `src/Tianjige.UI/Views/LauncherWindow.xaml.cs`
+  - `src/Tianjige.UI/Views/TacticalHudWindow.xaml`
+  - `src/Tianjige.UI/Views/TacticalHudWindow.xaml.cs`
+  - `src/Tianjige.UI/App.xaml`
+- **Estimated scope:** Medium (4-8 files)
 
 ### Task 2.3: 极简防崩溃窗口生命周期与纯顶层置顶
 - **Description:** 放弃侵入式焦点拦截与暂停逻辑，使用标准 `TopMost` 与基础置顶，天机阁仅作为无害的侧边情报面板，游戏与参谋窗各自独立稳定运行。
 - **Acceptance criteria:**
-  - [ ] 天机阁置顶时不阻断游戏点击，两者独立交互，零卡死、零崩溃
+  - [x] 天机阁置顶时不阻断游戏点击，两者独立交互，零卡死、零崩溃
+  - [x] 窗体顶栏提供“📌 置顶/浮动”实时切换与“⚙️ 启动台”平滑回切
+- **Verification:**
+  - [x] 采用纯 WPF TopMost 与无边框桌面吸附，零内存注入/键盘钩子，物理无死锁
 - **Dependencies:** Task 2.2
 - **Estimated scope:** Small (2 files)
 

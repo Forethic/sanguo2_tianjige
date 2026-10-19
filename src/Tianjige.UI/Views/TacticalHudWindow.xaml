@@ -1,0 +1,264 @@
+<Window x:Class="Tianjige.UI.Views.TacticalHudWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:Tianjige.UI.Views"
+        xmlns:vm="clr-namespace:Tianjige.UI.ViewModels"
+        mc:Ignorable="d"
+        Title="群英策 · 天机阁 —— 战局参谋 HUD"
+        Width="400" Height="1080"
+        WindowStartupLocation="Manual"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Topmost="{Binding IsTopmost}"
+        Icon="../Resources/app_icon.ico">
+
+    <Window.DataContext>
+        <vm:MainViewModel />
+    </Window.DataContext>
+
+    <!-- 外层汉式古风卷轴边框 -->
+    <Border Background="{StaticResource BrushWoodSilkGradient}"
+            BorderBrush="{StaticResource BrushGoldBorder}"
+            BorderThickness="1.5,0,0,0">
+        <Border.Effect>
+            <DropShadowEffect Color="#000000" BlurRadius="20" ShadowDepth="-4" Opacity="0.85" />
+        </Border.Effect>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <!-- 0: 顶栏古风标题与窗口控制 -->
+                <RowDefinition Height="38" />
+                <!-- 1: 模块切换标签栏 (将星录 / 兵机盘) -->
+                <RowDefinition Height="36" />
+                <!-- 2: 主参谋台工作区 -->
+                <RowDefinition Height="*" />
+                <!-- 3: 运筹底栏 (岁次时令与气运印信) -->
+                <RowDefinition Height="28" />
+            </Grid.RowDefinitions>
+
+            <!-- 0: 标题栏 (支持鼠标拖拽移动) -->
+            <Border Grid.Row="0"
+                    Background="#191411"
+                    BorderBrush="{StaticResource BrushGoldMuted}"
+                    BorderThickness="0,0,0,1"
+                    MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+                <Grid Margin="10,0,8,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- 图标与主标题 -->
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Image Source="../Resources/app_icon.png" Width="20" Height="20" Margin="0,0,8,0" />
+                        <TextBlock Text="群英策 · 天机阁"
+                                   FontFamily="{StaticResource FontLiSu}"
+                                   FontSize="15"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource BrushGoldLight}"
+                                   VerticalAlignment="Center" />
+                        <Border Background="{StaticResource BrushCinnabarDark}"
+                                CornerRadius="2"
+                                Padding="4,1"
+                                Margin="6,0,0,0"
+                                VerticalAlignment="Center">
+                            <TextBlock Text="战局 HUD" FontSize="8" Foreground="#FFFFFF" />
+                        </Border>
+                    </StackPanel>
+
+                    <!-- 右侧控制按钮组 (返回启动台 / 置顶 / 最小化 / 关闭) -->
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                        <!-- 返回启动台 -->
+                        <Button Click="BackToLauncher_Click"
+                                Margin="0,0,4,0"
+                                Padding="5,2"
+                                Cursor="Hand"
+                                Style="{StaticResource StyleAncientButton}"
+                                Content="⚙️ 启动台"
+                                FontSize="9"
+                                ToolTip="打开启动配置台" />
+
+                        <!-- 置顶切换按钮 -->
+                        <Button Command="{Binding ToggleTopmostCommand}"
+                                Margin="0,0,4,0"
+                                Padding="5,2"
+                                Cursor="Hand"
+                                ToolTip="切换窗口置顶状态">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="PinBorder"
+                                            Background="#251F1A"
+                                            BorderBrush="{StaticResource BrushGoldMuted}"
+                                            BorderThickness="1"
+                                            CornerRadius="3"
+                                            Padding="5,2">
+                                        <TextBlock x:Name="PinText"
+                                                   Text="{Binding IsTopmost, Converter={x:Null}, StringFormat='📌 置顶'}"
+                                                   FontSize="9"
+                                                   Foreground="{StaticResource BrushGoldLight}" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding IsTopmost}" Value="False">
+                                            <Setter TargetName="PinBorder" Property="Background" Value="#1F1A16" />
+                                            <Setter TargetName="PinBorder" Property="BorderBrush" Value="#4A3C2F" />
+                                            <Setter TargetName="PinText" Property="Text" Value="📌 浮动" />
+                                            <Setter TargetName="PinText" Property="Foreground" Value="{StaticResource BrushTextMuted}" />
+                                        </DataTrigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+
+                        <!-- 最小化 -->
+                        <Button Click="Minimize_Click"
+                                Width="24" Height="22"
+                                Margin="0,0,3,0"
+                                Style="{StaticResource StyleAncientButton}"
+                                Content="—"
+                                FontSize="10" />
+
+                        <!-- 关闭 -->
+                        <Button Click="Close_Click"
+                                Width="24" Height="22"
+                                Style="{StaticResource StyleAncientButton}"
+                                Content="✕"
+                                FontSize="10" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- 1: 参谋模块标签栏 -->
+            <Border Grid.Row="1"
+                    Background="#211B16"
+                    BorderBrush="{StaticResource BrushGoldMuted}"
+                    BorderThickness="0,0,0,1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- 将星录 Tab -->
+                    <Button Grid.Column="0"
+                            Command="{Binding SwitchTabCommand}"
+                            CommandParameter="0"
+                            Cursor="Hand">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="TabBorder" Background="Transparent">
+                                    <Grid>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <TextBlock Text="★" FontSize="11" Margin="0,0,5,0" x:Name="TabIcon" Foreground="{StaticResource BrushTextMuted}" />
+                                            <TextBlock Text="将星录 · 典籍"
+                                                       FontFamily="{StaticResource FontLiSu}"
+                                                       FontSize="13"
+                                                       x:Name="TabText"
+                                                       Foreground="{StaticResource BrushTextSecondary}" />
+                                        </StackPanel>
+                                        <Border x:Name="ActiveLine"
+                                                Height="2"
+                                                Background="{StaticResource BrushGoldBorder}"
+                                                VerticalAlignment="Bottom"
+                                                Visibility="Collapsed" />
+                                    </Grid>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding IsGeneralStarSelected}" Value="True">
+                                        <Setter TargetName="TabBorder" Property="Background" Value="#2B231D" />
+                                        <Setter TargetName="TabText" Property="Foreground" Value="{StaticResource BrushGoldLight}" />
+                                        <Setter TargetName="TabText" Property="FontWeight" Value="Bold" />
+                                        <Setter TargetName="TabIcon" Property="Foreground" Value="{StaticResource BrushGoldLight}" />
+                                        <Setter TargetName="ActiveLine" Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <!-- 兵机盘 Tab -->
+                    <Button Grid.Column="1"
+                            Command="{Binding SwitchTabCommand}"
+                            CommandParameter="1"
+                            Cursor="Hand">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="TabBorder" Background="Transparent">
+                                    <Grid>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <TextBlock Text="☯" FontSize="11" Margin="0,0,5,0" x:Name="TabIcon" Foreground="{StaticResource BrushTextMuted}" />
+                                            <TextBlock Text="兵机盘 · 演武"
+                                                       FontFamily="{StaticResource FontLiSu}"
+                                                       FontSize="13"
+                                                       x:Name="TabText"
+                                                       Foreground="{StaticResource BrushTextSecondary}" />
+                                        </StackPanel>
+                                        <Border x:Name="ActiveLine"
+                                                Height="2"
+                                                Background="{StaticResource BrushGoldBorder}"
+                                                VerticalAlignment="Bottom"
+                                                Visibility="Collapsed" />
+                                    </Grid>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding IsTroopCompassSelected}" Value="True">
+                                        <Setter TargetName="TabBorder" Property="Background" Value="#2B231D" />
+                                        <Setter TargetName="TabText" Property="Foreground" Value="{StaticResource BrushGoldLight}" />
+                                        <Setter TargetName="TabText" Property="FontWeight" Value="Bold" />
+                                        <Setter TargetName="TabIcon" Property="Foreground" Value="{StaticResource BrushGoldLight}" />
+                                        <Setter TargetName="ActiveLine" Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <!-- 2: 主参谋工作台内容区 -->
+            <Grid Grid.Row="2">
+                <views:GeneralStarView DataContext="{Binding GeneralStarVm}"
+                                      Visibility="{Binding DataContext.IsGeneralStarSelected, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+                <views:TroopCompassView DataContext="{Binding TroopCompassVm}"
+                                        Visibility="{Binding DataContext.IsTroopCompassSelected, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            </Grid>
+
+            <!-- 3: 运筹底栏 -->
+            <Border Grid.Row="3"
+                    Background="#15110E"
+                    BorderBrush="{StaticResource BrushGoldMuted}"
+                    BorderThickness="0,1,0,0">
+                <Grid Margin="10,0,10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="📜 " FontSize="10" VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding SeasonTitle}"
+                                   FontSize="10"
+                                   Foreground="{StaticResource BrushTextSecondary}"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+
+                    <Border Grid.Column="1"
+                            Background="#231A14"
+                            BorderBrush="{StaticResource BrushGoldMuted}"
+                            BorderThickness="1"
+                            CornerRadius="2"
+                            Padding="5,1"
+                            VerticalAlignment="Center">
+                        <TextBlock Text="{Binding ConnectionStatus}"
+                                   FontSize="9"
+                                   Foreground="{StaticResource BrushGoldLight}" />
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

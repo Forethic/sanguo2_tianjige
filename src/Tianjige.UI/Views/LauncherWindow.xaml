@@ -1,0 +1,407 @@
+<Window x:Class="Tianjige.UI.Views.LauncherWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:Tianjige.UI.ViewModels"
+        xmlns:models="clr-namespace:Tianjige.Core.Models;assembly=Tianjige.Core"
+        mc:Ignorable="d"
+        Title="群英策 · 天机阁 —— 聚贤启程台"
+        Width="720" Height="580"
+        MinWidth="680" MinHeight="520"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Icon="../Resources/app_icon.ico">
+
+    <Window.DataContext>
+        <vm:LauncherViewModel />
+    </Window.DataContext>
+
+    <Border Background="{StaticResource BrushWoodSilkGradient}"
+            BorderBrush="{StaticResource BrushGoldBorder}"
+            BorderThickness="1.5"
+            CornerRadius="8">
+        <Border.Effect>
+            <DropShadowEffect Color="#000000" BlurRadius="25" ShadowDepth="6" Opacity="0.9" />
+        </Border.Effect>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <!-- 0: 顶栏古风标题与拖拽区 -->
+                <RowDefinition Height="42" />
+                <!-- 1: 主配置内容区 -->
+                <RowDefinition Height="*" />
+                <!-- 2: 启程底栏操作区 -->
+                <RowDefinition Height="64" />
+            </Grid.RowDefinitions>
+
+            <!-- 0: 标题栏 -->
+            <Border Grid.Row="0"
+                    Background="#191411"
+                    CornerRadius="7,7,0,0"
+                    BorderBrush="{StaticResource BrushGoldMuted}"
+                    BorderThickness="0,0,0,1"
+                    MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+                <Grid Margin="14,0,10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Image Source="../Resources/app_icon.png" Width="22" Height="22" Margin="0,0,10,0" />
+                        <TextBlock Text="群英策 · 天机阁"
+                                   FontFamily="{StaticResource FontLiSu}"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource BrushGoldLight}"
+                                   VerticalAlignment="Center" />
+                        <TextBlock Text="—— 聚贤启程台"
+                                   FontSize="12"
+                                   Foreground="{StaticResource BrushTextSecondary}"
+                                   VerticalAlignment="Center"
+                                   Margin="6,0,0,0" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button Click="Minimize_Click"
+                                Width="28" Height="24"
+                                Margin="0,0,6,0"
+                                Style="{StaticResource StyleAncientButton}"
+                                Content="—"
+                                FontSize="10"
+                                ToolTip="最小化" />
+                        <Button Click="Close_Click"
+                                Width="28" Height="24"
+                                Style="{StaticResource StyleAncientButton}"
+                                Content="✕"
+                                FontSize="10"
+                                ToolTip="退出天机阁" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- 1: 主配置内容区 -->
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <StackPanel Margin="18,14,18,10">
+
+                    <!-- 一、游戏路径对齐 -->
+                    <Border Background="{StaticResource BrushBgCard}"
+                            BorderBrush="{StaticResource BrushGoldMuted}"
+                            BorderThickness="1"
+                            CornerRadius="5"
+                            Padding="12,10"
+                            Margin="0,0,0,14">
+                        <StackPanel>
+                            <DockPanel LastChildFill="False" Margin="0,0,0,6">
+                                <TextBlock Text="一、群英传2 游戏路径"
+                                           FontFamily="{StaticResource FontLiSu}"
+                                           FontSize="14"
+                                           FontWeight="Bold"
+                                           Foreground="{StaticResource BrushGoldLight}"
+                                           VerticalAlignment="Center" />
+                                <Border DockPanel.Dock="Right"
+                                        Background="#261E17"
+                                        BorderBrush="{StaticResource BrushGoldMuted}"
+                                        BorderThickness="1"
+                                        CornerRadius="3"
+                                        Padding="6,2">
+                                    <TextBlock Text="{Binding DirectoryStatusText}"
+                                               FontSize="10"
+                                               Foreground="{Binding IsGameDirectoryValid, Converter={x:Null}, FallbackValue='#E8C982'}" />
+                                </Border>
+                            </DockPanel>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="90" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox Text="{Binding GameDirectory, UpdateSourceTrigger=PropertyChanged}"
+                                         Style="{StaticResource StyleAncientSearchBox}"
+                                         Tag="请点击右侧选择 Sango2 所在目录..." />
+
+                                <Button Grid.Column="2"
+                                        Content="浏览定位..."
+                                        Command="{Binding BrowseGameDirectoryCommand}"
+                                        Style="{StaticResource StyleAncientButton}"
+                                        Height="32" />
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 二、多屏拓扑与目标屏幕选择 -->
+                    <Border Background="{StaticResource BrushBgCard}"
+                            BorderBrush="{StaticResource BrushGoldMuted}"
+                            BorderThickness="1"
+                            CornerRadius="5"
+                            Padding="12,10"
+                            Margin="0,0,0,14">
+                        <StackPanel>
+                            <DockPanel LastChildFill="False" Margin="0,0,0,8">
+                                <TextBlock Text="二、目标显示器选择 (支持双屏/多屏)"
+                                           FontFamily="{StaticResource FontLiSu}"
+                                           FontSize="14"
+                                           FontWeight="Bold"
+                                           Foreground="{StaticResource BrushGoldLight}"
+                                           VerticalAlignment="Center" />
+                                <TextBlock Text="游戏与 HUD 将对齐于所选屏幕"
+                                           FontSize="10"
+                                           Foreground="{StaticResource BrushTextMuted}"
+                                           DockPanel.Dock="Right"
+                                           VerticalAlignment="Center" />
+                            </DockPanel>
+
+                            <!-- 显示器磁贴列表 -->
+                            <ItemsControl ItemsSource="{Binding Monitors}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type models:MonitorInfo}">
+                                        <Button Command="{Binding DataContext.SelectMonitorCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                CommandParameter="{Binding}"
+                                                Margin="0,0,10,8"
+                                                Cursor="Hand">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border x:Name="MonitorCard"
+                                                            Width="195" Height="64"
+                                                            Background="#201B17"
+                                                            BorderBrush="#473A2B"
+                                                            BorderThickness="1.2"
+                                                            CornerRadius="4"
+                                                            Padding="10,6">
+                                                        <Grid>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="Auto" />
+                                                                <RowDefinition Height="*" />
+                                                            </Grid.RowDefinitions>
+                                                            <DockPanel LastChildFill="False">
+                                                                <TextBlock Text="{Binding DisplayTitle}"
+                                                                           FontSize="11"
+                                                                           FontWeight="SemiBold"
+                                                                           Foreground="{StaticResource BrushTextPrimary}" />
+                                                                <Border DockPanel.Dock="Right"
+                                                                        Background="#3A2C1B"
+                                                                        CornerRadius="2"
+                                                                        Padding="4,1"
+                                                                        Visibility="{Binding IsPrimary, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                                    <TextBlock Text="主屏" FontSize="8" Foreground="{StaticResource BrushGoldLight}" />
+                                                                </Border>
+                                                            </DockPanel>
+
+                                                            <TextBlock Grid.Row="1"
+                                                                       Text="{Binding Width, StringFormat='分辨率: {0}×'}"
+                                                                       FontSize="10"
+                                                                       Foreground="{StaticResource BrushTextMuted}"
+                                                                       VerticalAlignment="Bottom" />
+                                                        </Grid>
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="MonitorCard" Property="Background" Value="{StaticResource BrushBgCardHover}" />
+                                                            <Setter TargetName="MonitorCard" Property="BorderBrush" Value="{StaticResource BrushGoldBorder}" />
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 三、4:3 视口推导与 HUD 宽幅微调预览 -->
+                    <Border Background="{StaticResource BrushBgCard}"
+                            BorderBrush="{StaticResource BrushGoldMuted}"
+                            BorderThickness="1"
+                            CornerRadius="5"
+                            Padding="12,10">
+                        <StackPanel>
+                            <DockPanel LastChildFill="False" Margin="0,0,0,8">
+                                <TextBlock Text="三、物理零遮挡几何推导预览"
+                                           FontFamily="{StaticResource FontLiSu}"
+                                           FontSize="14"
+                                           FontWeight="Bold"
+                                           Foreground="{StaticResource BrushGoldLight}"
+                                           VerticalAlignment="Center" />
+                                <TextBlock Text="cnc-ddraw 纯算力对齐"
+                                           FontSize="10"
+                                           Foreground="{StaticResource BrushJadeActive}"
+                                           DockPanel.Dock="Right"
+                                           VerticalAlignment="Center" />
+                            </DockPanel>
+
+                            <!-- 视口几何微缩比例示意图 (280x80) -->
+                            <Border Background="#13100E"
+                                    BorderBrush="#3D3226"
+                                    BorderThickness="1"
+                                    CornerRadius="4"
+                                    Height="70"
+                                    Margin="0,0,0,10">
+                                <Grid Margin="12,8">
+                                    <Grid.ColumnDefinitions>
+                                        <!-- 4:3 游戏区比例 (1440/1920 = 75%) -->
+                                        <ColumnDefinition Width="3*" />
+                                        <!-- 纯黑物理黑区比例 (480/1920 = 25%) -->
+                                        <ColumnDefinition Width="1*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- 4:3 游戏区 -->
+                                    <Border Grid.Column="0"
+                                            Background="#1B2836"
+                                            BorderBrush="#2F4C6E"
+                                            BorderThickness="1"
+                                            CornerRadius="2"
+                                            Margin="0,0,4,0">
+                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <TextBlock Text="4:3 游戏原版画幅"
+                                                       FontSize="11"
+                                                       FontWeight="Bold"
+                                                       Foreground="#9EC2E8"
+                                                       HorizontalAlignment="Center" />
+                                            <TextBlock Text="{Binding CurrentGeometry.GameWidth, StringFormat='{}{0} 像素 (顶格左靠)'}"
+                                                       FontSize="9"
+                                                       Foreground="#6F92B8"
+                                                       HorizontalAlignment="Center" />
+                                        </StackPanel>
+                                    </Border>
+
+                                    <!-- 右侧 HUD 嵌入黑区 -->
+                                    <Border Grid.Column="1"
+                                            Background="#2B1A14"
+                                            BorderBrush="{StaticResource BrushCinnabarDark}"
+                                            BorderThickness="1"
+                                            CornerRadius="2">
+                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <TextBlock Text="天机阁 HUD"
+                                                       FontSize="10"
+                                                       FontWeight="Bold"
+                                                       Foreground="{StaticResource BrushGoldLight}"
+                                                       HorizontalAlignment="Center" />
+                                            <TextBlock Text="{Binding CurrentGeometry.RecommendedHudWidth, StringFormat='宽 {0}px'}"
+                                                       FontSize="8"
+                                                       Foreground="#D48E85"
+                                                       HorizontalAlignment="Center" />
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+                            </Border>
+
+                            <!-- 滑动条微调 HUD 宽度 -->
+                            <Grid Margin="0,0,0,6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="HUD 宽度微调: "
+                                           FontSize="11"
+                                           Foreground="{StaticResource BrushTextSecondary}"
+                                           VerticalAlignment="Center" />
+                                <Slider Grid.Column="1"
+                                        Minimum="280"
+                                        Maximum="{Binding MaxHudWidth}"
+                                        Value="{Binding CustomHudWidth, Mode=TwoWay}"
+                                        Margin="10,0"
+                                        VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="2"
+                                           Text="{Binding CustomHudWidth, StringFormat='{}{0} px'}"
+                                           FontSize="11"
+                                           FontWeight="Bold"
+                                           Foreground="{StaticResource BrushGoldLight}"
+                                           VerticalAlignment="Center" />
+                            </Grid>
+
+                            <!-- 状态文本 -->
+                            <TextBlock Text="{Binding GeometrySummaryText}"
+                                       FontSize="10"
+                                       Foreground="{StaticResource BrushTextMuted}"
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Border>
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- 2: 启程底栏操作区 -->
+            <Border Grid.Row="2"
+                    Background="#171310"
+                    BorderBrush="{StaticResource BrushGoldMuted}"
+                    BorderThickness="0,1,0,0"
+                    CornerRadius="0,0,7,7">
+                <Grid Margin="18,0,18,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- 离线单机速查入口 -->
+                    <Button Grid.Column="0"
+                            Command="{Binding OpenOfflineLoreCommand}"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Padding="14,8"
+                            Cursor="Hand"
+                            Style="{StaticResource StyleAncientButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="📖 " FontSize="12" VerticalAlignment="Center" />
+                            <TextBlock Text="翻阅典籍 (单机速查)" FontSize="12" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+
+                    <!-- 启程入局启动主按钮 -->
+                    <Button Grid.Column="1"
+                            Command="{Binding LaunchGameCommand}"
+                            VerticalAlignment="Center"
+                            Padding="22,10"
+                            Cursor="Hand">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="BtnBorder"
+                                        Background="{StaticResource BrushCinnabar}"
+                                        BorderBrush="{StaticResource BrushGoldLight}"
+                                        BorderThickness="1.5"
+                                        CornerRadius="4"
+                                        Padding="18,8">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="#A63428" BlurRadius="12" ShadowDepth="1" Opacity="0.8" />
+                                    </Border.Effect>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="⚔️ " FontSize="14" VerticalAlignment="Center" />
+                                        <TextBlock Text="启程入局 · 运筹帷幄"
+                                                   FontFamily="{StaticResource FontLiSu}"
+                                                   FontSize="16"
+                                                   FontWeight="Bold"
+                                                   Foreground="#FFFFFF"
+                                                   VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="BtnBorder" Property="Background" Value="{StaticResource BrushCinnabarLight}" />
+                                        <Setter TargetName="BtnBorder" Property="BorderBrush" Value="#FFE6A8" />
+                                    </Trigger>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter TargetName="BtnBorder" Property="Background" Value="#3D2924" />
+                                        <Setter TargetName="BtnBorder" Property="BorderBrush" Value="#6B584E" />
+                                        <Setter TargetName="BtnBorder" Property="Opacity" Value="0.6" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </Grid>
+            </Border>
+
+        </Grid>
+    </Border>
+</Window>
