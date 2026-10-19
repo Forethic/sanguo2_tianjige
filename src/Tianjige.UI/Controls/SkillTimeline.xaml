@@ -1,0 +1,134 @@
+<UserControl x:Class="Tianjige.UI.Controls.SkillTimeline"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:models="clr-namespace:Tianjige.Core.Models;assembly=Tianjige.Core"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="360">
+    <ItemsControl ItemsSource="{Binding SkillTree, RelativeSource={RelativeSource AncestorType=UserControl}}">
+        <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="{x:Type models:SkillTreeNode}">
+                <Grid Margin="0,0,0,12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="46" />
+                        <ColumnDefinition Width="14" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- 等级圆标 -->
+                    <Border Grid.Column="0" 
+                            Height="24"
+                            CornerRadius="3"
+                            Background="#26201B"
+                            BorderBrush="{StaticResource BrushGoldBorder}"
+                            BorderThickness="1"
+                            VerticalAlignment="Top"
+                            Margin="0,2,0,0">
+                        <TextBlock Text="{Binding Level, StringFormat='Lv.{0}'}"
+                                   FontFamily="{StaticResource FontReading}"
+                                   FontSize="11"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource BrushGoldLight}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
+                    </Border>
+
+                    <!-- 时间轴连接线与节点 -->
+                    <Grid Grid.Column="1" HorizontalAlignment="Center">
+                        <!-- 竖向竹轴线 -->
+                        <Rectangle Width="2" Fill="#423528" VerticalAlignment="Stretch" Margin="0,-6,0,-6"/>
+                        <!-- 节点金珠 -->
+                        <Ellipse Width="8" Height="8" Fill="{StaticResource BrushGoldBorder}" Stroke="#1F1A16" StrokeThickness="1.5" VerticalAlignment="Top" Margin="0,10,0,0"/>
+                    </Grid>
+
+                    <!-- 技能详情卷轴卡片 -->
+                    <Border Grid.Column="2" 
+                            Background="#221C18" 
+                            BorderBrush="#3D3226" 
+                            BorderThickness="1" 
+                            CornerRadius="3" 
+                            Padding="8,6"
+                            Margin="4,0,0,0">
+                        <StackPanel>
+                            <!-- 第一行：类别标签 + 技能名 (点击反查) + 技力消耗 -->
+                            <DockPanel LastChildFill="False">
+                                <!-- 技能类别徽章 (红/蓝) -->
+                                <Border DockPanel.Dock="Left" 
+                                        CornerRadius="2" 
+                                        Padding="4,1" 
+                                        Margin="0,0,6,0"
+                                        VerticalAlignment="Center">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Category}" Value="{x:Static models:SkillCategory.General}">
+                                                    <Setter Property="Background" Value="{StaticResource BrushSkillGeneral}" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Category}" Value="{x:Static models:SkillCategory.Military}">
+                                                    <Setter Property="Background" Value="{StaticResource BrushSkillMilitary}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                    <TextBlock FontFamily="{StaticResource FontAncient}" 
+                                               FontSize="10" 
+                                               Foreground="#FFFFFF">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Category}" Value="{x:Static models:SkillCategory.General}">
+                                                        <Setter Property="Text" Value="武将技" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Category}" Value="{x:Static models:SkillCategory.Military}">
+                                                        <Setter Property="Text" Value="军师技" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Border>
+
+                                <!-- 技能名称（可点击逆向反查） -->
+                                <Button DockPanel.Dock="Left"
+                                        Content="{Binding SkillName}"
+                                        Command="{Binding DataContext.LookupSkillCommand, RelativeSource={RelativeSource AncestorType=UserControl, AncestorLevel=2}}"
+                                        CommandParameter="{Binding SkillName}"
+                                        FontFamily="{StaticResource FontAncient}"
+                                        FontSize="14"
+                                        FontWeight="Normal"
+                                        Foreground="{StaticResource BrushGoldLight}"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Padding="0"
+                                        Cursor="Hand"
+                                        ToolTip="点击逆向查询全图掌握该技能的武将清单">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <ContentPresenter />
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+
+                                <!-- 技力消耗 -->
+                                <TextBlock DockPanel.Dock="Right"
+                                           Text="{Binding MpCost, StringFormat='消耗: {0}'}"
+                                           FontFamily="{StaticResource FontReading}"
+                                           FontSize="11"
+                                           Foreground="{StaticResource BrushTextSecondary}"
+                                           VerticalAlignment="Center" />
+                            </DockPanel>
+
+                            <!-- 第二行：技能客观释义 -->
+                            <TextBlock Text="{Binding Description}"
+                                       Style="{StaticResource StyleBodySecondary}"
+                                       Margin="0,4,0,0"
+                                       TextWrapping="Wrap"
+                                       Foreground="#B0A696" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
+</UserControl>

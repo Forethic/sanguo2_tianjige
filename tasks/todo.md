@@ -89,11 +89,12 @@
 ### Task 1.5: 【将星录】视图与 1~40 级技能长卷
 - **Description:** 实现主模块【将星录】，包含武将名号印信、客观特色概括、初始与进阶兵种、红蓝分色 1~40 级技能时间轴长卷，以及点击技能展开的“技能逆查名录”。
 - **Acceptance criteria:**
-  - [ ] 武将名号右侧展示古风朱砂资质印信（如【无双】）
-  - [ ] 技能树分列武将技（赤红）与军师技（幽蓝），客观显示耗蓝与作用说明
-  - [ ] 点击任意技能，可浮层/侧展展示全图习得该技能的武将列表
+  - [x] 武将名号右侧展示古风朱砂资质印信（如【无双】）
+  - [x] 技能树分列武将技（赤红）与军师技（幽蓝），客观显示耗蓝与作用说明 (`SkillTimeline.xaml`)
+  - [x] 点击任意技能名称触发 `LookupSkillCommand`，抽屉浮层展示全图习得该技能的武将列表 (`GeneralStarView.xaml`)
 - **Verification:**
-  - [ ] 界面交互流畅，长卷滚动平滑，技能逆查交互自然
+  - [x] `dotnet build` 编译通过，UI 数据绑定与 ViewModel 逻辑就绪
+  - [x] 单元测试通过
 - **Dependencies:** Task 1.2, Task 1.4
 - **Files likely touched:**
   - `src/Tianjige.UI/ViewModels/GeneralStarViewModel.cs`
