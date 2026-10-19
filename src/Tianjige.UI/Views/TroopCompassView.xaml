@@ -1,0 +1,319 @@
+<UserControl x:Class="Tianjige.UI.Views.TroopCompassView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:Tianjige.UI.Controls"
+             xmlns:vm="clr-namespace:Tianjige.UI.ViewModels"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=vm:TroopCompassViewModel}"
+             Background="{StaticResource BrushBgDarkWood}">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="12,10,12,16">
+
+            <!-- 顶栏标题 -->
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <TextBlock Text="兵机盘 · 演武推阵"
+                               FontFamily="{StaticResource FontLiSu}"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource BrushTextPrimary}"/>
+                    <TextBlock Text="纯客观兵种相克推演与八门阵略"
+                               FontSize="10"
+                               Foreground="{StaticResource BrushTextMuted}"
+                               Margin="0,2,0,0"/>
+                </StackPanel>
+
+                <!-- 兵机铜章印记 -->
+                <Border Grid.Column="1"
+                        BorderBrush="{StaticResource BrushGoldBorder}"
+                        BorderThickness="1"
+                        Background="#2B2117"
+                        CornerRadius="3"
+                        Padding="6,2"
+                        VerticalAlignment="Center">
+                    <TextBlock Text="相克天机"
+                               FontSize="10"
+                               FontFamily="{StaticResource FontLiSu}"
+                               Foreground="{StaticResource BrushGoldLight}"/>
+                </Border>
+            </Grid>
+
+            <!-- 金石古风分割线 -->
+            <Border Height="1" Background="{StaticResource BrushGoldBorder}" Opacity="0.3" Margin="0,0,0,10"/>
+
+            <!-- 司南环形罗盘控件 -->
+            <Border Background="#1A1512"
+                    BorderBrush="{StaticResource BrushGoldBorder}"
+                    BorderThickness="1"
+                    CornerRadius="6"
+                    Padding="4,8"
+                    Margin="0,0,0,12">
+                <StackPanel HorizontalAlignment="Center">
+                    <controls:CompassWidget HorizontalAlignment="Center"/>
+                    <TextBlock Text="※ 点击外圈任意兵种，推演其客观生克关系"
+                               FontSize="9"
+                               Foreground="{StaticResource BrushTextMuted}"
+                               HorizontalAlignment="Center"
+                               Margin="0,4,0,2"/>
+                </StackPanel>
+            </Border>
+
+            <!-- 所选兵种客观生克剖析卡片 -->
+            <Border Background="{StaticResource BrushBgCard}"
+                    BorderBrush="{StaticResource BrushGoldMuted}"
+                    BorderThickness="1"
+                    CornerRadius="5"
+                    Padding="10"
+                    Margin="0,0,0,14">
+                <StackPanel>
+                    <!-- 兵种名称与类别 -->
+                    <DockPanel LastChildFill="False" Margin="0,0,0,6">
+                        <TextBlock Text="{Binding SelectedTroop.TroopName}"
+                                   FontFamily="{StaticResource FontLiSu}"
+                                   FontSize="15"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource BrushGoldLight}"
+                                   VerticalAlignment="Center"/>
+
+                        <Border DockPanel.Dock="Right"
+                                Background="{StaticResource BrushCinnabarDark}"
+                                CornerRadius="3"
+                                Padding="5,1"
+                                VerticalAlignment="Center">
+                            <TextBlock Text="{Binding CurrentAnalysis.Troop.Category, FallbackValue='主力'}"
+                                       FontSize="9"
+                                       Foreground="#FFF8E7"/>
+                        </Border>
+                    </DockPanel>
+
+                    <!-- 客观特性详述 -->
+                    <TextBlock Text="{Binding CurrentAnalysis.Troop.Characteristics}"
+                               FontSize="11"
+                               Foreground="{StaticResource BrushTextSecondary}"
+                               TextWrapping="Wrap"
+                               LineHeight="16"
+                               Margin="0,0,0,8"/>
+
+                    <Grid Margin="0,2,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="8"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- 克制优势栏 -->
+                        <Border Grid.Column="0"
+                                Background="#2A241C"
+                                BorderBrush="{StaticResource BrushGoldBorder}"
+                                BorderThickness="1"
+                                CornerRadius="4"
+                                Padding="6,6">
+                            <StackPanel>
+                                <TextBlock Text="【占优·我克制】"
+                                           FontSize="10"
+                                           FontWeight="SemiBold"
+                                           Foreground="{StaticResource BrushGoldLight}"
+                                           Margin="0,0,0,4"/>
+                                <ItemsControl ItemsSource="{Binding CurrentAnalysis.StrongAgainst}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Background="#3D301F"
+                                                    BorderBrush="{StaticResource BrushGoldBorder}"
+                                                    BorderThickness="0.8"
+                                                    CornerRadius="2"
+                                                    Padding="4,2"
+                                                    Margin="0,0,4,4">
+                                                <TextBlock Text="{Binding}"
+                                                           FontSize="10"
+                                                           Foreground="{StaticResource BrushGoldLight}"/>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- 受制弱点栏 -->
+                        <Border Grid.Column="2"
+                                Background="#1A222B"
+                                BorderBrush="{StaticResource BrushSkillMilitaryDark}"
+                                BorderThickness="1"
+                                CornerRadius="4"
+                                Padding="6,6">
+                            <StackPanel>
+                                <TextBlock Text="【破绽·被克制】"
+                                           FontSize="10"
+                                           FontWeight="SemiBold"
+                                           Foreground="#8ABBE2"
+                                           Margin="0,0,0,4"/>
+                                <ItemsControl ItemsSource="{Binding CurrentAnalysis.WeakAgainst}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Background="#16293B"
+                                                    BorderBrush="{StaticResource BrushSkillMilitary}"
+                                                    BorderThickness="0.8"
+                                                    CornerRadius="2"
+                                                    Padding="4,2"
+                                                    Margin="0,0,4,4">
+                                                <TextBlock Text="{Binding}"
+                                                           FontSize="10"
+                                                           Foreground="#8ABBE2"/>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- 八门阵法图略标题 -->
+            <Grid Margin="0,0,0,8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="八门阵法 · 站位图略"
+                           FontFamily="{StaticResource FontLiSu}"
+                           FontSize="14"
+                           FontWeight="Bold"
+                           Foreground="{StaticResource BrushTextPrimary}"/>
+                <TextBlock Grid.Column="1"
+                           Text="阵型互克速览"
+                           FontSize="10"
+                           Foreground="{StaticResource BrushTextMuted}"
+                           VerticalAlignment="Center"/>
+            </Grid>
+
+            <!-- 8 阵选择标签排 -->
+            <ItemsControl ItemsSource="{Binding Formations}" Margin="0,0,0,8">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Command="{Binding DataContext.SelectFormationCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                CommandParameter="{Binding}"
+                                Margin="0,0,4,4"
+                                Cursor="Hand">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="TabBorder"
+                                            Background="#26201B"
+                                            BorderBrush="{StaticResource BrushGoldMuted}"
+                                            BorderThickness="1"
+                                            CornerRadius="3"
+                                            Padding="8,4">
+                                        <TextBlock x:Name="TabText"
+                                                   Text="{Binding Name}"
+                                                   FontSize="11"
+                                                   Foreground="{StaticResource BrushTextSecondary}"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="TabBorder" Property="Background" Value="{StaticResource BrushBgCardHover}"/>
+                                            <Setter TargetName="TabText" Property="Foreground" Value="{StaticResource BrushGoldLight}"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!-- 所选阵型详析卡片 -->
+            <Border Background="{StaticResource BrushBgCard}"
+                    BorderBrush="{StaticResource BrushGoldBorder}"
+                    BorderThickness="1"
+                    CornerRadius="5"
+                    Padding="10">
+                <StackPanel>
+                    <!-- 阵名与重心 -->
+                    <DockPanel LastChildFill="False" Margin="0,0,0,6">
+                        <TextBlock Text="{Binding SelectedFormation.Name}"
+                                   FontFamily="{StaticResource FontLiSu}"
+                                   FontSize="15"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource BrushGoldLight}"/>
+                        <Border DockPanel.Dock="Right"
+                                Background="#352B1E"
+                                BorderBrush="{StaticResource BrushGoldMuted}"
+                                BorderThickness="1"
+                                CornerRadius="3"
+                                Padding="5,1">
+                            <TextBlock Text="{Binding SelectedFormation.CenterGravity}"
+                                       FontSize="9"
+                                       Foreground="{StaticResource BrushTextPrimary}"/>
+                        </Border>
+                    </DockPanel>
+
+                    <!-- 客观战术效用 -->
+                    <TextBlock Text="{Binding SelectedFormation.Description}"
+                               FontSize="11"
+                               Foreground="{StaticResource BrushTextSecondary}"
+                               TextWrapping="Wrap"
+                               LineHeight="16"
+                               Margin="0,0,0,8"/>
+
+                    <!-- 优势与克制 -->
+                    <Grid Margin="0,0,0,6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="【阵法优势】"
+                                   FontSize="11"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource BrushJadeActive}"/>
+                        <TextBlock Grid.Column="1"
+                                   Text="{Binding SelectedFormation.Advantages}"
+                                   FontSize="11"
+                                   Foreground="{StaticResource BrushTextPrimary}"
+                                   TextWrapping="Wrap"
+                                   LineHeight="15"/>
+                    </Grid>
+
+                    <!-- 劣势与破绽 -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="【阵法劣势】"
+                                   FontSize="11"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource BrushSkillGeneral}"/>
+                        <TextBlock Grid.Column="1"
+                                   Text="{Binding SelectedFormation.Disadvantages}"
+                                   FontSize="11"
+                                   Foreground="{StaticResource BrushTextSecondary}"
+                                   TextWrapping="Wrap"
+                                   LineHeight="15"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

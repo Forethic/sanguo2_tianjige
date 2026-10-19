@@ -1,0 +1,181 @@
+<UserControl x:Class="Tianjige.UI.Controls.CompassWidget"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             Width="280" Height="280">
+
+    <Grid Width="280" Height="280">
+        <!-- 罗盘古铜背景环 -->
+        <Ellipse Width="260" Height="260"
+                 Stroke="{StaticResource BrushGoldBorder}"
+                 StrokeThickness="1"
+                 StrokeDashArray="6 3"
+                 Opacity="0.4"
+                 IsHitTestVisible="False"/>
+
+        <Ellipse Width="200" Height="200"
+                 Stroke="{StaticResource BrushGoldMuted}"
+                 StrokeThickness="1"
+                 Opacity="0.25"
+                 IsHitTestVisible="False"/>
+
+        <Ellipse Width="150" Height="150"
+                 Stroke="{StaticResource BrushGoldBorder}"
+                 StrokeThickness="0.8"
+                 StrokeDashArray="2 4"
+                 Opacity="0.3"
+                 IsHitTestVisible="False"/>
+
+        <!-- 8 方向八卦刻度指示线 -->
+        <Path Data="M 140,20 L 140,260 M 20,140 L 260,140 M 55,55 L 225,225 M 55,225 L 225,55"
+              Stroke="{StaticResource BrushGoldMuted}"
+              StrokeThickness="0.6"
+              Opacity="0.18"
+              IsHitTestVisible="False"/>
+
+        <!-- 中心枢纽司南核心 -->
+        <Border Width="88" Height="88"
+                CornerRadius="44"
+                Background="{StaticResource BrushBgDarkWood}"
+                BorderBrush="{StaticResource BrushGoldBorder}"
+                BorderThickness="1.5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+            <Border.Effect>
+                <DropShadowEffect Color="#000000" BlurRadius="12" ShadowDepth="0" Opacity="0.7"/>
+            </Border.Effect>
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="兵机枢"
+                           FontSize="9"
+                           Foreground="{StaticResource BrushGoldMuted}"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,2"/>
+                <TextBlock Text="{Binding SelectedTroop.TroopName}"
+                           FontFamily="{StaticResource FontLiSu}"
+                           FontSize="15"
+                           FontWeight="Bold"
+                           Foreground="{StaticResource BrushTextPrimary}"
+                           HorizontalAlignment="Center"/>
+                <Border Background="{StaticResource BrushCinnabarDark}"
+                        CornerRadius="3"
+                        Padding="5,1"
+                        Margin="0,3,0,0"
+                        HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding CurrentAnalysis.Troop.Characteristics, FallbackValue='纯客观推演'}"
+                               FontSize="8"
+                               Foreground="{StaticResource BrushTextPrimary}"
+                               MaxWidth="70"
+                               TextTrimming="CharacterEllipsis"
+                               TextAlignment="Center"/>
+                </Border>
+            </StackPanel>
+        </Border>
+
+        <!-- 8 方兵种交互节点 -->
+        <ItemsControl ItemsSource="{Binding TroopNodes}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas Width="280" Height="280" IsItemsHost="True"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Canvas.Left" Value="{Binding X}"/>
+                    <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Command="{Binding DataContext.SelectTroopCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                            CommandParameter="{Binding TroopName}"
+                            Cursor="Hand">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="NodeBorder"
+                                        Width="68" Height="32"
+                                        CornerRadius="4"
+                                        BorderThickness="1"
+                                        Padding="4,2">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="#000000" BlurRadius="6" ShadowDepth="1" Opacity="0.5"/>
+                                    </Border.Effect>
+                                    <Grid VerticalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- 兵种名称 -->
+                                        <TextBlock x:Name="TxtName"
+                                                   Text="{Binding TroopName}"
+                                                   FontSize="11"
+                                                   VerticalAlignment="Center"
+                                                   TextTrimming="CharacterEllipsis"/>
+
+                                        <!-- 关系角标 -->
+                                        <Border x:Name="BadgeBorder"
+                                                Grid.Column="1"
+                                                CornerRadius="2"
+                                                Padding="3,1"
+                                                Margin="2,0,0,0"
+                                                VerticalAlignment="Center">
+                                            <TextBlock x:Name="TxtBadge"
+                                                       Text="{Binding RelationBadgeText}"
+                                                       FontSize="8"
+                                                       Foreground="#FFFFFF"/>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+
+                                <ControlTemplate.Triggers>
+                                    <!-- 默认平手样式 -->
+                                    <Trigger Property="IsEnabled" Value="True">
+                                        <Setter TargetName="NodeBorder" Property="Background" Value="#251F1A"/>
+                                        <Setter TargetName="NodeBorder" Property="BorderBrush" Value="#4A3C2F"/>
+                                        <Setter TargetName="TxtName" Property="Foreground" Value="{StaticResource BrushTextSecondary}"/>
+                                        <Setter TargetName="BadgeBorder" Property="Background" Value="#332A22"/>
+                                    </Trigger>
+
+                                    <!-- 自身主选样式 (朱砂赤红 + 砂金边框) -->
+                                    <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                        <Setter TargetName="NodeBorder" Property="Background" Value="{StaticResource BrushCinnabar}"/>
+                                        <Setter TargetName="NodeBorder" Property="BorderBrush" Value="{StaticResource BrushGoldLight}"/>
+                                        <Setter TargetName="TxtName" Property="Foreground" Value="#FFF8E7"/>
+                                        <Setter TargetName="TxtName" Property="FontWeight" Value="Bold"/>
+                                        <Setter TargetName="BadgeBorder" Property="Background" Value="{StaticResource BrushCinnabarDark}"/>
+                                    </DataTrigger>
+
+                                    <!-- 我克制对手 (金石琥珀 + 亮金边框) -->
+                                    <DataTrigger Binding="{Binding IsStrong}" Value="True">
+                                        <Setter TargetName="NodeBorder" Property="Background" Value="#382C1D"/>
+                                        <Setter TargetName="NodeBorder" Property="BorderBrush" Value="{StaticResource BrushGoldBorder}"/>
+                                        <Setter TargetName="TxtName" Property="Foreground" Value="{StaticResource BrushGoldLight}"/>
+                                        <Setter TargetName="TxtName" Property="FontWeight" Value="SemiBold"/>
+                                        <Setter TargetName="BadgeBorder" Property="Background" Value="{StaticResource BrushGoldMuted}"/>
+                                    </DataTrigger>
+
+                                    <!-- 被对手克制 (幽蓝青苍 + 蓝青边框) -->
+                                    <DataTrigger Binding="{Binding IsWeak}" Value="True">
+                                        <Setter TargetName="NodeBorder" Property="Background" Value="#1C2735"/>
+                                        <Setter TargetName="NodeBorder" Property="BorderBrush" Value="#457099"/>
+                                        <Setter TargetName="TxtName" Property="Foreground" Value="#8ABBE2"/>
+                                        <Setter TargetName="BadgeBorder" Property="Background" Value="{StaticResource BrushSkillMilitaryDark}"/>
+                                    </DataTrigger>
+
+                                    <!-- 鼠标悬停微动效 -->
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="NodeBorder" Property="Opacity" Value="0.9"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</UserControl>

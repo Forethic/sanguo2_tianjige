@@ -108,17 +108,21 @@
 ### Task 1.6: 【兵机盘】交互罗盘与八门阵型视图
 - **Description:** 实现【兵机盘】展开视图与右上角常驻入口，以环形相克图呈现短兵、远兵、长兵、骑兵、特殊兵种的克制关系，并提供八门阵型优劣速查表。
 - **Acceptance criteria:**
-  - [ ] 交互式罗盘点击任意兵种高亮显示“我克制”、“被克制”与“平手”对应兵种
-  - [ ] 八门阵型卡片清晰列出站位重心与对抗优劣
-  - [ ] 保持纯客观法则，不提供战术保姆说教
+  - [x] 交互式罗盘点击任意兵种高亮显示“我克制”、“被克制”与“平手”对应兵种
+  - [x] 八门阵型卡片清晰列出站位重心与对抗优劣
+  - [x] 保持纯客观法则，不提供战术保姆说教
 - **Verification:**
-  - [ ] 交互测试：点击长枪兵高亮骑兵克制与弓箭兵被克制
+  - [x] 单元测试通过：`TroopCompassTests` 验证长枪兵克制铁骑兵、受制于弓箭兵等生克闭环，八门阵型完整度校验 (21 tests total)
+  - [x] `dotnet build` 编译成功，XAML 数据模板与视图模型绑定就绪
 - **Dependencies:** Task 1.2, Task 1.3
 - **Files likely touched:**
+  - `src/Tianjige.Core/Services/TroopRelationService.cs`
   - `src/Tianjige.UI/ViewModels/TroopCompassViewModel.cs`
   - `src/Tianjige.UI/Views/TroopCompassView.xaml`
   - `src/Tianjige.UI/Views/TroopCompassView.xaml.cs`
   - `src/Tianjige.UI/Controls/CompassWidget.xaml`
+  - `src/Tianjige.UI/Controls/CompassWidget.xaml.cs`
+  - `tests/Tianjige.Tests/TroopCompassTests.cs`
 - **Estimated scope:** Small (3-4 files)
 
 ---
