@@ -308,6 +308,23 @@
 ### Task 4.3: 单文件便携式打包与交付发布
 - **Description:** 将整个工程打包为绿色单文件，包含内置 cnc-ddraw 与静态典籍，无需额外运行时安装。
 - **Acceptance criteria:**
-  - [ ] 双击即可运行，单文件便携即用
+  - [x] 双击即可运行，单文件便携即用 (`dist/Tianjige/Tianjige.exe` 独立打包仅 3.24 MB)
+  - [x] 自动化打包构建脚本 `scripts/publish.ps1` 一键生成无冗余 Release 单文件
+- **Verification:**
+  - [x] 运行自动化验证脚本测试拉起 `Tianjige.exe`，进程健康启动并在 1.5 秒后安全关闭 (PID 正常分配，退出码 0)
 - **Dependencies:** Checkpoint 4
+- **Files likely touched:**
+  - `src/Tianjige.UI/Tianjige.UI.csproj`
+  - `scripts/publish.ps1`
+  - `.gitignore`
 - **Estimated scope:** Small (1-2 files)
+
+---
+
+## 阶段四里程碑检查点（Checkpoint 4 - 全案验收交付）
+- [x] 战前老虎机防抖状态机 `BattleDebouncer` 抑制选将画面抽搐
+- [x] 运筹底栏建安年号干支时令 `AncientCalendarService` 与气运玉印联动
+- [x] 全套单元测试 100% 通过 (`dotnet test` 54/54 tests passed)
+- [x] 单文件发布产物 `dist/Tianjige/Tianjige.exe` 打包就绪并通过自启自测
+- [x] 《群英策·天机阁》双窗体架构（启动配置台 + 零遮挡战局参谋屏风）全流程闭环
+

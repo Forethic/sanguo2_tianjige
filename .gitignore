@@ -431,3 +431,6 @@ FodyWeavers.xsd
 assets/cnc-ddraw/*.zip
 assets/cnc-ddraw/*.exe
 
+# Single file publish outputs
+dist/
+
