@@ -1,0 +1,148 @@
+[
+  {
+    "id": 1,
+    "name": "关羽",
+    "pinyinIndex": "gy",
+    "sealTier": "无双",
+    "baseForce": 98,
+    "baseIntellect": 84,
+    "comment": "武圣关云长，攻守兼备，前中期飞刀旋灯，终极大招神火怒张与狂雷。",
+    "initialTroop": "长枪兵",
+    "unlockTroop": "铁骑兵",
+    "skillTree": [
+      { "level": 1, "skillName": "半月斩", "category": 1, "mpCost": 15, "description": "挥舞青龙偃月刀斩出一道金色半月斗气直劈敌阵。" },
+      { "level": 1, "skillName": "离间计初", "category": 2, "mpCost": 12, "description": "战前挑拨离间敌将与君主关系。" },
+      { "level": 7, "skillName": "回天术", "category": 1, "mpCost": 23, "description": "调理内息回补自身体力 25 点。" },
+      { "level": 13, "skillName": "烈火旋灯", "category": 1, "mpCost": 33, "description": "周身环绕烈焰烈火旋灯，近战清兵无敌。" },
+      { "level": 14, "skillName": "增加体力中", "category": 2, "mpCost": 28, "description": "交战前以军师符咒提升主将体力上限 30 点。" },
+      { "level": 21, "skillName": "神剑闪华", "category": 1, "mpCost": 38, "description": "召唤巨灵飞剑贯穿敌方全阵线。" },
+      { "level": 28, "skillName": "神火怒张", "category": 1, "mpCost": 35, "description": "天降数百团熊熊烈火覆盖敌阵，烈焰狂暴席卷。" },
+      { "level": 35, "skillName": "狂雷天牢", "category": 1, "mpCost": 42, "description": "九天神雷轰顶封杀敌将，造成毁灭性单挑打击。" },
+      { "level": 40, "skillName": "鬼哭神号", "category": 1, "mpCost": 50, "description": "群英2终极大招！神鬼乱舞+狂雷天牢+飞矢烈震合一。" }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "太史慈",
+    "pinyinIndex": "tsc",
+    "sealTier": "无双",
+    "baseForce": 97,
+    "baseIntellect": 70,
+    "comment": "前中期单挑自愈神将，40级终极【鬼哭神号】，江东第一箭手。",
+    "initialTroop": "弓箭兵",
+    "unlockTroop": "铁骑兵",
+    "skillTree": [
+      { "level": 1, "skillName": "落日弓", "category": 1, "mpCost": 18, "description": "挽硬弓射出流星光矢暗箭狙杀敌将。" },
+      { "level": 1, "skillName": "强化士兵初", "category": 2, "mpCost": 15, "description": "提升全军士兵攻击力。" },
+      { "level": 8, "skillName": "生生不息", "category": 1, "mpCost": 22, "description": "持续缓缓回愈体力，单挑续航神技。" },
+      { "level": 14, "skillName": "烈火旋灯", "category": 1, "mpCost": 33, "description": "三团烈火护体，冲入敌群如割草。" },
+      { "level": 22, "skillName": "神鬼乱舞", "category": 1, "mpCost": 40, "description": "极速连续挥砍狂暴爆发，瞬间蒸发敌将血槽。" },
+      { "level": 40, "skillName": "鬼哭神号", "category": 1, "mpCost": 50, "description": "终极大招！狂雷天牢+神鬼乱舞全屏齐发。" }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "诸葛亮",
+    "pinyinIndex": "zgl",
+    "sealTier": "谋主",
+    "baseForce": 55,
+    "baseIntellect": 100,
+    "comment": "卧龙诸葛武侯，天下第一军师！八门金锁、增加体力高、金蝉脱壳全能控场。",
+    "initialTroop": "弓箭兵",
+    "unlockTroop": "藤甲兵",
+    "skillTree": [
+      { "level": 1, "skillName": "雷击", "category": 1, "mpCost": 16, "description": "落下一道天雷直击敌将。" },
+      { "level": 1, "skillName": "化解计策", "category": 2, "mpCost": 20, "description": "极高概率使敌方军师计策彻底失效。" },
+      { "level": 6, "skillName": "八门金锁", "category": 2, "mpCost": 30, "description": "定身锁死敌全军数秒，顶级控场胜局底牌。" },
+      { "level": 13, "skillName": "雷光焦狱", "category": 1, "mpCost": 34, "description": "大范围连环雷电轰杀敌方密集兵群。" },
+      { "level": 17, "skillName": "恢复技力高", "category": 2, "mpCost": 40, "description": "法力源源不断自动高速回升。" },
+      { "level": 24, "skillName": "增加体力高", "category": 2, "mpCost": 40, "description": "入场主将血上限暴涨 50 点以上。" },
+      { "level": 32, "skillName": "封武将技", "category": 2, "mpCost": 35, "description": "封印敌将技能释放，使其沦为白刃肉搏。" },
+      { "level": 40, "skillName": "狂雷天牢", "category": 1, "mpCost": 42, "description": "召引九天神雷毁灭敌将。" }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "吕布",
+    "pinyinIndex": "lb",
+    "sealTier": "无双",
+    "baseForce": 100,
+    "baseIntellect": 42,
+    "comment": "人中吕布，天下无敌！初始武力100满值，鬼哭神号与神鬼乱舞所向披靡。",
+    "initialTroop": "铁骑兵",
+    "unlockTroop": "铁骑兵",
+    "skillTree": [
+      { "level": 1, "skillName": "半月斩", "category": 1, "mpCost": 15, "description": "方天画戟横斩出金色半月气刃。" },
+      { "level": 7, "skillName": "旋灯火", "category": 1, "mpCost": 25, "description": "双火护体清兵。" },
+      { "level": 14, "skillName": "烈火旋灯", "category": 1, "mpCost": 33, "description": "三团烈火旋灯，近战清兵。" },
+      { "level": 22, "skillName": "神鬼乱舞", "category": 1, "mpCost": 40, "description": "连击爆发毁灭单挑敌将。" },
+      { "level": 40, "skillName": "鬼哭神号", "category": 1, "mpCost": 50, "description": "终极大招，毁天灭地。" }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "夏侯惇",
+    "pinyinIndex": "xhd",
+    "sealTier": "良将",
+    "baseForce": 96,
+    "baseIntellect": 72,
+    "comment": "曹魏前锋第一骨干，肉搏拔矢啖睛，前中期大招烈火旋灯与回天术。",
+    "initialTroop": "朴刀兵",
+    "unlockTroop": "铁骑兵",
+    "skillTree": [
+      { "level": 1, "skillName": "落石", "category": 1, "mpCost": 15, "description": "滚木礌石冲击敌方前排步卒。" },
+      { "level": 1, "skillName": "离间计初", "category": 2, "mpCost": 12, "description": "离间敌将忠诚度。" },
+      { "level": 8, "skillName": "回天术", "category": 1, "mpCost": 23, "description": "回补自身体力 25 点。" },
+      { "level": 15, "skillName": "烈火旋灯", "category": 1, "mpCost": 33, "description": "环身三团烈焰高速旋转焚烧小兵。" },
+      { "level": 24, "skillName": "神鬼乱舞", "category": 1, "mpCost": 40, "description": "单挑连环爆发狂舞斩。" }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "周瑜",
+    "pinyinIndex": "zyu",
+    "sealTier": "谋主",
+    "baseForce": 78,
+    "baseIntellect": 97,
+    "comment": "美周郎，赤壁都督，兼修火系大招与十面埋伏，智勇双全。",
+    "initialTroop": "弓箭兵",
+    "unlockTroop": "长枪兵",
+    "skillTree": [
+      { "level": 1, "skillName": "火箭", "category": 1, "mpCost": 15, "description": "漫天火箭齐射压制敌阵。" },
+      { "level": 1, "skillName": "强化士兵初", "category": 2, "mpCost": 15, "description": "战前鼓舞士气提升全军士兵攻防。" },
+      { "level": 8, "skillName": "烈火旋灯", "category": 1, "mpCost": 33, "description": "烈火旋灯焚烧周身步卒。" },
+      { "level": 15, "skillName": "神火怒张", "category": 1, "mpCost": 35, "description": "百团大火席卷战场全屏清兵。" },
+      { "level": 23, "skillName": "金蝉脱壳", "category": 2, "mpCost": 25, "description": "战场撤退成功率100%，绝不被俘。" }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "邢道荣",
+    "pinyinIndex": "xdr",
+    "sealTier": "裨将",
+    "baseForce": 79,
+    "baseIntellect": 42,
+    "comment": "零陵上将，勇力可嘉，虽无顶尖大招，但在零陵城防中足堪中流之柱。",
+    "initialTroop": "长枪兵",
+    "unlockTroop": "长枪兵",
+    "skillTree": [
+      { "level": 1, "skillName": "半月斩", "category": 1, "mpCost": 15, "description": "大斧力斩半月气劲。" },
+      { "level": 9, "skillName": "突石", "category": 1, "mpCost": 22, "description": "地生尖锐巨石突刺前排敌人。" }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "蒋干",
+    "pinyinIndex": "jg",
+    "sealTier": "白身",
+    "baseForce": 38,
+    "baseIntellect": 62,
+    "comment": "曹操谋士，盗书反误大事，平庸无奇。",
+    "initialTroop": "朴刀兵",
+    "unlockTroop": "朴刀兵",
+    "skillTree": [
+      { "level": 1, "skillName": "伏兵排阵", "category": 1, "mpCost": 18, "description": "唤出数名预备步卒参战。" },
+      { "level": 1, "skillName": "离间计初", "category": 2, "mpCost": 12, "description": "微弱离间敌将忠诚度。" }
+    ]
+  }
+]

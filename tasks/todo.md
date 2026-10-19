@@ -46,13 +46,13 @@
 ### Task 1.3: 静态典籍数据构建与序列化模型
 - **Description:** 编写并内置《三国群英传2》原生静态数据字典，包括 `Skills.json`（全武将技与军师技消耗及客观效果）、`Items.json`（神兵宝物加成属性）、`Formations.json`（八门阵型与兵种相克矩阵）及典型名将全周期技能树种子数据。
 - **Acceptance criteria:**
-  - [ ] 静态实体模型支持 GeneralStaticInfo, SkillInfo, ItemInfo, FormationInfo
-  - [ ] `Skills.json` 覆盖核心武将技与军师技消耗与客观释义
-  - [ ] `Items.json` 覆盖方天画戟、青龙偃月刀、赤兔马、兵法二十四篇等核心宝物
-  - [ ] `Formations.json` 准确记录 8 种阵型站位与兵种互克数据
-  - [ ] 嵌入式资源或独立 JSON 装载器，支持冷启动快速加载
+  - [x] 静态实体模型支持 GeneralStaticInfo, SkillInfo, ItemInfo, FormationInfo, TroopCounterInfo
+  - [x] `Skills.json` 覆盖核心武将技（如鬼哭神号、烈火旋灯、神剑闪华等）与军师技（如八门金锁、恢复技力高）消耗与客观释义
+  - [x] `Items.json` 覆盖方天画戟、青龙偃月刀、赤兔马、兵法二十四篇等核心宝物
+  - [x] `Formations.json` 准确记录 8 种阵型站位与兵种互克数据
+  - [x] 嵌入式资源装载器 `StaticRepository`，冷启动毫秒级解析加载
 - **Verification:**
-  - [ ] 单元测试验证 JSON 数据反序列化完整且字段无缺失
+  - [x] 单元测试 `StaticDataTests` 验证 JSON 数据反序列化完整且字段无缺失 (5 tests passed)
 - **Dependencies:** Task 1.1
 - **Files likely touched:**
   - `src/Tianjige.Core/Models/GeneralStaticInfo.cs`
