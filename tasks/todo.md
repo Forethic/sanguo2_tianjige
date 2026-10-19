@@ -159,16 +159,24 @@
 ### Task 2.1: 内置 `cnc-ddraw` 核心组件与任意分辨率配置引擎
 - **Description:** 将开源 `cnc-ddraw` 预编译二进制文件（`ddraw.dll` 及默认模板）内嵌于程序资源中，开发 `CncDdrawManager`。内置任意分辨率 4:3 视口推导算法（计算所选屏幕的 $H_{game} = H_{screen}, W_{game} = \lfloor H_{screen} \times 4/3 \rfloor, W_{black} = W_{screen} - W_{game}$），依据选定屏幕与偏好生成精确的 `cnc-ddraw.ini`。
 - **Acceptance criteria:**
-  - [ ] 自动检测游戏目录下是否存在 `ddraw.dll`，不存在则安全写入
-  - [ ] 纯算力兼容 1080p (480px 黑边)、2K (640px 黑边)、4K (960px 黑边) 与 16:10 等任意屏幕
+  - [x] 自动检测游戏目录下是否存在 `ddraw.dll`，不存在则安全写入
+  - [x] 纯算力兼容 1080p (480px 黑边)、2K (640px 黑边)、4K (960px 黑边) 与 16:10 等任意屏幕
+  - [x] 动态生成 `ddraw.ini` 精确注入 `width`, `height`, `posX`, `posY`, `windowed=true`, `border=false`, `savesettings=0`, `center_window=0`
+  - [x] `DisplayMonitorService` 实现多显示器 P/Invoke 枚举与安全兜底
+- **Verification:**
+  - [x] 单元测试覆盖：`DisplayGeometryTests` (4 tests) + `CncDdrawManagerTests` (3 tests) 验证 1080p、2K 副屏偏移、4K、16:10 几何推导与临时目录真实写入 (29 tests total)
+  - [x] `dotnet build` 编译 0 警告 0 错误
 - **Dependencies:** Checkpoint 1
 - **Files likely touched:**
+  - `src/Tianjige.Core/Models/DisplayGeometry.cs`
+  - `src/Tianjige.Core/Services/DisplayGeometryCalculator.cs`
   - `src/Tianjige.Core/Services/CncDdrawManager.cs`
   - `src/Tianjige.Core/Native/DisplayMonitorService.cs`
-  - `src/Tianjige.Core/Models/DisplayGeometry.cs`
   - `src/Tianjige.Core/Assets/CncDdraw/ddraw.dll`
-  - `src/Tianjige.Core/Assets/CncDdraw/cnc-ddraw.ini`
-- **Estimated scope:** Medium (4 files)
+  - `src/Tianjige.Core/Assets/CncDdraw/cnc-ddraw.ini.template`
+  - `tests/Tianjige.Tests/DisplayGeometryTests.cs`
+  - `tests/Tianjige.Tests/CncDdrawManagerTests.cs`
+- **Estimated scope:** Medium (4-8 files)
 
 ### Task 2.2: 双窗体架构（启动配置窗 LauncherWindow + 实时战局 HUD 窗 TacticalHudWindow）
 - **Description:** 打造双窗体体验：
