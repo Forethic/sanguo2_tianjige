@@ -280,15 +280,29 @@
 ### Task 4.1: 战前老虎机乱闪防抖逻辑
 - **Description:** 监测游戏当前场景状态，在战前电脑武将头像飞速变换时保持 HUD 静止，仅在确认对战大门拉开时淡入对阵卡。
 - **Acceptance criteria:**
-  - [ ] 战前选将界面零抽搐，优雅平滑
+  - [x] 战前选将界面零抽搐，优雅平滑 (`BattleDebouncer` 状态机与 `BattleState == 2` 防抖)
+- **Verification:**
+  - [x] 单元测试 `BattleDebouncer_WhenSlotMachineSpinning_SuppressesFlicker` 验证防抖抑制与交锋锁定
 - **Dependencies:** Task 3.1
+- **Files likely touched:**
+  - `src/Tianjige.Core/Services/BattleDebouncer.cs`
+  - `tests/Tianjige.Tests/CalendarAndDebounceTests.cs`
 - **Estimated scope:** Small (2 files)
 
 ### Task 4.2: 【运筹底栏】建安年号纪年映射与气运玉印状态联动
-- **Description:** 从内存提取当前游戏年月，映射为古风年纪（如“建安五年 仲夏”），联动玉印状态。
+- **Description:** 从内存提取当前游戏年月，映射为古风年纪（如“建安五年 · 岁在庚辰 · 孟秋七月”），联动玉印状态。
 - **Acceptance criteria:**
-  - [ ] 游戏运行时显示碧色玉印 `☯ 气运连通`，退出时显示墨色玉印 `○ 闭关静思`
+  - [x] 游戏运行时显示玉印 `☯ 气运连通 · 战局洞若观火`，退出或未连通时显示 `○ 闭关静思 · 典籍速查模式`
+  - [x] 年号干支与孟仲季四时时令精准计算
+- **Verification:**
+  - [x] 单元测试 `AncientCalendar_ShouldFormatAccurately` (10 tests) 验证建安、黄初、太和等古风年号与干支计算
+  - [x] UI 运筹底栏双窗体（MainWindow 与 TacticalHudWindow）完美绑定
 - **Dependencies:** Task 3.1
+- **Files likely touched:**
+  - `src/Tianjige.Core/Services/AncientCalendarService.cs`
+  - `src/Tianjige.UI/ViewModels/MainViewModel.cs`
+  - `src/Tianjige.UI/Views/TacticalHudWindow.xaml`
+  - `tests/Tianjige.Tests/CalendarAndDebounceTests.cs`
 - **Estimated scope:** Small (2 files)
 
 ### Task 4.3: 单文件便携式打包与交付发布

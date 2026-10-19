@@ -285,6 +285,11 @@
                                    FontSize="10"
                                    Foreground="{StaticResource BrushTextSecondary}"
                                    VerticalAlignment="Center" />
+                        <TextBlock Text=" · " FontSize="10" Foreground="{StaticResource BrushGoldMuted}" VerticalAlignment="Center" Margin="4,0" />
+                        <TextBlock Text="{Binding BattleStatusText}"
+                                   FontSize="10"
+                                   Foreground="{StaticResource BrushGoldLight}"
+                                   VerticalAlignment="Center" />
                     </StackPanel>
 
                     <Border Grid.Column="1"

@@ -11,11 +11,39 @@ namespace Tianjige.UI.Views;
 public partial class TacticalHudWindow : Window
 {
     private readonly Window? _ownerLauncher;
+    private readonly System.Windows.Threading.DispatcherTimer? _telemetryTimer;
+    private readonly Tianjige.Data.Memory.IMemoryReader? _memoryReader;
 
-    public TacticalHudWindow(Window? ownerLauncher = null)
+    public TacticalHudWindow(Window? ownerLauncher = null, Tianjige.Data.Memory.IMemoryReader? memoryReader = null)
     {
         _ownerLauncher = ownerLauncher;
+        _memoryReader = memoryReader;
+
         InitializeComponent();
+
+        if (memoryReader != null)
+        {
+            DataContext = new MainViewModel(memoryReader: memoryReader);
+        }
+
+        if (DataContext is MainViewModel mainVm)
+        {
+            _telemetryTimer = new System.Windows.Threading.DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(1000)
+            };
+            _telemetryTimer.Tick += (s, e) =>
+            {
+                mainVm.WorldSituationVm.Refresh();
+            };
+            _telemetryTimer.Start();
+        }
+
+        Closed += (s, e) =>
+        {
+            _telemetryTimer?.Stop();
+            _memoryReader?.Dispose();
+        };
     }
 
     /// <summary>

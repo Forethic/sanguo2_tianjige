@@ -1,4 +1,7 @@
 using System.Windows.Input;
+using Tianjige.Core.Services;
+using Tianjige.Data.Memory;
+using Tianjige.Data.Memory.Models;
 using Tianjige.Data.Repositories;
 
 namespace Tianjige.UI.ViewModels;
@@ -6,10 +9,13 @@ namespace Tianjige.UI.ViewModels;
 public class MainViewModel : ViewModelBase
 {
     private readonly StaticRepository _repository;
+    private readonly IMemoryReader _memoryReader;
+    private readonly BattleDebouncer _battleDebouncer = new();
 
     public GeneralStarViewModel GeneralStarVm { get; }
     public TroopCompassViewModel TroopCompassVm { get; }
     public WorldSituationViewModel WorldSituationVm { get; }
+    public BattleDebouncer BattleDebouncer => _battleDebouncer;
 
     private int _selectedTabIndex = 0;
     public int SelectedTabIndex
@@ -44,6 +50,13 @@ public class MainViewModel : ViewModelBase
         set => SetProperty(ref _seasonTitle, value);
     }
 
+    private string _battleStatusText = "大地图进军 · 帷幄筹谋";
+    public string BattleStatusText
+    {
+        get => _battleStatusText;
+        set => SetProperty(ref _battleStatusText, value);
+    }
+
     private string _connectionStatus = "离线大典速查模式 · 气运通泰";
     public string ConnectionStatus
     {
@@ -54,12 +67,16 @@ public class MainViewModel : ViewModelBase
     public ICommand SwitchTabCommand { get; }
     public ICommand ToggleTopmostCommand { get; }
 
-    public MainViewModel(StaticRepository? repository = null)
+    public MainViewModel(StaticRepository? repository = null, IMemoryReader? memoryReader = null)
     {
         _repository = repository ?? new StaticRepository();
+        _memoryReader = memoryReader ?? new MockMemoryReader();
         GeneralStarVm = new GeneralStarViewModel(_repository);
         TroopCompassVm = new TroopCompassViewModel(_repository);
-        WorldSituationVm = new WorldSituationViewModel();
+        WorldSituationVm = new WorldSituationViewModel(_memoryReader);
+
+        WorldSituationVm.SnapshotUpdated += OnSnapshotUpdated;
+        UpdateStatusFromSnapshot(WorldSituationVm.LatestSnapshot);
 
         SwitchTabCommand = new RelayCommand<object>(param =>
         {
@@ -71,5 +88,33 @@ public class MainViewModel : ViewModelBase
         {
             IsTopmost = !IsTopmost;
         });
+    }
+
+    private void OnSnapshotUpdated(GameLiveSnapshot? snapshot)
+    {
+        UpdateStatusFromSnapshot(snapshot);
+    }
+
+    public void UpdateStatusFromSnapshot(GameLiveSnapshot? snapshot)
+    {
+        if (snapshot != null)
+        {
+            SeasonTitle = AncientCalendarService.FormatYearMonth(snapshot.Year, snapshot.Month);
+            _battleDebouncer.Update(snapshot.BattleState, 0, 0);
+            BattleStatusText = _battleDebouncer.StatusText;
+        }
+
+        if (_memoryReader is SafeMemoryReader safeReader)
+        {
+            ConnectionStatus = safeReader.IsAttached
+                ? "☯ 气运连通 · 战局洞若观火"
+                : "○ 闭关静思 · 典籍速查模式";
+        }
+        else
+        {
+            ConnectionStatus = _memoryReader.IsAttached
+                ? "☯ 气运通泰 · 演兵推演中"
+                : "○ 闭关静思 · 典籍速查模式";
+        }
     }
 }

@@ -14,6 +14,8 @@ public class WorldSituationViewModel : ViewModelBase
     public ObservableCollection<LiveGeneralRecord> WanderingGenerals { get; } = new();
     public ObservableCollection<UndergroundItemSpot> UndergroundItems { get; } = new();
 
+    public event Action<GameLiveSnapshot?>? SnapshotUpdated;
+
     private GameLiveSnapshot? _latestSnapshot;
     public GameLiveSnapshot? LatestSnapshot
     {
@@ -90,6 +92,7 @@ public class WorldSituationViewModel : ViewModelBase
         {
             LatestSnapshot = snapshot;
             ApplyFilters();
+            SnapshotUpdated?.Invoke(LatestSnapshot);
         }
     }
 

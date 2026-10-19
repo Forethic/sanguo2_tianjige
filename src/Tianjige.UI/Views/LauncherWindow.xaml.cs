@@ -37,9 +37,12 @@ public partial class LauncherWindow : Window
                 vm.GameDirectory,
                 geometry);
 
+            var memoryReader = new Tianjige.Data.Memory.SafeMemoryReader();
+            memoryReader.TryAttach(process.Id);
+
             // 升起战局参谋 HUD 并吸附至侧边净黑区
             _currentHudWindow?.Close();
-            _currentHudWindow = new TacticalHudWindow(this);
+            _currentHudWindow = new TacticalHudWindow(this, memoryReader);
             _currentHudWindow.ApplyGeometry(geometry);
             _currentHudWindow.Show();
 
