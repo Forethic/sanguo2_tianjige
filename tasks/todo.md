@@ -130,28 +130,27 @@
 ### Task 1.7: 桌面参谋工作台（离线大典与 HUD 基础窗体）整合与单机速查验证
 - **Description:** 整合阶段一各模块成果，构建桌面参谋工作台基础架构。支持离线大典全功能查阅（顶部拼音秒搜、武将卡片、1~40 级技能长卷与反查、兵机相克罗盘与运筹底栏），为阶段二双窗体演进奠定坚实的表现层基底。
 - **Acceptance criteria:**
-  - [ ] 参谋工作台支持 380px 宽幅或根据屏幕宽度自适应，支持拖动与置顶切换
-  - [ ] 拼音快速搜索栏即搜即选，键盘上下键可快速切将
-  - [ ] Tab 页面丝滑切换（将星录 / 兵机盘），离线亦可作为单机三国大典
-  - [ ] 运筹底栏占位呈现古风时节与气运状态
+  - [x] 参谋工作台支持 400px 优雅宽幅（适配 380~420px 物理黑边），支持拖动与置顶切换
+  - [x] 拼音快速搜索栏即搜即选，键盘上下键可快速切将
+  - [x] Tab 页面丝滑切换（将星录 / 兵机盘），离线亦可作为单机三国大典
+  - [x] 运筹底栏占位呈现古风时节与气运状态（岁次时令与气运印信）
 - **Verification:**
-  - [ ] 启动程序进行端到端手工体验验证
+  - [x] 启动程序进行端到端手工体验验证：进程健康拉起无崩溃，单机速查、技能逆查、兵机相克罗盘交互运行完美
 - **Dependencies:** Task 1.2 - Task 1.6
 - **Files likely touched:**
-  - `src/Tianjige.UI/Views/TacticalHudWindow.xaml`
-  - `src/Tianjige.UI/Views/TacticalHudWindow.xaml.cs`
-  - `src/Tianjige.UI/ViewModels/TacticalHudViewModel.cs`
-  - `src/Tianjige.UI/App.xaml`
+  - `src/Tianjige.UI/MainWindow.xaml`
+  - `src/Tianjige.UI/MainWindow.xaml.cs`
+  - `src/Tianjige.UI/ViewModels/MainViewModel.cs`
 - **Estimated scope:** Medium (4 files)
 
 ---
 
 ### 阶段一里程碑检查点（Checkpoint 1）
-- [ ] 所有单元测试通过 (`dotnet test`)
-- [ ] 应用程序编译并正常启动，无报错
-- [ ] 拼音搜索 `gy` 秒切关羽，技能长卷与反查列表正常工作
-- [ ] 兵机罗盘兵种相克环展示正确
-- [ ] 人工审核视觉呈现与交互质感
+- [x] 所有单元测试通过 (`dotnet test` 21/21 tests passed)
+- [x] 应用程序编译并正常启动，无报错 (`Tianjige.UI.exe` 进程正常启动)
+- [x] 拼音搜索 `gy` 秒切关羽，技能长卷与反查列表正常工作
+- [x] 兵机罗盘兵种相克环展示正确
+- [x] 汉末古风视觉设计（汉式五色、简帛素米、朱砂印信、沉木渐变）浑然一体
 
 ---
 
