@@ -140,6 +140,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
                     <!-- 将星录 Tab -->
@@ -152,14 +153,13 @@
                                 <Border x:Name="TabBorder" Background="Transparent">
                                     <Grid>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock Text="★" FontSize="11" Margin="0,0,5,0" x:Name="TabIcon" Foreground="{StaticResource BrushTextMuted}" />
-                                            <TextBlock Text="将星录 · 典籍"
+                                            <TextBlock Text="★" FontSize="11" Margin="0,0,3,0" x:Name="TabIcon" Foreground="{StaticResource BrushTextMuted}" />
+                                            <TextBlock Text="将星录"
                                                        FontFamily="{StaticResource FontLiSu}"
                                                        FontSize="13"
                                                        x:Name="TabText"
                                                        Foreground="{StaticResource BrushTextSecondary}" />
                                         </StackPanel>
-                                        <!-- 底部激活金线 -->
                                         <Border x:Name="ActiveLine"
                                                 Height="2"
                                                 Background="{StaticResource BrushGoldBorder}"
@@ -190,14 +190,13 @@
                                 <Border x:Name="TabBorder" Background="Transparent">
                                     <Grid>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock Text="☯" FontSize="11" Margin="0,0,5,0" x:Name="TabIcon" Foreground="{StaticResource BrushTextMuted}" />
-                                            <TextBlock Text="兵机盘 · 演武"
+                                            <TextBlock Text="☯" FontSize="11" Margin="0,0,3,0" x:Name="TabIcon" Foreground="{StaticResource BrushTextMuted}" />
+                                            <TextBlock Text="兵机盘"
                                                        FontFamily="{StaticResource FontLiSu}"
                                                        FontSize="13"
                                                        x:Name="TabText"
                                                        Foreground="{StaticResource BrushTextSecondary}" />
                                         </StackPanel>
-                                        <!-- 底部激活金线 -->
                                         <Border x:Name="ActiveLine"
                                                 Height="2"
                                                 Background="{StaticResource BrushGoldBorder}"
@@ -207,6 +206,43 @@
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <DataTrigger Binding="{Binding IsTroopCompassSelected}" Value="True">
+                                        <Setter TargetName="TabBorder" Property="Background" Value="#2B231D" />
+                                        <Setter TargetName="TabText" Property="Foreground" Value="{StaticResource BrushGoldLight}" />
+                                        <Setter TargetName="TabText" Property="FontWeight" Value="Bold" />
+                                        <Setter TargetName="TabIcon" Property="Foreground" Value="{StaticResource BrushGoldLight}" />
+                                        <Setter TargetName="ActiveLine" Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <!-- 天下势 Tab -->
+                    <Button Grid.Column="2"
+                            Command="{Binding SwitchTabCommand}"
+                            CommandParameter="2"
+                            Cursor="Hand">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="TabBorder" Background="Transparent">
+                                    <Grid>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <TextBlock Text="🗺" FontSize="11" Margin="0,0,3,0" x:Name="TabIcon" Foreground="{StaticResource BrushTextMuted}" />
+                                            <TextBlock Text="天下势"
+                                                       FontFamily="{StaticResource FontLiSu}"
+                                                       FontSize="13"
+                                                       x:Name="TabText"
+                                                       Foreground="{StaticResource BrushTextSecondary}" />
+                                        </StackPanel>
+                                        <Border x:Name="ActiveLine"
+                                                Height="2"
+                                                Background="{StaticResource BrushGoldBorder}"
+                                                VerticalAlignment="Bottom"
+                                                Visibility="Collapsed" />
+                                    </Grid>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding IsWorldSituationSelected}" Value="True">
                                         <Setter TargetName="TabBorder" Property="Background" Value="#2B231D" />
                                         <Setter TargetName="TabText" Property="Foreground" Value="{StaticResource BrushGoldLight}" />
                                         <Setter TargetName="TabText" Property="FontWeight" Value="Bold" />
@@ -229,6 +265,10 @@
                 <!-- 兵机盘视图 -->
                 <views:TroopCompassView DataContext="{Binding TroopCompassVm}"
                                         Visibility="{Binding DataContext.IsTroopCompassSelected, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+                <!-- 天下势视图 -->
+                <views:WorldSituationView DataContext="{Binding WorldSituationVm}"
+                                          Visibility="{Binding DataContext.IsWorldSituationSelected, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BooleanToVisibilityConverter}}" />
             </Grid>
 
             <!-- 3: 运筹底栏 (岁次时节占位与气运印信) -->

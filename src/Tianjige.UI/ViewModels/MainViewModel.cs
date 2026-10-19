@@ -9,6 +9,7 @@ public class MainViewModel : ViewModelBase
 
     public GeneralStarViewModel GeneralStarVm { get; }
     public TroopCompassViewModel TroopCompassVm { get; }
+    public WorldSituationViewModel WorldSituationVm { get; }
 
     private int _selectedTabIndex = 0;
     public int SelectedTabIndex
@@ -20,12 +21,14 @@ public class MainViewModel : ViewModelBase
             {
                 OnPropertyChanged(nameof(IsGeneralStarSelected));
                 OnPropertyChanged(nameof(IsTroopCompassSelected));
+                OnPropertyChanged(nameof(IsWorldSituationSelected));
             }
         }
     }
 
     public bool IsGeneralStarSelected => SelectedTabIndex == 0;
     public bool IsTroopCompassSelected => SelectedTabIndex == 1;
+    public bool IsWorldSituationSelected => SelectedTabIndex == 2;
 
     private bool _isTopmost = true;
     public bool IsTopmost
@@ -56,6 +59,7 @@ public class MainViewModel : ViewModelBase
         _repository = repository ?? new StaticRepository();
         GeneralStarVm = new GeneralStarViewModel(_repository);
         TroopCompassVm = new TroopCompassViewModel(_repository);
+        WorldSituationVm = new WorldSituationViewModel();
 
         SwitchTabCommand = new RelayCommand<object>(param =>
         {

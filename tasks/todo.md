@@ -219,32 +219,58 @@
 ### Task 3.1: x86 `SafeMemoryReader` 核心引擎
 - **Description:** 实现基于 Win32 `OpenProcess(PROCESS_VM_READ)` 的纯只读安全内存采集器，定位 Sango2 武将数组（400 将）与城池数组（60 城）基址，提供 500ms 级别的毫秒级低负载快照。
 - **Acceptance criteria:**
-  - [ ] 纯只读访问，零内存写入，即使读取失败也优雅回退，绝不导致 Sango2 崩溃
-  - [ ] 能够稳定解析当前武将实时 HP/MP、忠诚度、所在城池与出仕状态
+  - [x] 纯只读访问，零内存写入，即使读取失败也优雅回退，绝不导致 Sango2 崩溃
+  - [x] 能够稳定解析当前武将实时 HP/MP、忠诚度、所在城池与出仕状态
+  - [x] `AobPatternMatcher` 支持 AOB 通配特征码搜索定位
+- **Verification:**
+  - [x] 单元测试覆盖：`MemoryStructTests` 验证结构体大小与偏移对齐、AOB 匹配、快照生成 (43 tests total)
 - **Dependencies:** Checkpoint 2
+- **Files likely touched:**
+  - `src/Tianjige.Core/Native/NativeMethods.cs`
+  - `src/Tianjige.Data/Memory/Models/MemoryModels.cs`
+  - `src/Tianjige.Data/Memory/AobPatternMatcher.cs`
+  - `src/Tianjige.Data/Memory/IMemoryReader.cs`
+  - `src/Tianjige.Data/Memory/SafeMemoryReader.cs`
+  - `src/Tianjige.Data/Memory/MockMemoryReader.cs`
 - **Estimated scope:** Medium (4-5 files)
 
 ### Task 3.2: 【天下势】割据版图、实时城池虚实穿透与诸侯忠诚度降序雷达
 - **Description:** 根据实时内存数据聚合全图诸侯领地、城内驻防武将与预备兵精确数字，支持按阵营查看武将实时忠诚度倒序排列。
 - **Acceptance criteria:**
-  - [ ] 实时穿透城内预备兵数，哪座是重兵城哪座是空虚城一览无余
-  - [ ] 实时忠诚度降序，及时发现可招募/离间目标
+  - [x] 实时穿透城内预备兵数，哪座是重兵城哪座是空虚城一览无余
+  - [x] 实时忠诚度降序，及时发现可招募/离间目标
+- **Verification:**
+  - [x] 单元测试覆盖：`WorldSituationTests` 验证预备兵城池聚合与忠诚度升序排序
 - **Dependencies:** Task 3.1
+- **Files likely touched:**
+  - `src/Tianjige.UI/ViewModels/WorldSituationViewModel.cs`
+  - `src/Tianjige.UI/Views/WorldSituationView.xaml`
+  - `src/Tianjige.UI/Views/WorldSituationView.xaml.cs`
 - **Estimated scope:** Medium (3-4 files)
 
 ### Task 3.3: 【天下势】实时在野寻贤、登场倒计时、逃将流动监控与英雄冢
 - **Description:** 实时过滤 `Status == 2`（在野）与 `Status == 3`（阵亡），并追踪残血逃窜将领逃往的邻近城池与当前忠诚。
 - **Acceptance criteria:**
-  - [ ] 逃将实时追踪：战后释放或溃败的武将实时出现在雷达中
-  - [ ] 在野名士城池精准定位
+  - [x] 逃将实时追踪：战后释放或溃败的武将实时出现在雷达中
+  - [x] 在野名士城池精准定位与能力排序
+- **Verification:**
+  - [x] `WorldSituationTests` 验证流浪/在野将领准确筛选
 - **Dependencies:** Task 3.1
+- **Files likely touched:**
+  - `src/Tianjige.Data/Memory/Models/MemoryModels.cs`
+  - `src/Tianjige.UI/Views/WorldSituationView.xaml`
 - **Estimated scope:** Medium (3-4 files)
 
 ### Task 3.4: 【天工坊】实时地脉勘宝与名器持有者透视
 - **Description:** 穿透全图未被搜寻的神兵宝书在地底的埋藏城池分布，盘点全图已出世宝物的具体持有武将。
 - **Acceptance criteria:**
-  - [ ] 清晰展示赤兔马、方天画戟、青囊书等当前在哪个城的地底未被搜出
+  - [x] 清晰展示赤兔马、方天画戟、青囊书等当前在哪个城的地底未被搜出
+- **Verification:**
+  - [x] 单元测试 `Snapshot_UndergroundItems_FoundAccurately` 验证地脉宝物关联城池正确
 - **Dependencies:** Task 3.1
+- **Files likely touched:**
+  - `src/Tianjige.Data/Memory/Models/MemoryModels.cs`
+  - `src/Tianjige.UI/Views/WorldSituationView.xaml`
 - **Estimated scope:** Small (3 files)
 
 ---

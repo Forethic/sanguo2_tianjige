@@ -1,0 +1,321 @@
+<UserControl x:Class="Tianjige.UI.Views.WorldSituationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:Tianjige.UI.ViewModels"
+             xmlns:models="clr-namespace:Tianjige.Data.Memory.Models;assembly=Tianjige.Data"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=vm:WorldSituationViewModel}"
+             Background="{StaticResource BrushBgDarkWood}">
+
+    <Grid Margin="10,8,10,10">
+        <Grid.RowDefinitions>
+            <!-- 0: 诸侯阵营过滤栏 -->
+            <RowDefinition Height="Auto" />
+            <!-- 1: 穿透子模块切换栏 -->
+            <RowDefinition Height="Auto" />
+            <!-- 2: 动态列表内容区 -->
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- 0: 诸侯阵营筛选栏 -->
+        <Border Grid.Row="0" Margin="0,0,0,8">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                <ItemsControl ItemsSource="{Binding LordFilters}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Command="{Binding DataContext.SelectLordFilterCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding}"
+                                    Content="{Binding}"
+                                    Margin="0,0,6,0"
+                                    Padding="10,3"
+                                    FontSize="11"
+                                    Style="{StaticResource StyleAncientButton}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+
+        <!-- 1: 子功能导航栏 (城池 / 忠诚 / 逃将 / 地脉) -->
+        <Border Grid.Row="1"
+                Background="#1B1612"
+                BorderBrush="{StaticResource BrushGoldMuted}"
+                BorderThickness="1"
+                CornerRadius="4"
+                Margin="0,0,0,10"
+                Padding="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" Command="{Binding SwitchSubSectionCommand}" CommandParameter="0" Content="🏰 城池虚实" Style="{StaticResource StyleAncientButton}" Padding="4,4" FontSize="10" />
+                <Button Grid.Column="1" Command="{Binding SwitchSubSectionCommand}" CommandParameter="1" Content="🎯 忠诚雷达" Style="{StaticResource StyleAncientButton}" Padding="4,4" FontSize="10" />
+                <Button Grid.Column="2" Command="{Binding SwitchSubSectionCommand}" CommandParameter="2" Content="🍃 逃将在野" Style="{StaticResource StyleAncientButton}" Padding="4,4" FontSize="10" />
+                <Button Grid.Column="3" Command="{Binding SwitchSubSectionCommand}" CommandParameter="3" Content="💎 地脉宝物" Style="{StaticResource StyleAncientButton}" Padding="4,4" FontSize="10" />
+            </Grid>
+        </Border>
+
+        <!-- 2: 动态列表内容区 -->
+        <Grid Grid.Row="2">
+
+            <!-- A: 城池虚实穿透 (预备兵降序) -->
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          Visibility="{Binding IsCitiesSectionSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <ItemsControl ItemsSource="{Binding FilteredCities}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type models:LiveCityRecord}">
+                            <Border Background="{StaticResource BrushBgCard}"
+                                    BorderBrush="{StaticResource BrushGoldMuted}"
+                                    BorderThickness="1"
+                                    CornerRadius="4"
+                                    Padding="10,8"
+                                    Margin="0,0,0,8">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- 城名 + 占领诸侯 -->
+                                    <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Name}"
+                                                   FontFamily="{StaticResource FontLiSu}"
+                                                   FontSize="15"
+                                                   FontWeight="Bold"
+                                                   Foreground="{StaticResource BrushGoldLight}" />
+                                        <Border Background="#2A2118"
+                                                BorderBrush="{StaticResource BrushGoldMuted}"
+                                                BorderThickness="1"
+                                                CornerRadius="2"
+                                                Padding="4,1"
+                                                Margin="8,0,0,0"
+                                                VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding LordName, StringFormat='主: {0}'}"
+                                                       FontSize="9"
+                                                       Foreground="{StaticResource BrushTextSecondary}" />
+                                        </Border>
+                                    </StackPanel>
+
+                                    <!-- 预备兵关键客观穿透数值 -->
+                                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                        <TextBlock Text="预备兵: " FontSize="10" Foreground="{StaticResource BrushTextMuted}" />
+                                        <TextBlock Text="{Binding ReserveTroops}"
+                                                   FontSize="14"
+                                                   FontWeight="Bold"
+                                                   Foreground="{StaticResource BrushGoldLight}" />
+                                    </StackPanel>
+
+                                    <!-- 第二行: 城防与驻将 -->
+                                    <DockPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="0,4,0,0">
+                                        <TextBlock Text="{Binding Defense, StringFormat='城防度: {0}'}"
+                                                   FontSize="10"
+                                                   Foreground="{StaticResource BrushTextMuted}" />
+                                        <TextBlock Text="{Binding GeneralCount, StringFormat='驻守将领: {0} 员'}"
+                                                   FontSize="10"
+                                                   Foreground="{StaticResource BrushTextSecondary}"
+                                                   Margin="14,0,0,0" />
+                                        <TextBlock Text="{Binding UndergroundItemName, StringFormat='地脉: {0}'}"
+                                                   FontSize="9"
+                                                   Foreground="{StaticResource BrushJadeActive}"
+                                                   DockPanel.Dock="Right"
+                                                   Visibility="{Binding UndergroundItemId, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                    </DockPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <!-- B: 忠诚度雷达 (低忠诚升序，动摇将领) -->
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          Visibility="{Binding IsLoyaltySectionSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <ItemsControl ItemsSource="{Binding LowLoyaltyGenerals}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type models:LiveGeneralRecord}">
+                            <Border Background="{StaticResource BrushBgCard}"
+                                    BorderBrush="{StaticResource BrushGoldMuted}"
+                                    BorderThickness="1"
+                                    CornerRadius="4"
+                                    Padding="10,6"
+                                    Margin="0,0,0,6">
+                                <DockPanel>
+                                    <!-- 忠诚度预警印泥角标 -->
+                                    <Border Background="{StaticResource BrushCinnabarDark}"
+                                            CornerRadius="3"
+                                            Padding="6,2"
+                                            Margin="0,0,10,0"
+                                            VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Loyalty, StringFormat='忠 {0}'}"
+                                                   FontSize="11"
+                                                   FontWeight="Bold"
+                                                   Foreground="#FFFFFF" />
+                                    </Border>
+
+                                    <!-- 武将名与所属 -->
+                                    <StackPanel VerticalAlignment="Center" Width="85">
+                                        <TextBlock Text="{Binding Name}"
+                                                   FontFamily="{StaticResource FontLiSu}"
+                                                   FontSize="14"
+                                                   FontWeight="Bold"
+                                                   Foreground="{StaticResource BrushTextPrimary}" />
+                                        <TextBlock Text="{Binding LordName, StringFormat='效忠: {0}'}"
+                                                   FontSize="9"
+                                                   Foreground="{StaticResource BrushTextMuted}" />
+                                    </StackPanel>
+
+                                    <!-- 属性 -->
+                                    <StackPanel VerticalAlignment="Center" Margin="6,0,0,0">
+                                        <TextBlock Text="{Binding Force, StringFormat='武力 {0}'}" FontSize="10" Foreground="#E68A7E" />
+                                        <TextBlock Text="{Binding Intellect, StringFormat='智力 {0}'}" FontSize="10" Foreground="#8EC0E4" />
+                                    </StackPanel>
+
+                                    <!-- 所在城池 -->
+                                    <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                        <TextBlock Text="{Binding CityName}"
+                                                   FontSize="11"
+                                                   Foreground="{StaticResource BrushGoldLight}"
+                                                   HorizontalAlignment="Right" />
+                                        <TextBlock Text="动摇可谋"
+                                                   FontSize="9"
+                                                   Foreground="{StaticResource BrushCinnabarLight}"
+                                                   HorizontalAlignment="Right" />
+                                    </StackPanel>
+                                </DockPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <!-- C: 在野寻贤与逃将流动 -->
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          Visibility="{Binding IsWanderingSectionSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <ItemsControl ItemsSource="{Binding WanderingGenerals}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type models:LiveGeneralRecord}">
+                            <Border Background="{StaticResource BrushBgCard}"
+                                    BorderBrush="{StaticResource BrushGoldMuted}"
+                                    BorderThickness="1"
+                                    CornerRadius="4"
+                                    Padding="10,6"
+                                    Margin="0,0,0,6">
+                                <DockPanel>
+                                    <!-- 状态标签 (在野 vs 流浪逃窜) -->
+                                    <Border Background="#2F251C"
+                                            BorderBrush="{StaticResource BrushGoldMuted}"
+                                            BorderThickness="1"
+                                            CornerRadius="3"
+                                            Padding="6,2"
+                                            Margin="0,0,10,0"
+                                            VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Status}"
+                                                   FontSize="10"
+                                                   Foreground="{StaticResource BrushGoldLight}" />
+                                    </Border>
+
+                                    <StackPanel VerticalAlignment="Center" Width="85">
+                                        <TextBlock Text="{Binding Name}"
+                                                   FontFamily="{StaticResource FontLiSu}"
+                                                   FontSize="14"
+                                                   FontWeight="Bold"
+                                                   Foreground="{StaticResource BrushTextPrimary}" />
+                                        <TextBlock Text="{Binding Level, StringFormat='等级: {0}'}"
+                                                   FontSize="9"
+                                                   Foreground="{StaticResource BrushTextMuted}" />
+                                    </StackPanel>
+
+                                    <StackPanel VerticalAlignment="Center" Margin="6,0,0,0">
+                                        <TextBlock Text="{Binding Force, StringFormat='武 {0}'}" FontSize="10" Foreground="#E68A7E" />
+                                        <TextBlock Text="{Binding Intellect, StringFormat='智 {0}'}" FontSize="10" Foreground="#8EC0E4" />
+                                    </StackPanel>
+
+                                    <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                        <TextBlock Text="{Binding CityName, StringFormat='出没: {0}'}"
+                                                   FontSize="11"
+                                                   Foreground="{StaticResource BrushGoldLight}"
+                                                   HorizontalAlignment="Right" />
+                                        <TextBlock Text="{Binding CurrentHp, StringFormat='残血: {0} HP'}"
+                                                   FontSize="9"
+                                                   Foreground="{StaticResource BrushTextMuted}"
+                                                   HorizontalAlignment="Right" />
+                                    </StackPanel>
+                                </DockPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <!-- D: 地脉宝物勘察 -->
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          Visibility="{Binding IsArtifactSectionSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <ItemsControl ItemsSource="{Binding UndergroundItems}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type models:UndergroundItemSpot}">
+                            <Border Background="{StaticResource BrushBgCard}"
+                                    BorderBrush="{StaticResource BrushGoldBorder}"
+                                    BorderThickness="1"
+                                    CornerRadius="4"
+                                    Padding="10,8"
+                                    Margin="0,0,0,8">
+                                <DockPanel>
+                                    <!-- 宝物图标标记 -->
+                                    <Border Background="#3B2E1C"
+                                            BorderBrush="{StaticResource BrushGoldBorder}"
+                                            BorderThickness="1"
+                                            CornerRadius="3"
+                                            Padding="6,3"
+                                            Margin="0,0,10,0"
+                                            VerticalAlignment="Center">
+                                        <TextBlock Text="神兵" FontSize="10" Foreground="{StaticResource BrushGoldLight}" />
+                                    </Border>
+
+                                    <StackPanel VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding ItemName}"
+                                                   FontFamily="{StaticResource FontLiSu}"
+                                                   FontSize="15"
+                                                   FontWeight="Bold"
+                                                   Foreground="{StaticResource BrushGoldLight}" />
+                                        <TextBlock Text="{Binding Description}"
+                                                   FontSize="10"
+                                                   Foreground="{StaticResource BrushTextSecondary}" />
+                                    </StackPanel>
+
+                                    <!-- 埋藏城池 -->
+                                    <Border DockPanel.Dock="Right"
+                                            Background="#1E2A1E"
+                                            BorderBrush="{StaticResource BrushJadeActive}"
+                                            BorderThickness="1"
+                                            CornerRadius="3"
+                                            Padding="8,3"
+                                            VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding CityName, StringFormat='地处【{0}】'}"
+                                                   FontSize="11"
+                                                   Foreground="{StaticResource BrushJadeActive}" />
+                                    </Border>
+                                </DockPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+        </Grid>
+    </Grid>
+</UserControl>
