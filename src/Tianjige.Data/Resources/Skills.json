@@ -75,7 +75,7 @@
     "id": 9,
     "name": "八门金锁",
     "category": 2,
-    "mpCost": 30,
+    "mpCost": 0,
     "tag": "军师控场",
     "damageDetail": "定身控制: 敌全军锁死 8 秒",
     "description": "顶级军师控场技！战阵开门瞬间锁定敌全军，使其陷入金锁阵无法行动数秒，任由我方宰割。"
@@ -84,7 +84,7 @@
     "id": 10,
     "name": "金蝉脱壳",
     "category": 2,
-    "mpCost": 25,
+    "mpCost": 0,
     "tag": "军师退却",
     "damageDetail": "撤退脱离率: 100% (绝不被俘)",
     "description": "危急时刻幻化脱身，战场撤退成功率提升为100%，绝不被俘虏斩首。"
@@ -93,7 +93,7 @@
     "id": 11,
     "name": "增加体力高",
     "category": 2,
-    "mpCost": 40,
+    "mpCost": 0,
     "tag": "军师体魄",
     "damageDetail": "入场体力上限: +50 点以上",
     "description": "交战前以军师符咒强健我将气血，入场瞬间体力上限暴涨 50 点以上。"
@@ -102,7 +102,7 @@
     "id": 12,
     "name": "恢复技力高",
     "category": 2,
-    "mpCost": 40,
+    "mpCost": 0,
     "tag": "军师续航",
     "damageDetail": "法力极速回流，可连发大招",
     "description": "战场期间技力自动高速回升，提供源源不断的法力支持，连环释放大招。"
@@ -111,7 +111,7 @@
     "id": 13,
     "name": "化解计策",
     "category": 2,
-    "mpCost": 28,
+    "mpCost": 0,
     "tag": "军师反制",
     "damageDetail": "极高概率彻底识破并抵消敌军师计",
     "description": "识破敌方军师机谋，有极高概率使敌方军师技彻底失效。"
@@ -120,7 +120,7 @@
     "id": 14,
     "name": "封武将技",
     "category": 2,
-    "mpCost": 35,
+    "mpCost": 0,
     "tag": "军师沉默",
     "damageDetail": "全场沉默: 敌将武将技彻底禁用",
     "description": "封闭敌将泥丸宫，使敌方猛将在整场战斗中彻底无法释放任何武将技。"
@@ -129,7 +129,7 @@
     "id": 15,
     "name": "强化士兵高",
     "category": 2,
-    "mpCost": 32,
+    "mpCost": 0,
     "tag": "军师军威",
     "damageDetail": "士兵攻防 +50% | 士气锁定高昂",
     "description": "战前鼓舞士气，大幅强化我军全体士兵攻防属性与士气抗打击力。"
@@ -138,7 +138,7 @@
     "id": 16,
     "name": "离间计高",
     "category": 2,
-    "mpCost": 24,
+    "mpCost": 0,
     "tag": "军师离间",
     "damageDetail": "战后俘虏敌将忠诚 -25~35",
     "description": "战前挑拨离间敌将与君主关系，战后若败，该将忠诚度暴跌，极易招降。"
@@ -174,7 +174,7 @@
     "id": 20,
     "name": "增加体力中",
     "category": 2,
-    "mpCost": 28,
+    "mpCost": 0,
     "tag": "军师体魄",
     "damageDetail": "入场体力上限: +30 点",
     "description": "以军师符咒提升主将体力上限30点。"

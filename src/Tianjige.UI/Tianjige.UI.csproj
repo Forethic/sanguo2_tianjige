@@ -21,4 +21,8 @@
     <Resource Include="Resources\app_icon.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\..\data\**" CopyToOutputDirectory="PreserveNewest" Link="data\%(RecursiveDir)%(FileName)%(Extension)" />
+  </ItemGroup>
+
 </Project>

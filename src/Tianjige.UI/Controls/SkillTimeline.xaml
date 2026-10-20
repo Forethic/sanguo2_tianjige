@@ -118,13 +118,23 @@
                                     </Button.Template>
                                 </Button>
 
-                                <!-- 技力消耗 -->
+                                <!-- 技力消耗 (仅武将技战场对决消耗技力，军师技为战前策谋无技力消耗) -->
                                 <TextBlock DockPanel.Dock="Right"
                                            Text="{Binding MpCost, StringFormat='技力: {0}'}"
                                            FontFamily="{StaticResource FontReading}"
                                            FontSize="11.5"
                                            Foreground="{StaticResource BrushTextSecondary}"
-                                           VerticalAlignment="Center" />
+                                           VerticalAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Category}" Value="{x:Static models:SkillCategory.Military}">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                             </DockPanel>
 
                             <!-- 第二行：伤害/效果硬核数值标签 (清晰突出显示) -->

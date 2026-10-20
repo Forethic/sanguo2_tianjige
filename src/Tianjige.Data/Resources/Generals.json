@@ -4,6 +4,7 @@
     "name": "关羽",
     "pinyinIndex": "gy",
     "sealTier": "无双",
+    "avatar": "avatars/guanyu.png",
     "baseForce": 98,
     "baseIntellect": 84,
     "comment": "武圣关云长，攻守兼备，前中期飞刀旋灯，终极大招神火怒张与狂雷。",
@@ -11,18 +12,18 @@
     "unlockTroop": "铁骑兵",
     "skillTree": [
       { "level": 1, "skillName": "半月斩", "category": 1, "mpCost": 15, "damageDetail": "对将伤害: 12点 | 清兵前排 5~8 人", "description": "挥舞青龙偃月刀斩出一道半月斗气，贯穿前排步卒并重劈敌将。" },
-      { "level": 1, "skillName": "离间计(初)", "category": 2, "mpCost": 12, "damageDetail": "战后俘虏敌将忠诚 -10~15", "description": "战前挑拨离间敌将与君主关系，战后若败极易招降归附。" },
+      { "level": 1, "skillName": "离间计(初)", "category": 2, "mpCost": 0, "damageDetail": "战后俘虏敌将忠诚 -10~15", "description": "战前挑拨离间敌将与君主关系，战后若败极易招降归附。" },
       { "level": 7, "skillName": "回天术", "category": 1, "mpCost": 23, "damageDetail": "自身体力回复: 25 点", "description": "调理内息回补自身体力25点，单挑续航核心手段。" },
-      { "level": 8, "skillName": "恢复体力(初)", "category": 2, "mpCost": 18, "damageDetail": "战场持续缓慢自愈: 约 15~20 点", "description": "战前以符咒祝祷，主将在交战期间体力缓缓回升。" },
+      { "level": 8, "skillName": "恢复体力(初)", "category": 2, "mpCost": 0, "damageDetail": "战场持续缓慢自愈: 约 15~20 点", "description": "战前以符咒祝祷，主将在交战期间体力缓缓回升。" },
       { "level": 13, "skillName": "烈火旋灯", "category": 1, "mpCost": 33, "damageDetail": "近战清兵极强 | 擦碰敌将约 20 点", "description": "周身三团烈火旋灯环绕，凡近身小兵瞬间秒杀，单挑亦可近身灼伤敌将。" },
-      { "level": 15, "skillName": "增加体力(中)", "category": 2, "mpCost": 28, "damageDetail": "入场体力上限: +30 点", "description": "交战前以军师秘法提升主将体力上限30点，大幅提升抗压能力。" },
+      { "level": 15, "skillName": "增加体力(中)", "category": 2, "mpCost": 0, "damageDetail": "入场体力上限: +30 点", "description": "交战前以军师秘法提升主将体力上限30点，大幅提升抗压能力。" },
       { "level": 20, "skillName": "升龙阵", "category": 1, "mpCost": 26, "damageDetail": "对将伤害: 22 点 | 击溃步卒 12 人", "description": "从地底召引金龙斗气冲天而起，破杀敌军阵脚。" },
-      { "level": 22, "skillName": "劝降", "category": 2, "mpCost": 22, "damageDetail": "敌将忠诚低时投诚率大幅上升", "description": "战前向敌将宣明大义，瓦解敌军主将战意。" },
+      { "level": 22, "skillName": "劝降", "category": 2, "mpCost": 0, "damageDetail": "敌将忠诚低时投诚率大幅上升", "description": "战前向敌将宣明大义，瓦解敌军主将战意。" },
       { "level": 26, "skillName": "神剑闪华", "category": 1, "mpCost": 38, "damageDetail": "对将伤害: 25~30 点 | 清兵 20+ 人", "description": "召唤巨灵飞剑贯穿敌方全阵线，对敌将造成重创。" },
-      { "level": 28, "skillName": "恢复技力(中)", "category": 2, "mpCost": 30, "damageDetail": "技力快速回复: 约 30 点", "description": "战前布置聚灵阵，战场中技力高速回流支持连续放大招。" },
+      { "level": 28, "skillName": "恢复技力(中)", "category": 2, "mpCost": 0, "damageDetail": "技力快速回复: 约 30 点", "description": "战前布置聚灵阵，战场中技力高速回流支持连续放大招。" },
       { "level": 33, "skillName": "神火怒张", "category": 1, "mpCost": 35, "damageDetail": "全屏清兵: 35~50 人 | 擦将约 15 点", "description": "天降数百团烈火覆盖战场，全屏烈焰席卷清空密集兵阵。" },
       { "level": 35, "skillName": "狂雷天牢", "category": 1, "mpCost": 42, "damageDetail": "对将伤害: 42 点 | 附带致盲强控", "description": "召引九天神雷轰顶封杀敌将，造成毁灭性单挑重创。" },
-      { "level": 38, "skillName": "强化士兵(高)", "category": 2, "mpCost": 32, "damageDetail": "士兵攻防 +50% | 士气高昂锁定", "description": "战前犒赏三军，士兵攻防属性大幅飞升，碾压普通兵阵。" },
+      { "level": 38, "skillName": "强化士兵(高)", "category": 2, "mpCost": 0, "damageDetail": "士兵攻防 +50% | 士气高昂锁定", "description": "战前犒赏三军，士兵攻防属性大幅飞升，碾压普通兵阵。" },
       { "level": 40, "skillName": "鬼哭神号", "category": 1, "mpCost": 50, "damageDetail": "对将毁灭伤害: 65~75 点 | 全屏清空", "description": "群英2最强终极武将技！神鬼乱舞+狂雷天牢+飞矢烈震+火牛烈崩四合一。" }
     ]
   },
@@ -31,6 +32,7 @@
     "name": "太史慈",
     "pinyinIndex": "tsc",
     "sealTier": "无双",
+    "avatar": "avatars/taishici.png",
     "baseForce": 97,
     "baseIntellect": 70,
     "comment": "前中期单挑自愈神将，40级终极【鬼哭神号】，江东第一箭手。",
@@ -38,15 +40,15 @@
     "unlockTroop": "铁骑兵",
     "skillTree": [
       { "level": 1, "skillName": "落日弓", "category": 1, "mpCost": 18, "damageDetail": "对将伤害: 15 点 (必中狙杀)", "description": "挽硬弓射出流星光矢，直取敌将咽喉，中距离高性价比暗箭狙杀。" },
-      { "level": 1, "skillName": "强化士兵(初)", "category": 2, "mpCost": 15, "damageDetail": "全军士兵攻防 +15%", "description": "战前鼓舞士气，小幅提升士兵攻防能力。" },
+      { "level": 1, "skillName": "强化士兵(初)", "category": 2, "mpCost": 0, "damageDetail": "全军士兵攻防 +15%", "description": "战前鼓舞士气，小幅提升士兵攻防能力。" },
       { "level": 8, "skillName": "连弩", "category": 1, "mpCost": 19, "damageDetail": "对将伤害: 每支 2 点 (全中 22 点) | 发射 5 支飞弩", "description": "连续射出5支强劲飞弩，贯穿直线敌兵，全中敌将造成高达22点伤害。" },
-      { "level": 9, "skillName": "恢复体力(初)", "category": 2, "mpCost": 18, "damageDetail": "战场持续回血: 约 15~20 点", "description": "主将体力持续缓慢自愈，单挑续航极佳。" },
+      { "level": 9, "skillName": "恢复体力(初)", "category": 2, "mpCost": 0, "damageDetail": "战场持续回血: 约 15~20 点", "description": "主将体力持续缓慢自愈，单挑续航极佳。" },
       { "level": 14, "skillName": "烈火旋灯", "category": 1, "mpCost": 33, "damageDetail": "近战清兵极强 | 擦碰敌将约 20 点", "description": "三团烈火护体高速旋转，冲入敌军步卒如割草。" },
-      { "level": 18, "skillName": "增加体力(中)", "category": 2, "mpCost": 28, "damageDetail": "入场体力上限: +30 点", "description": "入场主将体力上限提升30点。" },
+      { "level": 18, "skillName": "增加体力(中)", "category": 2, "mpCost": 0, "damageDetail": "入场体力上限: +30 点", "description": "入场主将体力上限提升30点。" },
       { "level": 22, "skillName": "神鬼乱舞", "category": 1, "mpCost": 40, "damageDetail": "对将单挑爆发: 45~50 点", "description": "近身极速狂暴连续挥砍，瞬间蒸发敌将大量血槽。" },
-      { "level": 26, "skillName": "恢复技力(中)", "category": 2, "mpCost": 30, "damageDetail": "技力快速回复: 约 30 点", "description": "战前布设法阵，战场中技力快速回升。" },
+      { "level": 26, "skillName": "恢复技力(中)", "category": 2, "mpCost": 0, "damageDetail": "技力快速回复: 约 30 点", "description": "战前布设法阵，战场中技力快速回升。" },
       { "level": 30, "skillName": "连弩狂涛", "category": 1, "mpCost": 32, "damageDetail": "对将伤害: 35 点 | 漫天弩箭击杀 20+ 人", "description": "漫天狂暴连弩箭雨齐发，重创敌将并荡平敌兵。" },
-      { "level": 34, "skillName": "封武将技", "category": 2, "mpCost": 35, "damageDetail": "全场沉默: 敌将技能彻底禁用", "description": "封印敌方技能，使其只能白刃肉搏。" },
+      { "level": 34, "skillName": "封武将技", "category": 2, "mpCost": 0, "damageDetail": "全场沉默: 敌将技能彻底禁用", "description": "封印敌方技能，使其只能白刃肉搏。" },
       { "level": 40, "skillName": "鬼哭神号", "category": 1, "mpCost": 50, "damageDetail": "对将毁灭伤害: 65~75 点 | 全屏清空", "description": "群英2终极武将技！狂雷天牢+神鬼乱舞全屏齐发。" }
     ]
   },
@@ -55,6 +57,7 @@
     "name": "诸葛亮",
     "pinyinIndex": "zgl",
     "sealTier": "谋主",
+    "avatar": "avatars/zhugeliang.png",
     "baseForce": 55,
     "baseIntellect": 100,
     "comment": "卧龙诸葛武侯，天下第一军师！八门金锁、增加体力高、金蝉脱壳全能控场。",
@@ -62,15 +65,15 @@
     "unlockTroop": "藤甲兵",
     "skillTree": [
       { "level": 1, "skillName": "木轮攻", "category": 1, "mpCost": 15, "damageDetail": "击杀直线士兵 8~12 人 | 撞将 10 点", "description": "推出巨型带刺滚轮贯穿战场，碾压敌军直线步卒。" },
-      { "level": 1, "skillName": "化解计策", "category": 2, "mpCost": 20, "damageDetail": "极高概率彻底识破并抵消敌军师计", "description": "识破敌方军师谋略，使其开局计谋失效。" },
-      { "level": 6, "skillName": "八门金锁", "category": 2, "mpCost": 30, "damageDetail": "定身控制: 敌全军锁死 8 秒", "description": "顶级军师控场技！定身锁死敌全军8秒，无法攻击与移动，任由宰割。" },
+      { "level": 1, "skillName": "化解计策", "category": 2, "mpCost": 0, "damageDetail": "极高概率彻底识破并抵消敌军师计", "description": "识破敌方军师谋略，使其开局计谋失效。" },
+      { "level": 6, "skillName": "八门金锁", "category": 2, "mpCost": 0, "damageDetail": "定身控制: 敌全军锁死 8 秒", "description": "顶级军师控场技！定身锁死敌全军8秒，无法攻击与移动，任由宰割。" },
       { "level": 7, "skillName": "雷击", "category": 1, "mpCost": 16, "damageDetail": "对将伤害: 14 点 (附带硬直)", "description": "落下一道天雷直劈敌将天灵盖。" },
-      { "level": 11, "skillName": "增加体力(中)", "category": 2, "mpCost": 28, "damageDetail": "入场体力上限: +30 点", "description": "提升主将体力上限30点。" },
+      { "level": 11, "skillName": "增加体力(中)", "category": 2, "mpCost": 0, "damageDetail": "入场体力上限: +30 点", "description": "提升主将体力上限30点。" },
       { "level": 13, "skillName": "雷光焦狱", "category": 1, "mpCost": 34, "damageDetail": "密集落雷清兵 25+ 人 | 劈将 22 点", "description": "大范围连环雷电轰击敌方全阵线，重创小兵。" },
-      { "level": 17, "skillName": "恢复技力(高)", "category": 2, "mpCost": 40, "damageDetail": "法力极速回流，可连发大招", "description": "法力源源不断自动极速回升，提供无限技能续航。" },
-      { "level": 24, "skillName": "增加体力(高)", "category": 2, "mpCost": 40, "damageDetail": "入场体力上限: +50 点以上", "description": "入场主将体力上限暴涨50点以上，肉度翻倍。" },
+      { "level": 17, "skillName": "恢复技力(高)", "category": 2, "mpCost": 0, "damageDetail": "法力极速回流，可连发大招", "description": "法力源源不断自动极速回升，提供无限技能续航。" },
+      { "level": 24, "skillName": "增加体力(高)", "category": 2, "mpCost": 0, "damageDetail": "入场体力上限: +50 点以上", "description": "入场主将体力上限暴涨50点以上，肉度翻倍。" },
       { "level": 27, "skillName": "地雷震", "category": 1, "mpCost": 30, "damageDetail": "地底爆破清兵 20 人 | 震伤 18 点", "description": "引爆敌军脚下地脉灵火，炸飞密集步卒。" },
-      { "level": 32, "skillName": "封武将技", "category": 2, "mpCost": 35, "damageDetail": "全场沉默: 敌将技能彻底禁用", "description": "封印敌方将领技能，使其无法施法。" },
+      { "level": 32, "skillName": "封武将技", "category": 2, "mpCost": 0, "damageDetail": "全场沉默: 敌将技能彻底禁用", "description": "封印敌方将领技能，使其无法施法。" },
       { "level": 34, "skillName": "神剑闪华", "category": 1, "mpCost": 38, "damageDetail": "对将伤害: 25~30 点 | 清兵 20+ 人", "description": "召唤灵剑贯穿敌阵。" },
       { "level": 40, "skillName": "狂雷天牢", "category": 1, "mpCost": 42, "damageDetail": "对将单挑毁灭: 42 点伤害+禁锢", "description": "九天神雷化为天牢轰杀敌将。" }
     ]
@@ -80,6 +83,7 @@
     "name": "吕布",
     "pinyinIndex": "lb",
     "sealTier": "无双",
+    "avatar": "avatars/lvbu.png",
     "baseForce": 100,
     "baseIntellect": 42,
     "comment": "人中吕布，天下无敌！初始武力100满值，鬼哭神号与神鬼乱舞所向披靡。",
@@ -87,9 +91,9 @@
     "unlockTroop": "铁骑兵",
     "skillTree": [
       { "level": 1, "skillName": "半月斩", "category": 1, "mpCost": 15, "damageDetail": "对将伤害: 12点 | 清兵前排 5~8 人", "description": "方天画戟横斩出金色半月气刃直破敌阵。" },
-      { "level": 1, "skillName": "诈败", "category": 2, "mpCost": 10, "damageDetail": "引诱敌将冒进冲锋出击", "description": "佯装败退，诱骗敌将脱离阵型发起决斗。" },
+      { "level": 1, "skillName": "诈败", "category": 2, "mpCost": 0, "damageDetail": "引诱敌将冒进冲锋出击", "description": "佯装败退，诱骗敌将脱离阵型发起决斗。" },
       { "level": 7, "skillName": "旋灯火", "category": 1, "mpCost": 25, "damageDetail": "双火环绕 | 近战清兵 15 人", "description": "周身双团烈火环绕，近战扫平步兵。" },
-      { "level": 12, "skillName": "强化士兵(初)", "category": 2, "mpCost": 15, "damageDetail": "全军士兵攻防 +15%", "description": "战前鼓舞士气，提升部属战力。" },
+      { "level": 12, "skillName": "强化士兵(初)", "category": 2, "mpCost": 0, "damageDetail": "全军士兵攻防 +15%", "description": "战前鼓舞士气，提升部属战力。" },
       { "level": 14, "skillName": "烈火旋灯", "category": 1, "mpCost": 33, "damageDetail": "近战清兵极强 | 擦碰敌将约 20 点", "description": "三团烈火旋灯，近战肉搏近乎无敌。" },
       { "level": 22, "skillName": "神鬼乱舞", "category": 1, "mpCost": 40, "damageDetail": "对将单挑爆发: 50 点满额暴击", "description": "近战连环狂暴爆发，瞬间蒸发敌将大量血量。" },
       { "level": 30, "skillName": "分身斩", "category": 1, "mpCost": 35, "damageDetail": "对将伤害: 28 点 (破甲突袭)", "description": "化为金光残影突刺敌将，造成强力单体伤害。" },
@@ -101,6 +105,7 @@
     "name": "夏侯惇",
     "pinyinIndex": "xhd",
     "sealTier": "良将",
+    "avatar": "avatars/xiahoudun.png",
     "baseForce": 96,
     "baseIntellect": 72,
     "comment": "曹魏前锋第一骨干，肉搏拔矢啖睛，前中期大招烈火旋灯与回天术。",
@@ -108,13 +113,13 @@
     "unlockTroop": "铁骑兵",
     "skillTree": [
       { "level": 1, "skillName": "落石", "category": 1, "mpCost": 15, "damageDetail": "滚石砸杀前排 6~10 人 | 砸将 8 点", "description": "滚木礌石冲击敌方前排步卒。" },
-      { "level": 1, "skillName": "离间计(初)", "category": 2, "mpCost": 12, "damageDetail": "敌将忠诚 -10~15", "description": "战前离间敌将与君主关系。" },
+      { "level": 1, "skillName": "离间计(初)", "category": 2, "mpCost": 0, "damageDetail": "敌将忠诚 -10~15", "description": "战前离间敌将与君主关系。" },
       { "level": 8, "skillName": "回天术", "category": 1, "mpCost": 23, "damageDetail": "自身体力回复: 25 点", "description": "回补自身体力25点，拔矢啖睛浴血奋战。" },
-      { "level": 10, "skillName": "恢复体力(初)", "category": 2, "mpCost": 18, "damageDetail": "战场持续回血: 约 15~20 点", "description": "主将体力持续缓慢自愈。" },
+      { "level": 10, "skillName": "恢复体力(初)", "category": 2, "mpCost": 0, "damageDetail": "战场持续回血: 约 15~20 点", "description": "主将体力持续缓慢自愈。" },
       { "level": 15, "skillName": "烈火旋灯", "category": 1, "mpCost": 33, "damageDetail": "近战清兵极强 | 擦碰敌将约 20 点", "description": "环身三团烈焰高速旋转焚烧小兵。" },
-      { "level": 19, "skillName": "增加体力(中)", "category": 2, "mpCost": 28, "damageDetail": "入场体力上限: +30 点", "description": "主将入场体力上限提升30点。" },
+      { "level": 19, "skillName": "增加体力(中)", "category": 2, "mpCost": 0, "damageDetail": "入场体力上限: +30 点", "description": "主将入场体力上限提升30点。" },
       { "level": 23, "skillName": "连弩激射", "category": 1, "mpCost": 25, "damageDetail": "对将伤害: 24 点 | 穿刺士兵 15 人", "description": "密集飞弩强射贯穿敌阵。" },
-      { "level": 29, "skillName": "恢复技力(中)", "category": 2, "mpCost": 30, "damageDetail": "技力快速回复: 约 30 点", "description": "法力快速回升保障后续大招释放。" },
+      { "level": 29, "skillName": "恢复技力(中)", "category": 2, "mpCost": 0, "damageDetail": "技力快速回复: 约 30 点", "description": "法力快速回升保障后续大招释放。" },
       { "level": 38, "skillName": "神鬼乱舞", "category": 1, "mpCost": 40, "damageDetail": "对将单挑爆发: 45~50 点", "description": "单挑连环爆发狂斩，终结残血敌将。" }
     ]
   },
@@ -123,6 +128,7 @@
     "name": "周瑜",
     "pinyinIndex": "zyu",
     "sealTier": "谋主",
+    "avatar": "avatars/zhouyu.png",
     "baseForce": 78,
     "baseIntellect": 97,
     "comment": "美周郎，赤壁都督，兼修火系大招与十面埋伏，智勇双全。",
@@ -130,15 +136,15 @@
     "unlockTroop": "长枪兵",
     "skillTree": [
       { "level": 1, "skillName": "火箭", "category": 1, "mpCost": 15, "damageDetail": "漫天火箭击杀 8~12 人 | 射将 10 点", "description": "漫天火箭齐射压制敌方步卒。" },
-      { "level": 1, "skillName": "强化士兵(初)", "category": 2, "mpCost": 15, "damageDetail": "士兵攻防 +15%", "description": "战前鼓舞士气提升全军战力。" },
-      { "level": 7, "skillName": "化解计策", "category": 2, "mpCost": 20, "damageDetail": "高概率识破抵消敌军师计", "description": "识破敌方阴谋计策使其无效。" },
+      { "level": 1, "skillName": "强化士兵(初)", "category": 2, "mpCost": 0, "damageDetail": "士兵攻防 +15%", "description": "战前鼓舞士气提升全军战力。" },
+      { "level": 7, "skillName": "化解计策", "category": 2, "mpCost": 0, "damageDetail": "高概率识破抵消敌军师计", "description": "识破敌方阴谋计策使其无效。" },
       { "level": 8, "skillName": "烈火旋灯", "category": 1, "mpCost": 33, "damageDetail": "近战清兵极强 | 擦碰敌将约 20 点", "description": "三灯烈火护体焚烧周身步卒。" },
-      { "level": 14, "skillName": "增加体力(中)", "category": 2, "mpCost": 28, "damageDetail": "入场体力上限: +30 点", "description": "主将入场体力上限+30点。" },
+      { "level": 14, "skillName": "增加体力(中)", "category": 2, "mpCost": 0, "damageDetail": "入场体力上限: +30 点", "description": "主将入场体力上限+30点。" },
       { "level": 15, "skillName": "神火怒张", "category": 1, "mpCost": 35, "damageDetail": "全屏清兵: 35~50 人 | 擦将 15 点", "description": "赤壁业火覆盖全屏清空密集敌军。" },
-      { "level": 21, "skillName": "恢复技力(中)", "category": 2, "mpCost": 30, "damageDetail": "技力快速回复约 30 点", "description": "技力持续快速回复。" },
-      { "level": 28, "skillName": "金蝉脱壳", "category": 2, "mpCost": 25, "damageDetail": "撤退成功率: 100% (绝不被俘)", "description": "战场撤退成功率100%，绝不被俘斩首。" },
+      { "level": 21, "skillName": "恢复技力(中)", "category": 2, "mpCost": 0, "damageDetail": "技力快速回复约 30 点", "description": "技力持续快速回复。" },
+      { "level": 28, "skillName": "金蝉脱壳", "category": 2, "mpCost": 0, "damageDetail": "撤退成功率: 100% (绝不被俘)", "description": "战场撤退成功率100%，绝不被俘斩首。" },
       { "level": 32, "skillName": "火牛阵", "category": 1, "mpCost": 30, "damageDetail": "火牛踏击清兵 20+ 人 | 撞将 20 点", "description": "驱使烈焰火牛群踏碎敌阵。" },
-      { "level": 35, "skillName": "十面埋伏", "category": 2, "mpCost": 35, "damageDetail": "战前降低敌军士气并打乱阵型", "description": "布设重重伏兵，使敌阵陷于混乱恐惧。" },
+      { "level": 35, "skillName": "十面埋伏", "category": 2, "mpCost": 0, "damageDetail": "战前降低敌军士气并打乱阵型", "description": "布设重重伏兵，使敌阵陷于混乱恐惧。" },
       { "level": 39, "skillName": "狂雷天牢", "category": 1, "mpCost": 42, "damageDetail": "对将伤害: 42 点 (单挑天牢强控)", "description": "召引雷暴轰杀锁定敌将。" }
     ]
   },
@@ -147,6 +153,7 @@
     "name": "邢道荣",
     "pinyinIndex": "xdr",
     "sealTier": "裨将",
+    "avatar": "avatars/xingdaorong.png",
     "baseForce": 79,
     "baseIntellect": 42,
     "comment": "零陵上将，勇力可嘉，虽无顶尖大招，但在零陵城防中足堪中流之柱。",
@@ -154,9 +161,9 @@
     "unlockTroop": "长枪兵",
     "skillTree": [
       { "level": 1, "skillName": "半月斩", "category": 1, "mpCost": 15, "damageDetail": "对将伤害: 12点 | 清兵前排 5~8 人", "description": "开山大斧挥斩出半月气劲劈杀前排。" },
-      { "level": 1, "skillName": "诈败", "category": 2, "mpCost": 10, "damageDetail": "引诱敌将冒进单挑", "description": "佯败诱敌出击。" },
+      { "level": 1, "skillName": "诈败", "category": 2, "mpCost": 0, "damageDetail": "引诱敌将冒进单挑", "description": "佯败诱敌出击。" },
       { "level": 9, "skillName": "突石", "category": 1, "mpCost": 22, "damageDetail": "地刺杀兵 10~15 人 | 刺将 12 点", "description": "地生尖锐巨石突刺前排敌人。" },
-      { "level": 15, "skillName": "强化士兵(初)", "category": 2, "mpCost": 15, "damageDetail": "全军士兵攻防 +15%", "description": "提升所率零陵步卒战斗力。" },
+      { "level": 15, "skillName": "强化士兵(初)", "category": 2, "mpCost": 0, "damageDetail": "全军士兵攻防 +15%", "description": "提升所率零陵步卒战斗力。" },
       { "level": 17, "skillName": "旋灯火", "category": 1, "mpCost": 25, "damageDetail": "双火环绕 | 近战清兵 15 人", "description": "双团烈火护身杀兵。" },
       { "level": 25, "skillName": "连弩", "category": 1, "mpCost": 19, "damageDetail": "对将伤害: 每支 2 点 (全中 22 点) | 射出 5 支飞弩", "description": "连发五支飞弩狙杀敌兵敌将。" }
     ]
@@ -166,6 +173,7 @@
     "name": "蒋干",
     "pinyinIndex": "jg",
     "sealTier": "白身",
+    "avatar": "avatars/jianggan.png",
     "baseForce": 38,
     "baseIntellect": 62,
     "comment": "曹操谋士，盗书反误大事，平庸无奇。",
@@ -173,8 +181,8 @@
     "unlockTroop": "朴刀兵",
     "skillTree": [
       { "level": 1, "skillName": "伏兵排阵", "category": 1, "mpCost": 18, "damageDetail": "战场中召唤 8~12 名预备步兵", "description": "唤出一队预备步卒参战。" },
-      { "level": 1, "skillName": "离间计(初)", "category": 2, "mpCost": 12, "damageDetail": "敌将忠诚 -10~15", "description": "微弱离间敌将忠诚度。" },
-      { "level": 12, "skillName": "劝降", "category": 2, "mpCost": 22, "damageDetail": "游说敌将归降 (成功率一般)", "description": "巧舌劝说敌将投诚。" }
+      { "level": 1, "skillName": "离间计(初)", "category": 2, "mpCost": 0, "damageDetail": "敌将忠诚 -10~15", "description": "微弱离间敌将忠诚度。" },
+      { "level": 12, "skillName": "劝降", "category": 2, "mpCost": 0, "damageDetail": "游说敌将归降 (成功率一般)", "description": "巧舌劝说敌将投诚。" }
     ]
   }
 ]

@@ -29,6 +29,15 @@ dotnet publish $projectPath `
 
 if ($LASTEXITCODE -eq 0) {
     $exePath = Join-Path $distDir "Tianjige.exe"
+    $dataPath = Join-Path $rootDir "data"
+    $distDataPath = Join-Path $distDir "data"
+    if (Test-Path $dataPath) {
+        if (-not (Test-Path $distDataPath)) {
+            New-Item -Path $distDataPath -ItemType Directory -Force | Out-Null
+        }
+        Copy-Item -Path "$dataPath\*" -Destination $distDataPath -Recurse -Force
+        Write-Host ">>> 已同步外置典籍数据目录: $distDataPath" -ForegroundColor Cyan
+    }
     if (Test-Path $exePath) {
         $sizeMB = [math]::Round((Get-Item $exePath).Length / 1MB, 2)
         Write-Host ">>> 构建发布大吉！产物: $exePath ($sizeMB MB)" -ForegroundColor Green

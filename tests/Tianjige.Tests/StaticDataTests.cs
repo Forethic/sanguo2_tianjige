@@ -45,7 +45,7 @@ public class StaticDataTests
         var bamen = _repository.GetSkillByName("八门金锁");
         bamen.Should().NotBeNull();
         bamen!.Category.Should().Be(SkillCategory.Military);
-        bamen.MpCost.Should().Be(30);
+        bamen.MpCost.Should().Be(0); // 军师技为战前策谋，无技力消耗
     }
 
     [Fact]
@@ -83,5 +83,20 @@ public class StaticDataTests
         changqiang.Should().NotBeNull();
         changqiang!.StrongAgainst.Should().Contain("铁骑兵");
         changqiang.WeakAgainst.Should().Contain("弓箭兵");
+    }
+
+    [Fact]
+    public void Generals_ShouldHaveAvatar_AndResolveAvatarPath()
+    {
+        var guanyu = _repository.GetGeneralByName("关羽");
+        guanyu.Should().NotBeNull();
+        guanyu!.Avatar.Should().NotBeNullOrWhiteSpace();
+
+        var avatarPath = _repository.ResolveAvatarPath(guanyu.Avatar);
+        // 若在仓库或输出目录下存在头像，应能成功解析出绝对路径
+        if (avatarPath != null)
+        {
+            File.Exists(avatarPath).Should().BeTrue();
+        }
     }
 }

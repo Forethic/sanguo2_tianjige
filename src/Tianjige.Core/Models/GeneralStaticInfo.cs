@@ -36,5 +36,6 @@ public sealed record GeneralStaticInfo
     public string Comment { get; init; } = string.Empty;
     public string InitialTroop { get; init; } = string.Empty;
     public string UnlockTroop { get; init; } = string.Empty;
+    public string Avatar { get; init; } = string.Empty; // 头像相对路径 (如: "avatars/guanyu.png")
     public IReadOnlyList<SkillTreeNode> SkillTree { get; init; } = Array.Empty<SkillTreeNode>();
 }

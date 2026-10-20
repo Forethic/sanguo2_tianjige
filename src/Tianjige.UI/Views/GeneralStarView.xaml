@@ -56,55 +56,92 @@
                       HorizontalScrollBarVisibility="Disabled">
             <StackPanel>
                 <!-- 武将核心名片头 -->
-                <Border DataContext="{Binding SelectedGeneral}"
-                        Background="#241E19" 
+                <Border Background="#241E19" 
                         BorderBrush="{StaticResource BrushGoldBorder}" 
                         BorderThickness="1" 
                         CornerRadius="4" 
                         Padding="14,12"
                         Margin="0,0,0,10">
-                    <StackPanel>
-                        <!-- 第一行：大名 + 朱砂印章资质 -->
-                        <DockPanel LastChildFill="False">
-                            <TextBlock Text="{Binding Name}" 
-                                       Style="{StaticResource StyleTitleLarge}"
-                                       VerticalAlignment="Center" />
-                            <controls:SealBadge Tier="{Binding SealTier}" 
-                                                DockPanel.Dock="Right"
-                                                VerticalAlignment="Center" />
-                        </DockPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-                        <!-- 属性数值行 -->
-                        <Grid Margin="0,10,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <!-- 武力 -->
-                            <StackPanel Grid.Column="0">
-                                <TextBlock Text="初始武力" Style="{StaticResource StyleBodySecondary}" />
-                                <TextBlock Text="{Binding BaseForce}" Style="{StaticResource StyleStatNumber}" Foreground="#FFA496" />
-                            </StackPanel>
-                            <!-- 智力 -->
-                            <StackPanel Grid.Column="1">
-                                <TextBlock Text="初始智力" Style="{StaticResource StyleBodySecondary}" />
-                                <TextBlock Text="{Binding BaseIntellect}" Style="{StaticResource StyleStatNumber}" Foreground="#96CBF5" />
-                            </StackPanel>
-                            <!-- 兵种 -->
-                            <StackPanel Grid.Column="2">
-                                <TextBlock Text="初始统兵" Style="{StaticResource StyleBodySecondary}" />
-                                <TextBlock Text="{Binding InitialTroop}" Style="{StaticResource StyleStatNumber}" Foreground="{StaticResource BrushGoldLight}" />
-                            </StackPanel>
-                        </Grid>
+                        <!-- 左侧：武将头像框 / 印玺降级回退 -->
+                        <Border Grid.Column="0"
+                                Width="58" Height="58"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Background="#1A1410"
+                                BorderBrush="{StaticResource BrushGoldBorder}"
+                                BorderThickness="1.2"
+                                CornerRadius="4"
+                                Margin="0,2,14,0"
+                                SnapsToDevicePixels="True">
+                            <Grid ClipToBounds="True">
+                                <!-- 底层 fallback: 纯正古风朱红/紫檀姓氏印章 -->
+                                <Border Background="#2B1814" CornerRadius="3">
+                                    <TextBlock Text="{Binding SelectedGeneralInitial}"
+                                               FontFamily="{StaticResource FontAncient}"
+                                               FontSize="28"
+                                               FontWeight="Bold"
+                                               Foreground="{StaticResource BrushGoldLight}"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
+                                </Border>
 
-                        <Separator Style="{StaticResource StyleAncientSeparator}" Margin="0,10" />
+                                <!-- 顶层: 武将真实肖像 (如果存在路径并能加载，则覆盖显示；否则透明穿透展示姓氏印) -->
+                                <Image Source="{Binding SelectedGeneralAvatarPath}"
+                                       Stretch="UniformToFill"
+                                       RenderOptions.BitmapScalingMode="HighQuality" />
+                            </Grid>
+                        </Border>
 
-                        <!-- 客观特色评语 -->
-                        <TextBlock Text="{Binding Comment}" 
-                                   Style="{StaticResource StyleBody}" 
-                                   Foreground="#C8BEB0" />
-                    </StackPanel>
+                        <!-- 右侧：武将详情 (大名、印章资质、三维属性、客观评语) -->
+                        <StackPanel Grid.Column="1" DataContext="{Binding SelectedGeneral}">
+                            <!-- 第一行：大名 + 朱砂印章资质 -->
+                            <DockPanel LastChildFill="False">
+                                <TextBlock Text="{Binding Name}" 
+                                           Style="{StaticResource StyleTitleLarge}"
+                                           VerticalAlignment="Center" />
+                                <controls:SealBadge Tier="{Binding SealTier}" 
+                                                    DockPanel.Dock="Right"
+                                                    VerticalAlignment="Center" />
+                            </DockPanel>
+
+                            <!-- 属性数值行 -->
+                            <Grid Margin="0,10,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <!-- 武力 -->
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="初始武力" Style="{StaticResource StyleBodySecondary}" />
+                                    <TextBlock Text="{Binding BaseForce}" Style="{StaticResource StyleStatNumber}" Foreground="#FFA496" />
+                                </StackPanel>
+                                <!-- 智力 -->
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="初始智力" Style="{StaticResource StyleBodySecondary}" />
+                                    <TextBlock Text="{Binding BaseIntellect}" Style="{StaticResource StyleStatNumber}" Foreground="#96CBF5" />
+                                </StackPanel>
+                                <!-- 兵种 -->
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="初始统兵" Style="{StaticResource StyleBodySecondary}" />
+                                    <TextBlock Text="{Binding InitialTroop}" Style="{StaticResource StyleStatNumber}" Foreground="{StaticResource BrushGoldLight}" />
+                                </StackPanel>
+                            </Grid>
+
+                            <Separator Style="{StaticResource StyleAncientSeparator}" Margin="0,10" />
+
+                            <!-- 客观特色评语 -->
+                            <TextBlock Text="{Binding Comment}" 
+                                       Style="{StaticResource StyleBody}" 
+                                       Foreground="#C8BEB0" />
+                        </StackPanel>
+                    </Grid>
                 </Border>
 
                 <!-- 技能树标题与操作提示 -->

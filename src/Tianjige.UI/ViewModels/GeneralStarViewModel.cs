@@ -65,9 +65,21 @@ public sealed class GeneralStarViewModel : ViewModelBase
             if (SetProperty(ref _selectedGeneral, value))
             {
                 UpdateDisplayedSkills();
+                OnPropertyChanged(nameof(SelectedGeneralAvatarPath));
+                OnPropertyChanged(nameof(SelectedGeneralInitial));
+                OnPropertyChanged(nameof(AllSkillsCount));
+                OnPropertyChanged(nameof(GeneralSkillsCount));
+                OnPropertyChanged(nameof(MilitarySkillsCount));
             }
         }
     }
+
+    public string? SelectedGeneralAvatarPath =>
+        _selectedGeneral != null ? _repository.ResolveAvatarPath(_selectedGeneral.Avatar) : null;
+
+    public string SelectedGeneralInitial =>
+        !string.IsNullOrWhiteSpace(_selectedGeneral?.Name) ? _selectedGeneral.Name[..1] : "将";
+
 
     public string ReverseLookupSkillName
     {

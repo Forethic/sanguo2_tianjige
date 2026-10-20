@@ -1,0 +1,178 @@
+[
+  {
+    "id": 1,
+    "name": "方天画戟",
+    "category": 1,
+    "forceBonus": 10,
+    "intellectBonus": 0,
+    "hpBonus": 0,
+    "speedBonus": 0,
+    "description": "顶级神兵，画杆方天，万夫莫当之威。武力+10。",
+    "defaultOwner": "吕布"
+  },
+  {
+    "id": 2,
+    "name": "青龙偃月刀",
+    "category": 1,
+    "forceBonus": 9,
+    "intellectBonus": 0,
+    "hpBonus": 0,
+    "speedBonus": 0,
+    "description": "重八十二斤，冷艳锯锋，刀劈颜良斩文丑。武力+9。",
+    "defaultOwner": "关羽"
+  },
+  {
+    "id": 3,
+    "name": "丈八蛇矛",
+    "category": 1,
+    "forceBonus": 9,
+    "intellectBonus": 0,
+    "hpBonus": 0,
+    "speedBonus": 0,
+    "description": "镔铁点钢蛇矛，长一丈八尺，长坂坡桥头吼断桥梁。武力+9。",
+    "defaultOwner": "张飞"
+  },
+  {
+    "id": 4,
+    "name": "青釭剑",
+    "category": 1,
+    "forceBonus": 7,
+    "intellectBonus": 0,
+    "hpBonus": 0,
+    "speedBonus": 0,
+    "description": "曹操佩剑，削铁如泥，赵子龙长坂坡斩夏侯恩夺取。武力+7。",
+    "defaultOwner": "夏侯恩"
+  },
+  {
+    "id": 5,
+    "name": "倚天剑",
+    "category": 1,
+    "forceBonus": 8,
+    "intellectBonus": 0,
+    "hpBonus": 0,
+    "speedBonus": 0,
+    "description": "曹操自佩镇关之宝剑，锋锐绝伦。武力+8。",
+    "defaultOwner": "曹操"
+  },
+  {
+    "id": 6,
+    "name": "双股剑",
+    "category": 1,
+    "forceBonus": 6,
+    "intellectBonus": 0,
+    "hpBonus": 0,
+    "speedBonus": 0,
+    "description": "玄德双手雌雄双剑，左右开阖，灵活迅捷。武力+6。",
+    "defaultOwner": "刘备"
+  },
+  {
+    "id": 7,
+    "name": "古锭刀",
+    "category": 1,
+    "forceBonus": 6,
+    "intellectBonus": 0,
+    "hpBonus": 0,
+    "speedBonus": 0,
+    "description": "江东猛虎孙坚祖传家宝刀，百炼成钢。武力+6。",
+    "defaultOwner": "孙坚"
+  },
+  {
+    "id": 8,
+    "name": "赤兔马",
+    "category": 3,
+    "forceBonus": 0,
+    "intellectBonus": 0,
+    "hpBonus": 0,
+    "speedBonus": 12,
+    "description": "人中吕布，马中赤兔！日行千里，渡水登山如履平地。大地图行军神速，战场退却率极高。",
+    "defaultOwner": "吕布"
+  },
+  {
+    "id": 9,
+    "name": "的卢",
+    "category": 3,
+    "forceBonus": 0,
+    "intellectBonus": 0,
+    "hpBonus": 0,
+    "speedBonus": 10,
+    "description": "额有白点，檀溪一跃三丈救主。移速+10。",
+    "defaultOwner": "刘备"
+  },
+  {
+    "id": 10,
+    "name": "绝影",
+    "category": 3,
+    "forceBonus": 0,
+    "intellectBonus": 0,
+    "hpBonus": 0,
+    "speedBonus": 9,
+    "description": "行空绝影，宛城脱困之神驹。移速+9。",
+    "defaultOwner": "曹操"
+  },
+  {
+    "id": 11,
+    "name": "爪黄飞电",
+    "category": 3,
+    "forceBonus": 0,
+    "intellectBonus": 0,
+    "hpBonus": 0,
+    "speedBonus": 9,
+    "description": "许田围猎曹操所乘金鞍神驹。移速+9。",
+    "defaultOwner": "曹操"
+  },
+  {
+    "id": 12,
+    "name": "兵法二十四篇",
+    "category": 2,
+    "forceBonus": 0,
+    "intellectBonus": 10,
+    "hpBonus": 0,
+    "speedBonus": 0,
+    "description": "诸葛武侯毕生心血用兵绝学，临终传与姜伯约。智力+10。",
+    "defaultOwner": "诸葛亮"
+  },
+  {
+    "id": 13,
+    "name": "孟德新书",
+    "category": 2,
+    "forceBonus": 0,
+    "intellectBonus": 9,
+    "hpBonus": 0,
+    "speedBonus": 0,
+    "description": "魏武帝曹操总结《孙子兵法》之战略孤本。智力+9。",
+    "defaultOwner": "曹操"
+  },
+  {
+    "id": 14,
+    "name": "青囊书",
+    "category": 2,
+    "forceBonus": 0,
+    "intellectBonus": 0,
+    "hpBonus": 15,
+    "speedBonus": 0,
+    "description": "神医华佗毕生行医外科活命宝典，强健筋骨。体力上限+15。",
+    "defaultOwner": "华佗"
+  },
+  {
+    "id": 15,
+    "name": "遁甲天书",
+    "category": 2,
+    "forceBonus": 0,
+    "intellectBonus": 8,
+    "hpBonus": 0,
+    "speedBonus": 0,
+    "description": "左慈传道奇书，通晓呼风唤雨之术。智力+8。",
+    "defaultOwner": "左慈"
+  },
+  {
+    "id": 16,
+    "name": "太平要术",
+    "category": 2,
+    "forceBonus": 0,
+    "intellectBonus": 7,
+    "hpBonus": 0,
+    "speedBonus": 0,
+    "description": "大贤良师张角传黄老之道，符水度人。智力+7。",
+    "defaultOwner": "张角"
+  }
+]
