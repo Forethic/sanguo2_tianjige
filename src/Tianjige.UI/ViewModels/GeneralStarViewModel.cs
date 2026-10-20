@@ -19,6 +19,31 @@ public sealed class GeneralStarViewModel : ViewModelBase
     private IReadOnlyList<SkillMasteryInfo> _reverseLookupMasters = Array.Empty<SkillMasteryInfo>();
 
     public ObservableCollection<GeneralStaticInfo> FilteredGenerals { get; } = new();
+    public ObservableCollection<SkillTreeNode> DisplayedSkills { get; } = new();
+
+    private int _skillFilter = 0; // 0: 全部, 1: 仅武将技, 2: 仅军师技
+    public int SkillFilter
+    {
+        get => _skillFilter;
+        set
+        {
+            if (SetProperty(ref _skillFilter, value))
+            {
+                UpdateDisplayedSkills();
+                OnPropertyChanged(nameof(IsFilterAll));
+                OnPropertyChanged(nameof(IsFilterGeneral));
+                OnPropertyChanged(nameof(IsFilterMilitary));
+            }
+        }
+    }
+
+    public bool IsFilterAll => _skillFilter == 0;
+    public bool IsFilterGeneral => _skillFilter == 1;
+    public bool IsFilterMilitary => _skillFilter == 2;
+
+    public int AllSkillsCount => SelectedGeneral?.SkillTree.Count ?? 0;
+    public int GeneralSkillsCount => SelectedGeneral?.SkillTree.Count(s => s.Category == SkillCategory.General) ?? 0;
+    public int MilitarySkillsCount => SelectedGeneral?.SkillTree.Count(s => s.Category == SkillCategory.Military) ?? 0;
 
     public string SearchText
     {
@@ -35,7 +60,13 @@ public sealed class GeneralStarViewModel : ViewModelBase
     public GeneralStaticInfo? SelectedGeneral
     {
         get => _selectedGeneral;
-        set => SetProperty(ref _selectedGeneral, value);
+        set
+        {
+            if (SetProperty(ref _selectedGeneral, value))
+            {
+                UpdateDisplayedSkills();
+            }
+        }
     }
 
     public string ReverseLookupSkillName
@@ -59,6 +90,7 @@ public sealed class GeneralStarViewModel : ViewModelBase
     public ICommand SelectGeneralCommand { get; }
     public ICommand LookupSkillCommand { get; }
     public ICommand CloseReverseLookupCommand { get; }
+    public ICommand SetSkillFilterCommand { get; }
 
     public GeneralStarViewModel() : this(null)
     {
@@ -69,6 +101,12 @@ public sealed class GeneralStarViewModel : ViewModelBase
         _repository = repository ?? new StaticRepository();
         _allGenerals = _repository.GetAllGenerals().ToList();
         _invertedIndex = new SkillInvertedIndex(_allGenerals);
+
+        SetSkillFilterCommand = new RelayCommand<object>(param =>
+        {
+            if (param is int i) SkillFilter = i;
+            else if (param is string s && int.TryParse(s, out var parsed)) SkillFilter = parsed;
+        });
 
         SelectGeneralCommand = new RelayCommand<GeneralStaticInfo>(general =>
         {
@@ -96,6 +134,28 @@ public sealed class GeneralStarViewModel : ViewModelBase
 
         ApplyFilter();
         SelectedGeneral = _allGenerals.FirstOrDefault(g => g.Name == "关羽") ?? _allGenerals.FirstOrDefault();
+    }
+
+    private void UpdateDisplayedSkills()
+    {
+        DisplayedSkills.Clear();
+        if (SelectedGeneral != null)
+        {
+            var items = _skillFilter switch
+            {
+                1 => SelectedGeneral.SkillTree.Where(s => s.Category == SkillCategory.General),
+                2 => SelectedGeneral.SkillTree.Where(s => s.Category == SkillCategory.Military),
+                _ => SelectedGeneral.SkillTree
+            };
+            foreach (var s in items)
+            {
+                DisplayedSkills.Add(s);
+            }
+        }
+
+        OnPropertyChanged(nameof(AllSkillsCount));
+        OnPropertyChanged(nameof(GeneralSkillsCount));
+        OnPropertyChanged(nameof(MilitarySkillsCount));
     }
 
     private void ApplyFilter()

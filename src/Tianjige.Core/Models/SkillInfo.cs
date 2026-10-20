@@ -11,4 +11,5 @@ public sealed record SkillInfo
     public required byte MpCost { get; init; }
     public required string Description { get; init; }
     public string Tag { get; init; } = string.Empty; // 如: 清兵/单挑/控制/增益
+    public string DamageDetail { get; init; } = string.Empty; // 伤害与效果数值细则
 }

@@ -84,12 +84,11 @@
 
                     <!-- 右侧控制按钮组 (置顶 / 最小化 / 关闭) -->
                     <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
-                        <!-- 置顶切换按钮 -->
+                        <!-- 置顶切换图钉按钮 -->
                         <Button Command="{Binding ToggleTopmostCommand}"
-                                Margin="0,0,6,0"
-                                Padding="6,2"
-                                Cursor="Hand"
-                                ToolTip="切换窗口置顶状态">
+                                Width="26" Height="22"
+                                Margin="0,0,4,0"
+                                Cursor="Hand">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Border x:Name="PinBorder"
@@ -97,21 +96,34 @@
                                             BorderBrush="{StaticResource BrushGoldMuted}"
                                             BorderThickness="1"
                                             CornerRadius="3"
-                                            Padding="6,2">
-                                        <TextBlock x:Name="PinText"
-                                                   Text="{Binding IsTopmost, Converter={x:Null}, StringFormat='📌 置顶'}"
-                                                   FontSize="10"
-                                                   Foreground="{StaticResource BrushGoldLight}" />
+                                            SnapsToDevicePixels="True"
+                                            UseLayoutRounding="True">
+                                        <Path x:Name="PinIcon"
+                                              Width="11" Height="12"
+                                              Stretch="Uniform"
+                                              Fill="{StaticResource BrushGoldLight}"
+                                              Data="M16,12V4H17V2H7V4H8V12L6,14V16H11V22L12,23L13,22V16H18V14L16,12Z" />
                                     </Border>
                                     <ControlTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding IsTopmost}" Value="True">
+                                            <Setter TargetName="PinBorder" Property="Background" Value="#382A1B" />
+                                            <Setter TargetName="PinBorder" Property="BorderBrush" Value="{StaticResource BrushGoldLight}" />
+                                            <Setter TargetName="PinIcon" Property="Fill" Value="#FFE6A3" />
+                                            <Setter Property="ToolTip" Value="窗口已置顶 (点击取消置顶)" />
+                                        </DataTrigger>
                                         <DataTrigger Binding="{Binding IsTopmost}" Value="False">
-                                            <Setter TargetName="PinBorder" Property="Background" Value="#1F1A16" />
-                                            <Setter TargetName="PinBorder" Property="BorderBrush" Value="#4A3C2F" />
-                                            <Setter TargetName="PinText" Property="Text" Value="📌 浮动" />
-                                            <Setter TargetName="PinText" Property="Foreground" Value="{StaticResource BrushTextMuted}" />
+                                            <Setter TargetName="PinBorder" Property="Background" Value="#1C1713" />
+                                            <Setter TargetName="PinBorder" Property="BorderBrush" Value="#44372D" />
+                                            <Setter TargetName="PinIcon" Property="Fill" Value="#75675A" />
+                                            <Setter TargetName="PinIcon" Property="RenderTransform">
+                                                <Setter.Value>
+                                                    <RotateTransform Angle="45" CenterX="5.5" CenterY="6" />
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="ToolTip" Value="窗口未置顶 (点击固定在最前端)" />
                                         </DataTrigger>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="PinBorder" Property="Background" Value="{StaticResource BrushBgCardHover}" />
+                                            <Setter TargetName="PinBorder" Property="BorderBrush" Value="#FFE6A8" />
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -290,19 +302,18 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <!-- 岁次时令 -->
-                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock Text="📜 " FontSize="10" VerticalAlignment="Center" />
-                        <TextBlock Text="{Binding SeasonTitle}"
-                                   FontSize="10"
-                                   Foreground="{StaticResource BrushTextSecondary}"
-                                   VerticalAlignment="Center" />
-                        <TextBlock Text=" · " FontSize="10" Foreground="{StaticResource BrushGoldMuted}" VerticalAlignment="Center" Margin="4,0" />
-                        <TextBlock Text="{Binding BattleStatusText}"
-                                   FontSize="10"
-                                   Foreground="{StaticResource BrushGoldLight}"
-                                   VerticalAlignment="Center" />
-                    </StackPanel>
+                    <!-- 岁次时令与战局状态（自动溢出省略，避免遮挡右侧状态印信） -->
+                    <TextBlock Grid.Column="0"
+                               VerticalAlignment="Center"
+                               TextTrimming="CharacterEllipsis"
+                               FontSize="10.5"
+                               Foreground="{StaticResource BrushTextSecondary}"
+                               Margin="0,0,8,0">
+                        <Run Text="📜 " />
+                        <Run Text="{Binding SeasonTitle, Mode=OneWay}" />
+                        <Run Text=" · " Foreground="{StaticResource BrushGoldMuted}" />
+                        <Run Text="{Binding BattleStatusText, Mode=OneWay}" Foreground="{StaticResource BrushGoldLight}" />
+                    </TextBlock>
 
                     <!-- 气运与状态印信 -->
                     <Border Grid.Column="1"

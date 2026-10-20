@@ -1,15 +1,16 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- 字体族定义（沉稳金石风华文中宋优先，辅以微软雅黑屏幕锐度） -->
-    <FontFamily x:Key="FontAncient">STZhongsong, 华文中宋, Microsoft YaHei, 微软雅黑, SimHei, 黑体, sans-serif</FontFamily>
-    <FontFamily x:Key="FontLiSu">STZhongsong, 华文中宋, Microsoft YaHei, 微软雅黑, SimHei, 黑体, sans-serif</FontFamily>
+    <!-- 字体族定义：大号碑帖使用华文中宋，界面排版与中文字元优先使用屏幕高清晰字体（微软雅黑），避免小字号下复杂笔画揉成黑团 -->
+    <FontFamily x:Key="FontImperial">STZhongsong, 华文中宋, Microsoft YaHei, 微软雅黑, sans-serif</FontFamily>
+    <FontFamily x:Key="FontAncient">Microsoft YaHei, 微软雅黑, Segoe UI, STZhongsong, 华文中宋, sans-serif</FontFamily>
+    <FontFamily x:Key="FontLiSu">Microsoft YaHei, 微软雅黑, Segoe UI, sans-serif</FontFamily>
     <FontFamily x:Key="FontReading">Microsoft YaHei, 微软雅黑, Segoe UI, sans-serif</FontFamily>
 
-    <!-- 标题文字：大卷轴主名 -->
+    <!-- 标题文字：大卷轴主名 / 武将大名 -->
     <Style x:Key="StyleTitleLarge" TargetType="TextBlock">
-        <Setter Property="FontFamily" Value="{StaticResource FontAncient}" />
-        <Setter Property="FontSize" Value="20" />
+        <Setter Property="FontFamily" Value="{StaticResource FontImperial}" />
+        <Setter Property="FontSize" Value="22" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Foreground" Value="{StaticResource BrushGoldLight}" />
         <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
@@ -18,7 +19,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
     </Style>
 
-    <!-- 标题文字：模块标题 / 武将名 -->
+    <!-- 标题文字：模块标题 / 弹窗标题 -->
     <Style x:Key="StyleTitleMedium" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource FontAncient}" />
         <Setter Property="FontSize" Value="16" />
@@ -30,10 +31,10 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
     </Style>
 
-    <!-- 小标题：分段小节 -->
+    <!-- 小标题：分段小节 / 技能长卷栏 -->
     <Style x:Key="StyleTitleSmall" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource FontAncient}" />
-        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontSize" Value="14" />
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Foreground" Value="{StaticResource BrushGoldBorder}" />
         <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
@@ -45,9 +46,9 @@
     <!-- 正文文字：技能释义 / 评语 -->
     <Style x:Key="StyleBody" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource FontReading}" />
-        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontSize" Value="13" />
         <Setter Property="Foreground" Value="{StaticResource BrushTextPrimary}" />
-        <Setter Property="LineHeight" Value="18" />
+        <Setter Property="LineHeight" Value="20" />
         <Setter Property="TextWrapping" Value="Wrap" />
         <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
         <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
@@ -58,7 +59,7 @@
     <!-- 次要文本：消耗 / 辅助说明 -->
     <Style x:Key="StyleBodySecondary" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource FontReading}" />
-        <Setter Property="FontSize" Value="11" />
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="Foreground" Value="{StaticResource BrushTextSecondary}" />
         <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
         <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
@@ -66,11 +67,11 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
     </Style>
 
-    <!-- 属性数值：武力 / 智力 / 忠诚 -->
+    <!-- 属性数值：武力 / 智力 / 统兵 -->
     <Style x:Key="StyleStatNumber" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource FontReading}" />
-        <Setter Property="FontSize" Value="14" />
-        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Foreground" Value="{StaticResource BrushGoldLight}" />
         <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
         <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />

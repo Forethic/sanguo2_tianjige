@@ -5,20 +5,22 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:models="clr-namespace:Tianjige.Core.Models;assembly=Tianjige.Core"
              mc:Ignorable="d" 
+             SnapsToDevicePixels="True"
+             UseLayoutRounding="True"
              d:DesignHeight="400" d:DesignWidth="360">
     <ItemsControl ItemsSource="{Binding SkillTree, RelativeSource={RelativeSource AncestorType=UserControl}}">
         <ItemsControl.ItemTemplate>
             <DataTemplate DataType="{x:Type models:SkillTreeNode}">
-                <Grid Margin="0,0,0,12">
+                <Grid Margin="0,0,0,12" SnapsToDevicePixels="True">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="46" />
-                        <ColumnDefinition Width="14" />
+                        <ColumnDefinition Width="48" />
+                        <ColumnDefinition Width="16" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
                     <!-- 等级圆标 -->
                     <Border Grid.Column="0" 
-                            Height="24"
+                            Height="26"
                             CornerRadius="3"
                             Background="#26201B"
                             BorderBrush="{StaticResource BrushGoldBorder}"
@@ -27,8 +29,8 @@
                             Margin="0,2,0,0">
                         <TextBlock Text="{Binding Level, StringFormat='Lv.{0}'}"
                                    FontFamily="{StaticResource FontReading}"
-                                   FontSize="11"
-                                   FontWeight="SemiBold"
+                                   FontSize="12"
+                                   FontWeight="Bold"
                                    Foreground="{StaticResource BrushGoldLight}"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center" />
@@ -47,41 +49,47 @@
                             Background="#221C18" 
                             BorderBrush="#3D3226" 
                             BorderThickness="1" 
-                            CornerRadius="3" 
-                            Padding="8,6"
+                            CornerRadius="4" 
+                            Padding="10,8"
                             Margin="4,0,0,0">
                         <StackPanel>
                             <!-- 第一行：类别标签 + 技能名 (点击反查) + 技力消耗 -->
                             <DockPanel LastChildFill="False">
-                                <!-- 技能类别徽章 (红/蓝) -->
+                                <!-- 技能类别徽章 (武将技:朱红 / 军师技:幽蓝) -->
                                 <Border DockPanel.Dock="Left" 
-                                        CornerRadius="2" 
-                                        Padding="4,1" 
-                                        Margin="0,0,6,0"
+                                        CornerRadius="3" 
+                                        Padding="5,2" 
+                                        Margin="0,0,8,0"
                                         VerticalAlignment="Center">
                                     <Border.Style>
                                         <Style TargetType="Border">
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding Category}" Value="{x:Static models:SkillCategory.General}">
-                                                    <Setter Property="Background" Value="{StaticResource BrushSkillGeneral}" />
+                                                    <Setter Property="Background" Value="#381512" />
+                                                    <Setter Property="BorderBrush" Value="#8A3427" />
+                                                    <Setter Property="BorderThickness" Value="1" />
                                                 </DataTrigger>
                                                 <DataTrigger Binding="{Binding Category}" Value="{x:Static models:SkillCategory.Military}">
-                                                    <Setter Property="Background" Value="{StaticResource BrushSkillMilitary}" />
+                                                    <Setter Property="Background" Value="#13253B" />
+                                                    <Setter Property="BorderBrush" Value="#2A5C87" />
+                                                    <Setter Property="BorderThickness" Value="1" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
                                     </Border.Style>
-                                    <TextBlock FontFamily="{StaticResource FontAncient}" 
-                                               FontSize="10" 
-                                               Foreground="#FFFFFF">
+                                    <TextBlock FontFamily="{StaticResource FontReading}" 
+                                               FontSize="11" 
+                                               FontWeight="SemiBold">
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding Category}" Value="{x:Static models:SkillCategory.General}">
-                                                        <Setter Property="Text" Value="武将技" />
+                                                        <Setter Property="Text" Value="⚔ 武将技" />
+                                                        <Setter Property="Foreground" Value="#FFA89E" />
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding Category}" Value="{x:Static models:SkillCategory.Military}">
-                                                        <Setter Property="Text" Value="军师技" />
+                                                        <Setter Property="Text" Value="📜 军师技" />
+                                                        <Setter Property="Foreground" Value="#8EC5F7" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -94,9 +102,9 @@
                                         Content="{Binding SkillName}"
                                         Command="{Binding DataContext.LookupSkillCommand, RelativeSource={RelativeSource AncestorType=UserControl, AncestorLevel=2}}"
                                         CommandParameter="{Binding SkillName}"
-                                        FontFamily="{StaticResource FontAncient}"
-                                        FontSize="14"
-                                        FontWeight="Normal"
+                                        FontFamily="{StaticResource FontReading}"
+                                        FontSize="14.5"
+                                        FontWeight="Bold"
                                         Foreground="{StaticResource BrushGoldLight}"
                                         Background="Transparent"
                                         BorderThickness="0"
@@ -112,19 +120,61 @@
 
                                 <!-- 技力消耗 -->
                                 <TextBlock DockPanel.Dock="Right"
-                                           Text="{Binding MpCost, StringFormat='消耗: {0}'}"
+                                           Text="{Binding MpCost, StringFormat='技力: {0}'}"
                                            FontFamily="{StaticResource FontReading}"
-                                           FontSize="11"
+                                           FontSize="11.5"
                                            Foreground="{StaticResource BrushTextSecondary}"
                                            VerticalAlignment="Center" />
                             </DockPanel>
 
-                            <!-- 第二行：技能客观释义 -->
+                            <!-- 第二行：伤害/效果硬核数值标签 (清晰突出显示) -->
+                            <Border Margin="0,6,0,4"
+                                    CornerRadius="3"
+                                    Padding="6,2"
+                                    HorizontalAlignment="Left">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Category}" Value="{x:Static models:SkillCategory.General}">
+                                                <Setter Property="Background" Value="#291512" />
+                                                <Setter Property="BorderBrush" Value="#6B291E" />
+                                                <Setter Property="BorderThickness" Value="1" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Category}" Value="{x:Static models:SkillCategory.Military}">
+                                                <Setter Property="Background" Value="#102030" />
+                                                <Setter Property="BorderBrush" Value="#1E4B73" />
+                                                <Setter Property="BorderThickness" Value="1" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <TextBlock Text="{Binding DamageDetail}"
+                                           FontFamily="{StaticResource FontReading}"
+                                           FontSize="11.5"
+                                           FontWeight="SemiBold">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Category}" Value="{x:Static models:SkillCategory.General}">
+                                                    <Setter Property="Foreground" Value="#FFAE9E" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Category}" Value="{x:Static models:SkillCategory.Military}">
+                                                    <Setter Property="Foreground" Value="#90C8FA" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Border>
+
+                            <!-- 第三行：技能释义详细说明 -->
                             <TextBlock Text="{Binding Description}"
-                                       Style="{StaticResource StyleBodySecondary}"
-                                       Margin="0,4,0,0"
+                                       FontFamily="{StaticResource FontReading}"
+                                       FontSize="12"
+                                       LineHeight="18"
+                                       Margin="0,2,0,0"
                                        TextWrapping="Wrap"
-                                       Foreground="#B0A696" />
+                                       Foreground="#C2B7A8" />
                         </StackPanel>
                     </Border>
                 </Grid>

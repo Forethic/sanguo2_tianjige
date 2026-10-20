@@ -10,6 +10,7 @@ public sealed record SkillTreeNode
     public required SkillCategory Category { get; init; }
     public required byte MpCost { get; init; }
     public required string Description { get; init; }
+    public string DamageDetail { get; init; } = string.Empty; // 伤害/杀伤/效果点数 (如: "对将伤害: 12点 | 清兵: 5~8人")
 }
 
 /// <summary>
