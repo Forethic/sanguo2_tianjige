@@ -3,6 +3,7 @@
 
     <!-- 字体族定义（古风隶书优先，优雅降级） -->
     <FontFamily x:Key="FontAncient">LiSu, 隶书, STZhongsong, 华文中宋, KaiTi, 楷体, Microsoft YaHei</FontFamily>
+    <FontFamily x:Key="FontLiSu">LiSu, 隶书, STZhongsong, 华文中宋, KaiTi, 楷体, Microsoft YaHei</FontFamily>
     <FontFamily x:Key="FontReading">Microsoft YaHei, 微软雅黑, Segoe UI, sans-serif</FontFamily>
 
     <!-- 标题文字：大卷轴主名 -->
