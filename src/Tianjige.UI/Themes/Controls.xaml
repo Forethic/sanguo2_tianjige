@@ -12,6 +12,10 @@
         <Setter Property="Padding" Value="8,5" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="CaretBrush" Value="{StaticResource BrushGoldLight}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+        <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
@@ -19,7 +23,9 @@
                             Background="{TemplateBinding Background}" 
                             BorderBrush="{TemplateBinding BorderBrush}" 
                             BorderThickness="{TemplateBinding BorderThickness}" 
-                            CornerRadius="3">
+                            CornerRadius="3"
+                            SnapsToDevicePixels="True"
+                            UseLayoutRounding="True">
                         <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -30,6 +36,11 @@
                                     <DropShadowEffect Color="#C8A355" BlurRadius="6" ShadowDepth="0" Opacity="0.4" />
                                 </Setter.Value>
                             </Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="border" Property="Background" Value="#161210" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="#3D3025" />
+                            <Setter Property="Foreground" Value="#6A5C50" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -47,6 +58,10 @@
         <Setter Property="FontSize" Value="13" />
         <Setter Property="Padding" Value="12,6" />
         <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+        <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -54,7 +69,9 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="3">
+                            CornerRadius="3"
+                            SnapsToDevicePixels="True"
+                            UseLayoutRounding="True">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>
@@ -64,6 +81,11 @@
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="btnBorder" Property="Background" Value="#1C1612" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="btnBorder" Property="Background" Value="#201A16" />
+                            <Setter TargetName="btnBorder" Property="BorderBrush" Value="#44372D" />
+                            <Setter Property="Foreground" Value="#7E6C5E" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

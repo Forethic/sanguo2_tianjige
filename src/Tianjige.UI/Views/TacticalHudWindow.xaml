@@ -13,6 +13,13 @@
         AllowsTransparency="True"
         Background="Transparent"
         Topmost="{Binding IsTopmost}"
+        UseLayoutRounding="True"
+        SnapsToDevicePixels="True"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType"
+        TextOptions.TextHintingMode="Fixed"
+        RenderOptions.ClearTypeHint="Enabled"
+        RenderOptions.BitmapScalingMode="HighQuality"
         Icon="../Resources/app_icon.ico">
 
     <Window.DataContext>

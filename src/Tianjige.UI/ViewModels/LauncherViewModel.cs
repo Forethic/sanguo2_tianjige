@@ -25,6 +25,10 @@ public class LauncherViewModel : ViewModelBase
         {
             if (SetProperty(ref _selectedMonitor, value))
             {
+                foreach (var m in Monitors)
+                {
+                    m.IsSelected = (value != null && m.DeviceName == value.DeviceName);
+                }
                 RecalculateGeometry();
             }
         }

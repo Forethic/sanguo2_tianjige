@@ -13,6 +13,13 @@
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
+        UseLayoutRounding="True"
+        SnapsToDevicePixels="True"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType"
+        TextOptions.TextHintingMode="Fixed"
+        RenderOptions.ClearTypeHint="Enabled"
+        RenderOptions.BitmapScalingMode="HighQuality"
         Icon="../Resources/app_icon.ico">
 
     <Window.DataContext>
@@ -22,9 +29,11 @@
     <Border Background="{StaticResource BrushWoodSilkGradient}"
             BorderBrush="{StaticResource BrushGoldBorder}"
             BorderThickness="1.5"
-            CornerRadius="8">
+            CornerRadius="8"
+            UseLayoutRounding="True"
+            SnapsToDevicePixels="True">
         <Border.Effect>
-            <DropShadowEffect Color="#000000" BlurRadius="25" ShadowDepth="6" Opacity="0.9" />
+            <DropShadowEffect Color="#000000" BlurRadius="16" ShadowDepth="3" Opacity="0.8" />
         </Border.Effect>
 
         <Grid>
@@ -51,14 +60,15 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                        <Image Source="../Resources/app_icon.png" Width="22" Height="22" Margin="0,0,10,0" />
+                        <Image Source="../Resources/app_icon.png" Width="22" Height="22" Margin="0,0,10,0" RenderOptions.BitmapScalingMode="HighQuality" />
                         <TextBlock Text="群英策 · 天机阁"
-                                   FontFamily="{StaticResource FontLiSu}"
-                                   FontSize="16"
+                                   FontFamily="{StaticResource FontAncient}"
+                                   FontSize="15"
                                    FontWeight="Bold"
                                    Foreground="{StaticResource BrushGoldLight}"
                                    VerticalAlignment="Center" />
                         <TextBlock Text="—— 聚贤启程台"
+                                   FontFamily="{StaticResource FontReading}"
                                    FontSize="12"
                                    Foreground="{StaticResource BrushTextSecondary}"
                                    VerticalAlignment="Center"
@@ -97,9 +107,9 @@
                         <StackPanel>
                             <DockPanel LastChildFill="False" Margin="0,0,0,6">
                                 <TextBlock Text="一、群英传2 游戏路径"
-                                           FontFamily="{StaticResource FontLiSu}"
-                                           FontSize="14"
-                                           FontWeight="Bold"
+                                           FontFamily="{StaticResource FontAncient}"
+                                           FontSize="13.5"
+                                           FontWeight="SemiBold"
                                            Foreground="{StaticResource BrushGoldLight}"
                                            VerticalAlignment="Center" />
                                 <Border DockPanel.Dock="Right"
@@ -144,9 +154,9 @@
                         <StackPanel>
                             <DockPanel LastChildFill="False" Margin="0,0,0,8">
                                 <TextBlock Text="二、目标显示器选择 (支持双屏/多屏)"
-                                           FontFamily="{StaticResource FontLiSu}"
-                                           FontSize="14"
-                                           FontWeight="Bold"
+                                           FontFamily="{StaticResource FontAncient}"
+                                           FontSize="13.5"
+                                           FontWeight="SemiBold"
                                            Foreground="{StaticResource BrushGoldLight}"
                                            VerticalAlignment="Center" />
                                 <TextBlock Text="游戏与 HUD 将对齐于所选屏幕"
@@ -172,12 +182,14 @@
                                             <Button.Template>
                                                 <ControlTemplate TargetType="Button">
                                                     <Border x:Name="MonitorCard"
-                                                            Width="195" Height="64"
+                                                            Width="215" Height="66"
                                                             Background="#201B17"
                                                             BorderBrush="#473A2B"
                                                             BorderThickness="1.2"
                                                             CornerRadius="4"
-                                                            Padding="10,6">
+                                                            Padding="10,8"
+                                                            SnapsToDevicePixels="True"
+                                                            UseLayoutRounding="True">
                                                         <Grid>
                                                             <Grid.RowDefinitions>
                                                                 <RowDefinition Height="Auto" />
@@ -185,21 +197,24 @@
                                                             </Grid.RowDefinitions>
                                                             <DockPanel LastChildFill="False">
                                                                 <TextBlock Text="{Binding DisplayTitle}"
-                                                                           FontSize="11"
+                                                                           FontFamily="{StaticResource FontAncient}"
+                                                                           FontSize="12"
                                                                            FontWeight="SemiBold"
-                                                                           Foreground="{StaticResource BrushTextPrimary}" />
+                                                                           Foreground="{StaticResource BrushGoldLight}" />
                                                                 <Border DockPanel.Dock="Right"
                                                                         Background="#3A2C1B"
+                                                                        BorderBrush="{StaticResource BrushGoldMuted}"
+                                                                        BorderThickness="0.8"
                                                                         CornerRadius="2"
                                                                         Padding="4,1"
                                                                         Visibility="{Binding IsPrimary, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                                                    <TextBlock Text="主屏" FontSize="8" Foreground="{StaticResource BrushGoldLight}" />
+                                                                    <TextBlock Text="主屏" FontSize="8.5" Foreground="{StaticResource BrushGoldLight}" />
                                                                 </Border>
                                                             </DockPanel>
 
                                                             <TextBlock Grid.Row="1"
-                                                                       Text="{Binding Width, StringFormat='分辨率: {0}×'}"
-                                                                       FontSize="10"
+                                                                       Text="{Binding ResolutionText, StringFormat='分辨率: {0}'}"
+                                                                       FontSize="10.5"
                                                                        Foreground="{StaticResource BrushTextMuted}"
                                                                        VerticalAlignment="Bottom" />
                                                         </Grid>
@@ -209,6 +224,10 @@
                                                             <Setter TargetName="MonitorCard" Property="Background" Value="{StaticResource BrushBgCardHover}" />
                                                             <Setter TargetName="MonitorCard" Property="BorderBrush" Value="{StaticResource BrushGoldBorder}" />
                                                         </Trigger>
+                                                        <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                            <Setter TargetName="MonitorCard" Property="BorderBrush" Value="{StaticResource BrushGoldLight}" />
+                                                            <Setter TargetName="MonitorCard" Property="Background" Value="#2D231B" />
+                                                        </DataTrigger>
                                                     </ControlTemplate.Triggers>
                                                 </ControlTemplate>
                                             </Button.Template>
@@ -228,9 +247,9 @@
                         <StackPanel>
                             <DockPanel LastChildFill="False" Margin="0,0,0,8">
                                 <TextBlock Text="三、物理零遮挡几何推导预览"
-                                           FontFamily="{StaticResource FontLiSu}"
-                                           FontSize="14"
-                                           FontWeight="Bold"
+                                           FontFamily="{StaticResource FontAncient}"
+                                           FontSize="13.5"
+                                           FontWeight="SemiBold"
                                            Foreground="{StaticResource BrushGoldLight}"
                                            VerticalAlignment="Center" />
                                 <TextBlock Text="cnc-ddraw 纯算力对齐"
@@ -351,10 +370,19 @@
                             VerticalAlignment="Center"
                             Padding="14,8"
                             Cursor="Hand"
+                            SnapsToDevicePixels="True"
+                            UseLayoutRounding="True"
                             Style="{StaticResource StyleAncientButton}">
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <TextBlock Text="📖 " FontSize="12" VerticalAlignment="Center" />
-                            <TextBlock Text="翻阅典籍 (单机速查)" FontSize="12" VerticalAlignment="Center" />
+                            <TextBlock Text="翻阅典籍 (单机速查)"
+                                       FontFamily="{StaticResource FontAncient}"
+                                       FontSize="12"
+                                       FontWeight="SemiBold"
+                                       Foreground="{StaticResource BrushTextPrimary}"
+                                       VerticalAlignment="Center"
+                                       TextOptions.TextFormattingMode="Display"
+                                       TextOptions.TextRenderingMode="ClearType" />
                         </StackPanel>
                     </Button>
 
@@ -362,38 +390,62 @@
                     <Button Grid.Column="1"
                             Command="{Binding LaunchGameCommand}"
                             VerticalAlignment="Center"
-                            Padding="22,10"
+                            SnapsToDevicePixels="True"
+                            UseLayoutRounding="True"
                             Cursor="Hand">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Border x:Name="BtnBorder"
+                                        SnapsToDevicePixels="True"
+                                        UseLayoutRounding="True"
                                         Background="{StaticResource BrushCinnabar}"
                                         BorderBrush="{StaticResource BrushGoldLight}"
                                         BorderThickness="1.5"
                                         CornerRadius="4"
-                                        Padding="18,8">
+                                        Padding="20,9">
                                     <Border.Effect>
-                                        <DropShadowEffect Color="#A63428" BlurRadius="12" ShadowDepth="1" Opacity="0.8" />
+                                        <DropShadowEffect Color="#B83828" BlurRadius="8" ShadowDepth="0" Opacity="0.45" />
                                     </Border.Effect>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="⚔️ " FontSize="14" VerticalAlignment="Center" />
-                                        <TextBlock Text="启程入局 · 运筹帷幄"
-                                                   FontFamily="{StaticResource FontLiSu}"
-                                                   FontSize="16"
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <TextBlock x:Name="BtnIcon"
+                                                   Text="⚔ "
+                                                   FontFamily="Segoe UI Symbol, Segoe UI Emoji, sans-serif"
+                                                   FontSize="14"
+                                                   Foreground="#FFF8E8"
+                                                   VerticalAlignment="Center"
+                                                   Margin="0,0,4,0" />
+                                        <TextBlock x:Name="BtnText"
+                                                   Text="启程入局 · 运筹帷幄"
+                                                   FontFamily="{StaticResource FontAncient}"
+                                                   FontSize="15"
                                                    FontWeight="Bold"
-                                                   Foreground="#FFFFFF"
-                                                   VerticalAlignment="Center" />
+                                                   Foreground="#FFF8E8"
+                                                   VerticalAlignment="Center"
+                                                   TextOptions.TextFormattingMode="Display"
+                                                   TextOptions.TextRenderingMode="ClearType" />
                                     </StackPanel>
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
                                         <Setter TargetName="BtnBorder" Property="Background" Value="{StaticResource BrushCinnabarLight}" />
                                         <Setter TargetName="BtnBorder" Property="BorderBrush" Value="#FFE6A8" />
+                                        <Setter TargetName="BtnBorder" Property="Effect">
+                                            <Setter.Value>
+                                                <DropShadowEffect Color="#D4402D" BlurRadius="12" ShadowDepth="0" Opacity="0.75" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="BtnBorder" Property="Background" Value="#781C12" />
+                                        <Setter TargetName="BtnBorder" Property="BorderBrush" Value="{StaticResource BrushGoldLight}" />
                                     </Trigger>
                                     <Trigger Property="IsEnabled" Value="False">
-                                        <Setter TargetName="BtnBorder" Property="Background" Value="#3D2924" />
-                                        <Setter TargetName="BtnBorder" Property="BorderBrush" Value="#6B584E" />
-                                        <Setter TargetName="BtnBorder" Property="Opacity" Value="0.6" />
+                                        <Setter TargetName="BtnBorder" Property="Background" Value="#221C18" />
+                                        <Setter TargetName="BtnBorder" Property="BorderBrush" Value="#44372D" />
+                                        <Setter TargetName="BtnBorder" Property="BorderThickness" Value="1" />
+                                        <Setter TargetName="BtnBorder" Property="Effect" Value="{x:Null}" />
+                                        <Setter TargetName="BtnIcon" Property="Foreground" Value="#6E5E52" />
+                                        <Setter TargetName="BtnText" Property="Foreground" Value="#7E6C5E" />
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>

@@ -3,7 +3,7 @@ namespace Tianjige.Core.Models;
 /// <summary>
 /// 显示器信息描述
 /// </summary>
-public sealed record MonitorInfo
+public sealed record MonitorInfo : System.ComponentModel.INotifyPropertyChanged
 {
     public required string DeviceName { get; init; }
     public required string DisplayTitle { get; init; }
@@ -14,6 +14,24 @@ public sealed record MonitorInfo
     public required int Width { get; init; }
     public required int Height { get; init; }
     public double DpiScale { get; init; } = 1.0;
+
+    public string ResolutionText => $"{Width} × {Height}";
+
+    private bool _isSelected;
+    public bool IsSelected
+    {
+        get => _isSelected;
+        set
+        {
+            if (_isSelected != value)
+            {
+                _isSelected = value;
+                PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs(nameof(IsSelected)));
+            }
+        }
+    }
+
+    public event System.ComponentModel.PropertyChangedEventHandler? PropertyChanged;
 }
 
 /// <summary>
