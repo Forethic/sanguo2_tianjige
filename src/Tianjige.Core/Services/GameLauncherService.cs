@@ -47,7 +47,7 @@ public class GameLauncherService
     /// <summary>
     /// 自动对齐 cnc-ddraw 环境并拉起原版游戏进程
     /// </summary>
-    public Process LaunchGame(string gameDirectory, DisplayGeometry geometry, string renderer = "auto", bool devmode = false)
+    public Process LaunchGame(string gameDirectory, DisplayGeometry geometry, string renderer = "auto", bool devmode = true, bool border = true)
     {
         ArgumentNullException.ThrowIfNull(gameDirectory);
         ArgumentNullException.ThrowIfNull(geometry);
@@ -56,7 +56,7 @@ public class GameLauncherService
             ?? throw new FileNotFoundException($"在选定目录中找不到《三国群英传2》执行程序: {gameDirectory}");
 
         // 自动注入/更新 ddraw.dll 与精准 ddraw.ini
-        _cncDdrawManager.DeployToDirectory(gameDirectory, geometry, renderer, devmode);
+        _cncDdrawManager.DeployToDirectory(gameDirectory, geometry, renderer, devmode, border);
 
         var startInfo = new ProcessStartInfo
         {

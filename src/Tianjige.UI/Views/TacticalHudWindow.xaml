@@ -12,7 +12,8 @@
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
-        Topmost="{Binding IsTopmost}"
+        Topmost="True"
+        ShowInTaskbar="True"
         UseLayoutRounding="True"
         SnapsToDevicePixels="True"
         TextOptions.TextFormattingMode="Display"
@@ -82,12 +83,15 @@
                         <!-- 返回启动台 -->
                         <Button Click="BackToLauncher_Click"
                                 Margin="0,0,4,0"
-                                Padding="5,2"
+                                Padding="6,2"
                                 Cursor="Hand"
                                 Style="{StaticResource StyleAncientButton}"
-                                Content="⚙️ 启动台"
-                                FontSize="9"
-                                ToolTip="打开启动配置台" />
+                                ToolTip="打开启动配置台">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBlock Text="⛭" FontFamily="Segoe UI Symbol, Segoe UI, sans-serif" FontSize="10" Margin="0,0,3,0" Foreground="{StaticResource BrushGoldLight}" VerticalAlignment="Center" />
+                                <TextBlock Text="启动台" FontSize="9.5" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
 
                         <!-- 置顶切换图钉按钮 -->
                         <Button Command="{Binding ToggleTopmostCommand}"
@@ -249,7 +253,7 @@
                                 <Border x:Name="TabBorder" Background="Transparent">
                                     <Grid>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock Text="🗺" FontSize="11" Margin="0,0,3,0" x:Name="TabIcon" Foreground="{StaticResource BrushTextMuted}" />
+                                            <TextBlock Text="◈" FontSize="11" Margin="0,0,3,0" x:Name="TabIcon" Foreground="{StaticResource BrushTextMuted}" />
                                             <TextBlock Text="天下势"
                                                        FontFamily="{StaticResource FontLiSu}"
                                                        FontSize="13"
@@ -308,7 +312,7 @@
                                FontSize="10.5"
                                Foreground="{StaticResource BrushTextSecondary}"
                                Margin="0,0,8,0">
-                        <Run Text="📜 " />
+                        <Run Text="◈ " Foreground="{StaticResource BrushGoldLight}" />
                         <Run Text="{Binding SeasonTitle, Mode=OneWay}" />
                         <Run Text=" · " Foreground="{StaticResource BrushGoldMuted}" />
                         <Run Text="{Binding BattleStatusText, Mode=OneWay}" Foreground="{StaticResource BrushGoldLight}" />

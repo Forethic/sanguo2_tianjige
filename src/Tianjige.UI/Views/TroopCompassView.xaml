@@ -204,7 +204,7 @@
             </Grid>
 
             <!-- 8 阵选择标签排 -->
-            <ItemsControl ItemsSource="{Binding Formations}" Margin="0,0,0,8">
+            <ItemsControl ItemsSource="{Binding FormationItems}" Margin="0,0,0,8">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel/>
@@ -223,17 +223,28 @@
                                             BorderBrush="{StaticResource BrushGoldMuted}"
                                             BorderThickness="1"
                                             CornerRadius="3"
-                                            Padding="8,4">
+                                            Padding="8,4"
+                                            SnapsToDevicePixels="True"
+                                            UseLayoutRounding="True">
                                         <TextBlock x:Name="TabText"
                                                    Text="{Binding Name}"
                                                    FontSize="11"
-                                                   Foreground="{StaticResource BrushTextSecondary}"/>
+                                                   Foreground="{StaticResource BrushTextSecondary}"
+                                                   TextOptions.TextFormattingMode="Display"
+                                                   TextOptions.TextRenderingMode="ClearType"/>
                                     </Border>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
                                             <Setter TargetName="TabBorder" Property="Background" Value="{StaticResource BrushBgCardHover}"/>
+                                            <Setter TargetName="TabBorder" Property="BorderBrush" Value="{StaticResource BrushGoldBorder}"/>
                                             <Setter TargetName="TabText" Property="Foreground" Value="{StaticResource BrushGoldLight}"/>
                                         </Trigger>
+                                        <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                            <Setter TargetName="TabBorder" Property="Background" Value="#4C341F"/>
+                                            <Setter TargetName="TabBorder" Property="BorderBrush" Value="{StaticResource BrushGoldLight}"/>
+                                            <Setter TargetName="TabText" Property="Foreground" Value="{StaticResource BrushGoldLight}"/>
+                                            <Setter TargetName="TabText" Property="FontWeight" Value="Bold"/>
+                                        </DataTrigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
                             </Button.Template>

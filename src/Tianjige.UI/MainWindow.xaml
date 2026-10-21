@@ -246,7 +246,7 @@
                                 <Border x:Name="TabBorder" Background="Transparent">
                                     <Grid>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock Text="🗺" FontSize="11" Margin="0,0,3,0" x:Name="TabIcon" Foreground="{StaticResource BrushTextMuted}" />
+                                            <TextBlock Text="◈" FontSize="11" Margin="0,0,3,0" x:Name="TabIcon" Foreground="{StaticResource BrushTextMuted}" />
                                             <TextBlock Text="天下势"
                                                        FontFamily="{StaticResource FontLiSu}"
                                                        FontSize="13"
@@ -309,7 +309,7 @@
                                FontSize="10.5"
                                Foreground="{StaticResource BrushTextSecondary}"
                                Margin="0,0,8,0">
-                        <Run Text="📜 " />
+                        <Run Text="◈ " Foreground="{StaticResource BrushGoldLight}" />
                         <Run Text="{Binding SeasonTitle, Mode=OneWay}" />
                         <Run Text=" · " Foreground="{StaticResource BrushGoldMuted}" />
                         <Run Text="{Binding BattleStatusText, Mode=OneWay}" Foreground="{StaticResource BrushGoldLight}" />

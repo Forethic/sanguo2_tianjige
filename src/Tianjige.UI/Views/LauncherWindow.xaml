@@ -340,6 +340,48 @@
                                            VerticalAlignment="Center" />
                             </Grid>
 
+                            <Separator Style="{StaticResource StyleAncientSeparator}" Margin="0,6,0,8" />
+
+                            <!-- 运行体验与光标设定 -->
+                            <Grid Margin="2,0,2,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <!-- 边框窗口化选项 -->
+                                <CheckBox Grid.Column="0"
+                                          IsChecked="{Binding IsWindowBordered, Mode=TwoWay}"
+                                          ToolTip="开启后游戏带有标题栏与外边框，杜绝全屏黑屏切换与闪退，可自由移动拖拽">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Border Background="#2B221A" BorderBrush="{StaticResource BrushGoldMuted}" BorderThickness="0.8" CornerRadius="2" Padding="3,1" Margin="0,0,5,0">
+                                            <TextBlock Text="窗" FontSize="9.5" Foreground="{StaticResource BrushGoldLight}" FontWeight="SemiBold" />
+                                        </Border>
+                                        <TextBlock Text="有边框窗口 (推荐，免黑屏闪烁)"
+                                                   FontSize="11"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="{StaticResource BrushGoldLight}"
+                                                   VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </CheckBox>
+
+                                <!-- 光标免锁定自由穿梭选项 -->
+                                <CheckBox Grid.Column="1"
+                                          IsChecked="{Binding UnlockCursor, Mode=TwoWay}"
+                                          ToolTip="开启后鼠标不会被强行限制在游戏内，可平滑滑入右侧天机阁HUD点击查看谋略">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Border Background="#2B221A" BorderBrush="{StaticResource BrushGoldMuted}" BorderThickness="0.8" CornerRadius="2" Padding="3,1" Margin="0,0,5,0">
+                                            <TextBlock Text="梭" FontSize="9.5" Foreground="{StaticResource BrushGoldLight}" FontWeight="SemiBold" />
+                                        </Border>
+                                        <TextBlock Text="光标自由穿梭 (滑入天机阁免切屏)"
+                                                   FontSize="11"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="{StaticResource BrushGoldLight}"
+                                                   VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </CheckBox>
+                            </Grid>
+
                             <!-- 状态文本 -->
                             <TextBlock Text="{Binding GeometrySummaryText}"
                                        FontSize="10"
@@ -374,7 +416,7 @@
                             UseLayoutRounding="True"
                             Style="{StaticResource StyleAncientButton}">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <TextBlock Text="📖 " FontSize="12" VerticalAlignment="Center" />
+                            <TextBlock Text="◈" FontSize="11" Margin="0,0,5,0" Foreground="{StaticResource BrushGoldLight}" VerticalAlignment="Center" />
                             <TextBlock Text="翻阅典籍 (单机速查)"
                                        FontFamily="{StaticResource FontAncient}"
                                        FontSize="12"

@@ -77,7 +77,7 @@ public class MainViewModel : ViewModelBase
         _memoryReader = memoryReader ?? new MockMemoryReader();
         GeneralStarVm = new GeneralStarViewModel(_repository);
         TroopCompassVm = new TroopCompassViewModel(_repository);
-        WorldSituationVm = new WorldSituationViewModel(_memoryReader);
+        WorldSituationVm = new WorldSituationViewModel(_memoryReader, _repository);
 
         WorldSituationVm.SnapshotUpdated += OnSnapshotUpdated;
         UpdateStatusFromSnapshot(WorldSituationVm.LatestSnapshot);

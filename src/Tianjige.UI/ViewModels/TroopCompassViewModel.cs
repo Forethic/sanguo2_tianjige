@@ -45,12 +45,36 @@ public class TroopNodeItem : ViewModelBase
     };
 }
 
+public class FormationItemViewModel : ViewModelBase
+{
+    public FormationInfo Formation { get; }
+    public string Name => Formation.Name;
+    public string CenterGravity => Formation.CenterGravity;
+    public string Description => Formation.Description;
+    public string Advantages => Formation.Advantages;
+    public string Disadvantages => Formation.Disadvantages;
+
+    private bool _isSelected;
+    public bool IsSelected
+    {
+        get => _isSelected;
+        set => SetProperty(ref _isSelected, value);
+    }
+
+    public FormationItemViewModel(FormationInfo formation, bool isSelected = false)
+    {
+        Formation = formation;
+        _isSelected = isSelected;
+    }
+}
+
 public class TroopCompassViewModel : ViewModelBase
 {
     private readonly StaticRepository _repository;
     private readonly TroopRelationService _relationService;
 
     public IReadOnlyList<FormationInfo> Formations { get; }
+    public ObservableCollection<FormationItemViewModel> FormationItems { get; } = new();
     public IReadOnlyList<TroopCounterInfo> Troops { get; }
     public ObservableCollection<TroopNodeItem> TroopNodes { get; } = new();
 
@@ -79,7 +103,16 @@ public class TroopCompassViewModel : ViewModelBase
     public FormationInfo? SelectedFormation
     {
         get => _selectedFormation;
-        set => SetProperty(ref _selectedFormation, value);
+        set
+        {
+            if (SetProperty(ref _selectedFormation, value))
+            {
+                foreach (var item in FormationItems)
+                {
+                    item.IsSelected = (item.Name == value?.Name);
+                }
+            }
+        }
     }
 
     public ICommand SelectTroopCommand { get; }
@@ -96,6 +129,11 @@ public class TroopCompassViewModel : ViewModelBase
         Formations = _repository.GetFormations();
         _relationService = new TroopRelationService(Troops);
 
+        foreach (var f in Formations)
+        {
+            FormationItems.Add(new FormationItemViewModel(f));
+        }
+
         SelectTroopCommand = new RelayCommand<string>(name =>
         {
             if (!string.IsNullOrEmpty(name))
@@ -105,9 +143,11 @@ public class TroopCompassViewModel : ViewModelBase
             }
         });
 
-        SelectFormationCommand = new RelayCommand<FormationInfo>(formation =>
+        SelectFormationCommand = new RelayCommand<object>(param =>
         {
-            if (formation != null) SelectedFormation = formation;
+            if (param is FormationItemViewModel item) SelectedFormation = item.Formation;
+            else if (param is FormationInfo info) SelectedFormation = info;
+            else if (param is string name) SelectedFormation = Formations.FirstOrDefault(f => f.Name == name);
         });
 
         InitializeNodes();

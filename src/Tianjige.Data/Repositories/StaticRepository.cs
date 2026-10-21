@@ -509,6 +509,11 @@ public class StaticRepository
     {
         var json = TryLoadExternalJson($"Monarchs_Scenario{scenarioId}.json");
         if (string.IsNullOrEmpty(json)) return Array.Empty<RawMonarchDto>();
-        return JsonSerializer.Deserialize<List<RawMonarchDto>>(json, JsonOptions) ?? (IReadOnlyList<RawMonarchDto>)Array.Empty<RawMonarchDto>();
+        var list = JsonSerializer.Deserialize<List<RawMonarchDto>>(json, JsonOptions) ?? new();
+        foreach (var m in list)
+        {
+            m.Name = AvatarResolver.ToSimplified(m.Name);
+        }
+        return list;
     }
 }

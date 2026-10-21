@@ -34,4 +34,14 @@ public class UserSettings
     /// 是否在启程时自动拉起游戏进程
     /// </summary>
     public bool AutoLaunchGame { get; set; } = true;
+
+    /// <summary>
+    /// 是否使用标准窗口边框 (有边框模式，便于拖动与最小化)
+    /// </summary>
+    public bool IsWindowBordered { get; set; } = true;
+
+    /// <summary>
+    /// 是否开启免锁定光标模式 (devmode=true，鼠标可在游戏与HUD间自由穿梭)
+    /// </summary>
+    public bool UnlockCursor { get; set; } = true;
 }

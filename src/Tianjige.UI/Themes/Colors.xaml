@@ -38,7 +38,10 @@
     <SolidColorBrush x:Key="BrushBgSandalwood" Color="{StaticResource ColorBgSandalwood}" />
     <SolidColorBrush x:Key="BrushBgCard" Color="{StaticResource ColorBgCard}" />
     <SolidColorBrush x:Key="BrushBgCardHover" Color="{StaticResource ColorBgCardHover}" />
+    <SolidColorBrush x:Key="BrushBgCardActive" Color="#3D2C1C" />
     <SolidColorBrush x:Key="BrushBgOverlay" Color="{StaticResource ColorBgOverlay}" />
+    <SolidColorBrush x:Key="BrushBadgeBg" Color="#241D17" />
+    <SolidColorBrush x:Key="BrushBadgeBorder" Color="#4A3C2D" />
 
     <SolidColorBrush x:Key="BrushTextPrimary" Color="{StaticResource ColorTextPrimary}" />
     <SolidColorBrush x:Key="BrushTextSecondary" Color="{StaticResource ColorTextSecondary}" />
@@ -48,6 +51,7 @@
     <SolidColorBrush x:Key="BrushGoldBorderDark" Color="{StaticResource ColorGoldBorderDark}" />
     <SolidColorBrush x:Key="BrushGoldMuted" Color="{StaticResource ColorGoldMuted}" />
     <SolidColorBrush x:Key="BrushGoldLight" Color="{StaticResource ColorGoldLight}" />
+    <SolidColorBrush x:Key="BrushGoldText" Color="{StaticResource ColorGoldLight}" />
 
     <SolidColorBrush x:Key="BrushCinnabar" Color="{StaticResource ColorCinnabar}" />
     <SolidColorBrush x:Key="BrushCinnabarDark" Color="{StaticResource ColorCinnabarDark}" />

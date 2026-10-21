@@ -8,6 +8,7 @@ namespace Tianjige.Data.Memory;
 public interface IMemoryReader : IDisposable
 {
     bool IsAttached { get; }
+    int CurrentScenarioId { get; set; }
     bool TryAttach(int processId);
     bool TryGetSnapshot(out GameLiveSnapshot snapshot);
     void Detach();

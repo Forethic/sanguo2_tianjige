@@ -74,6 +74,28 @@ public class LauncherViewModel : ViewModelBase
         }
     }
 
+    private bool _isWindowBordered = true;
+    public bool IsWindowBordered
+    {
+        get => _isWindowBordered;
+        set
+        {
+            if (SetProperty(ref _isWindowBordered, value))
+            {
+                RecalculateGeometry();
+            }
+        }
+    }
+
+    private bool _unlockCursor = true;
+    public bool UnlockCursor
+    {
+        get => _unlockCursor;
+        set => SetProperty(ref _unlockCursor, value);
+    }
+
+    public string Renderer => _settings.Renderer ?? "auto";
+
     private DisplayGeometry? _currentGeometry;
     public DisplayGeometry? CurrentGeometry
     {
@@ -114,6 +136,8 @@ public class LauncherViewModel : ViewModelBase
 
         _gameDirectory = _settings.GameDirectory;
         _customHudWidth = _settings.CustomHudWidth;
+        _isWindowBordered = _settings.IsWindowBordered;
+        _unlockCursor = _settings.UnlockCursor;
 
         SelectMonitorCommand = new RelayCommand<MonitorInfo>(m =>
         {
@@ -129,6 +153,8 @@ public class LauncherViewModel : ViewModelBase
             // 保存用户当前选配
             _settings.GameDirectory = GameDirectory;
             _settings.CustomHudWidth = CustomHudWidth;
+            _settings.IsWindowBordered = IsWindowBordered;
+            _settings.UnlockCursor = UnlockCursor;
             if (SelectedMonitor != null)
             {
                 _settings.SelectedMonitorDeviceName = SelectedMonitor.DeviceName;
@@ -163,7 +189,7 @@ public class LauncherViewModel : ViewModelBase
     {
         if (SelectedMonitor != null)
         {
-            CurrentGeometry = DisplayGeometryCalculator.Calculate(SelectedMonitor, CustomHudWidth);
+            CurrentGeometry = DisplayGeometryCalculator.Calculate(SelectedMonitor, CustomHudWidth, isBordered: IsWindowBordered);
         }
     }
 

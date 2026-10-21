@@ -12,6 +12,7 @@ public class MockMemoryReader : IMemoryReader
     private bool _isAttached = true;
 
     public bool IsAttached => _isAttached;
+    public int CurrentScenarioId { get; set; } = 1;
 
     public MockMemoryReader(StaticRepository? repository = null)
     {
@@ -151,16 +152,17 @@ public class MockMemoryReader : IMemoryReader
         Detach();
     }
 
-    private static string GetLordName(int lordId) => lordId switch
+    private string GetLordName(int lordId)
     {
-        1 => "曹操",
-        2 => "刘备",
-        3 => "孙权",
-        4 => "袁绍",
-        5 => "刘表",
-        6 => "马腾",
-        _ => "无主/在野"
-    };
+        if (lordId <= 0) return "在野/无主";
+        var monarchs = _repository.GetScenarioMonarchs(CurrentScenarioId);
+        if (lordId <= monarchs.Count)
+        {
+            var name = AvatarResolver.ToSimplified(monarchs[lordId - 1].Name);
+            if (!string.IsNullOrWhiteSpace(name)) return name;
+        }
+        return $"诸侯_{lordId}";
+    }
 
     private static string GetCityName(int cityId) => SanguoCityTable.GetCityName(cityId);
 }

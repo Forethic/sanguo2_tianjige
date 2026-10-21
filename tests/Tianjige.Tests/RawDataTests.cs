@@ -191,5 +191,15 @@ public class RawDataTests
             var sMonarchs = repo.GetScenarioMonarchs(i);
             sMonarchs.Should().NotBeEmpty();
         }
+
+        // 验证各剧本特色君主
+        var s1Monarchs = repo.GetScenarioMonarchs(1);
+        s1Monarchs.Select(m => m.Name).Should().Contain(new[] { "何进", "张角", "丁原" });
+
+        var s2Monarchs = repo.GetScenarioMonarchs(2);
+        s2Monarchs.Select(m => m.Name).Should().Contain(new[] { "董卓", "曹操", "袁绍" });
+
+        var s5Monarchs = repo.GetScenarioMonarchs(5);
+        s5Monarchs.Select(m => m.Name).Should().Contain(new[] { "曹操", "刘备", "孙权", "孟获" });
     }
 }

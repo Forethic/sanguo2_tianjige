@@ -4,7 +4,7 @@
     <!-- 字体族定义：大号碑帖使用华文中宋，界面排版与中文字元优先使用屏幕高清晰字体（微软雅黑），避免小字号下复杂笔画揉成黑团 -->
     <FontFamily x:Key="FontImperial">STZhongsong, 华文中宋, Microsoft YaHei, 微软雅黑, sans-serif</FontFamily>
     <FontFamily x:Key="FontAncient">Microsoft YaHei, 微软雅黑, Segoe UI, STZhongsong, 华文中宋, sans-serif</FontFamily>
-    <FontFamily x:Key="FontLiSu">Microsoft YaHei, 微软雅黑, Segoe UI, sans-serif</FontFamily>
+    <FontFamily x:Key="FontLiSu">LiSu, 隶书, STKaiti, 华文楷体, Microsoft YaHei, 微软雅黑, Segoe UI, sans-serif</FontFamily>
     <FontFamily x:Key="FontReading">Microsoft YaHei, 微软雅黑, Segoe UI, sans-serif</FontFamily>
 
     <!-- 标题文字：大卷轴主名 / 武将大名 -->
@@ -61,6 +61,41 @@
         <Setter Property="FontFamily" Value="{StaticResource FontReading}" />
         <Setter Property="FontSize" Value="12" />
         <Setter Property="Foreground" Value="{StaticResource BrushTextSecondary}" />
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+        <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
+        <Setter Property="TextOptions.TextHintingMode" Value="Fixed" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+    </Style>
+
+    <!-- 辅助说明与注记（10.5px） -->
+    <Style x:Key="StyleCaption" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource FontReading}" />
+        <Setter Property="FontSize" Value="10.5" />
+        <Setter Property="Foreground" Value="{StaticResource BrushTextMuted}" />
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+        <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
+        <Setter Property="TextOptions.TextHintingMode" Value="Fixed" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+    </Style>
+
+    <!-- 角标徽章文字（9.5px） -->
+    <Style x:Key="StyleBadgeText" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource FontReading}" />
+        <Setter Property="FontSize" Value="9.5" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{StaticResource BrushGoldLight}" />
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+        <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
+        <Setter Property="TextOptions.TextHintingMode" Value="Fixed" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+    </Style>
+
+    <!-- 列表表头文字（11px） -->
+    <Style x:Key="StyleTableHead" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource FontAncient}" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{StaticResource BrushGoldBorder}" />
         <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
         <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
         <Setter Property="TextOptions.TextHintingMode" Value="Fixed" />

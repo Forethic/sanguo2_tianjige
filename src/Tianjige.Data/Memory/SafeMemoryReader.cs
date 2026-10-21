@@ -19,6 +19,7 @@ public class SafeMemoryReader : IMemoryReader
     private const nint DefaultCityArrayAddress = 0x004B0000;
 
     public bool IsAttached => _processHandle != 0;
+    public int CurrentScenarioId { get; set; } = 1;
 
     public SafeMemoryReader(StaticRepository? repository = null)
     {
@@ -182,16 +183,17 @@ public class SafeMemoryReader : IMemoryReader
         GC.SuppressFinalize(this);
     }
 
-    private static string GetLordName(int lordId) => lordId switch
+    private string GetLordName(int lordId)
     {
-        1 => "曹操",
-        2 => "刘备",
-        3 => "孙权",
-        4 => "袁绍",
-        5 => "刘表",
-        6 => "马腾",
-        _ => lordId == 0 ? "在野/无主" : $"诸侯_{lordId}"
-    };
+        if (lordId <= 0) return "在野/无主";
+        var monarchs = _repository.GetScenarioMonarchs(CurrentScenarioId);
+        if (lordId <= monarchs.Count)
+        {
+            var name = AvatarResolver.ToSimplified(monarchs[lordId - 1].Name);
+            if (!string.IsNullOrWhiteSpace(name)) return name;
+        }
+        return $"诸侯_{lordId}";
+    }
 
     private static string GetCityName(int cityId) => SanguoCityTable.GetCityName(cityId);
 

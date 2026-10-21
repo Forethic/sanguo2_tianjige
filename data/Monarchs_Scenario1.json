@@ -1,23 +1,23 @@
-﻿[
+[
   {
     "Section": "KING01",
     "Name": "何進",
     "FlagNum": 26,
     "Type": 0,
-    "Select": 0
+    "Select": 8
   },
   {
     "Section": "KING02",
     "Name": "張角",
     "FlagNum": 9,
-    "Type": 1,
+    "Type": 0,
     "Select": 8
   },
   {
     "Section": "KING03",
     "Name": "孫堅",
     "FlagNum": 17,
-    "Type": 1,
+    "Type": 0,
     "Select": 8
   },
   {
@@ -31,105 +31,77 @@
     "Section": "KING05",
     "Name": "丁原",
     "FlagNum": 16,
-    "Type": 2,
+    "Type": 0,
     "Select": 7
   },
   {
     "Section": "KING06",
     "Name": "公孫瓚",
     "FlagNum": 6,
-    "Type": 2,
+    "Type": 0,
     "Select": 7
   },
   {
     "Section": "KING07",
     "Name": "劉焉",
     "FlagNum": 3,
-    "Type": 2,
+    "Type": 0,
     "Select": 9
   },
   {
     "Section": "KING08",
     "Name": "韓馥",
     "FlagNum": 13,
-    "Type": 2,
+    "Type": 0,
     "Select": 9
   },
   {
     "Section": "KING09",
     "Name": "龔景",
     "FlagNum": 23,
-    "Type": 3,
+    "Type": 0,
     "Select": 9
   },
   {
     "Section": "KING10",
     "Name": "喬玄",
     "FlagNum": 15,
-    "Type": 3,
+    "Type": 0,
     "Select": 9
   },
   {
     "Section": "KING11",
     "Name": "陶謙",
     "FlagNum": 19,
-    "Type": 3,
+    "Type": 0,
     "Select": 9
   },
   {
     "Section": "KING12",
     "Name": "孔岫",
     "FlagNum": 8,
-    "Type": 4,
+    "Type": 0,
     "Select": 9
   },
   {
     "Section": "KING13",
     "Name": "劉繇",
     "FlagNum": 10,
-    "Type": 2,
+    "Type": 0,
     "Select": 9
   },
   {
     "Section": "KING14",
     "Name": "嚴白虎",
     "FlagNum": 25,
-    "Type": 2,
+    "Type": 0,
     "Select": 9
   },
   {
     "Section": "KING15",
     "Name": "盜賊",
     "FlagNum": 0,
-    "Type": 4,
-    "Select": 0
-  },
-  {
-    "Section": "KING16",
-    "Name": "嚴白虎",
-    "FlagNum": 25,
-    "Type": 2,
-    "Select": 9
-  },
-  {
-    "Section": "KING17",
-    "Name": "王朗",
-    "FlagNum": 24,
-    "Type": 2,
-    "Select": 9
-  },
-  {
-    "Section": "KING18",
-    "Name": "劉焉",
-    "FlagNum": 3,
-    "Type": 2,
-    "Select": 9
-  },
-  {
-    "Section": "KING19",
-    "Name": "盜賊",
-    "FlagNum": 0,
-    "Type": 4,
+    "Type": 0,
     "Select": 0
   }
 ]

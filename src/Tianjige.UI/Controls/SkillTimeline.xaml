@@ -88,7 +88,7 @@
                                                         <Setter Property="Foreground" Value="#FFA89E" />
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding Category}" Value="{x:Static models:SkillCategory.Military}">
-                                                        <Setter Property="Text" Value="📜 军师技" />
+                                                        <Setter Property="Text" Value="☯ 军师技" />
                                                         <Setter Property="Foreground" Value="#8EC5F7" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
