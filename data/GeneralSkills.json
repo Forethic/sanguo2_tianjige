@@ -1,0 +1,992 @@
+﻿[
+  {
+    "Sequence": 1,
+    "Code": "R001",
+    "Name": "命療術",
+    "Mp": 20,
+    "Power": 100,
+    "Attack": 30,
+    "Note": "主將補血,L1"
+  },
+  {
+    "Sequence": 2,
+    "Code": "R002",
+    "Name": "落月弓",
+    "Mp": 18,
+    "Power": 100,
+    "Attack": 15,
+    "Note": "主將射箭,L1"
+  },
+  {
+    "Sequence": 3,
+    "Code": "R003",
+    "Name": "地泉衝",
+    "Mp": 19,
+    "Power": 100,
+    "Attack": 0,
+    "Note": "水柱,L1"
+  },
+  {
+    "Sequence": 4,
+    "Code": "R004",
+    "Name": "火箭",
+    "Mp": 20,
+    "Power": 100,
+    "Attack": 6,
+    "Note": "火箭支援,L1"
+  },
+  {
+    "Sequence": 5,
+    "Code": "R005",
+    "Name": "伏兵組陣",
+    "Mp": 21,
+    "Power": 100,
+    "Attack": 0,
+    "Note": "補兵,L2"
+  },
+  {
+    "Sequence": 6,
+    "Code": "R006",
+    "Name": "木輪攻",
+    "Mp": 22,
+    "Power": 100,
+    "Attack": 5,
+    "Note": "側滾筒,L1"
+  },
+  {
+    "Sequence": 7,
+    "Code": "R007",
+    "Name": "虎咆",
+    "Mp": 21,
+    "Power": 100,
+    "Attack": 7,
+    "Note": "主將四周亂爆,L1"
+  },
+  {
+    "Sequence": 8,
+    "Code": "R008",
+    "Name": "火雷",
+    "Mp": 22,
+    "Power": 100,
+    "Attack": 6,
+    "Note": "炸彈地雷,L1"
+  },
+  {
+    "Sequence": 9,
+    "Code": "R009",
+    "Name": "雷擊",
+    "Mp": 22,
+    "Power": 100,
+    "Attack": 0,
+    "Note": "閃電,L1"
+  },
+  {
+    "Sequence": 10,
+    "Code": "R010",
+    "Name": "炎龍",
+    "Mp": 23,
+    "Power": 100,
+    "Attack": 10,
+    "Note": "火龍,L1"
+  },
+  {
+    "Sequence": 11,
+    "Code": "R011",
+    "Name": "伏焰",
+    "Mp": 23,
+    "Power": 100,
+    "Attack": 6,
+    "Note": "放火,L1"
+  },
+  {
+    "Sequence": 12,
+    "Code": "R012",
+    "Name": "拒陸馬",
+    "Mp": 24,
+    "Power": 100,
+    "Attack": 20,
+    "Note": "退兵阻礙,L1"
+  },
+  {
+    "Sequence": 13,
+    "Code": "R013",
+    "Name": "御飛刀",
+    "Mp": 25,
+    "Power": 100,
+    "Attack": 20,
+    "Note": "飛刀,L2"
+  },
+  {
+    "Sequence": 14,
+    "Code": "R014",
+    "Name": "雷光波動",
+    "Mp": 25,
+    "Power": 100,
+    "Attack": 0,
+    "Note": "電力波及,L1"
+  },
+  {
+    "Sequence": 15,
+    "Code": "R015",
+    "Name": "火箭烈",
+    "Mp": 26,
+    "Power": 100,
+    "Attack": 6,
+    "Note": "火箭支援,L2"
+  },
+  {
+    "Sequence": 16,
+    "Code": "R016",
+    "Name": "虎咆震",
+    "Mp": 26,
+    "Power": 100,
+    "Attack": 7,
+    "Note": "主將四周亂爆,L2"
+  },
+  {
+    "Sequence": 17,
+    "Code": "R017",
+    "Name": "伏兵排陣",
+    "Mp": 28,
+    "Power": 100,
+    "Attack": 0,
+    "Note": "補兵,L3"
+  },
+  {
+    "Sequence": 18,
+    "Code": "R018",
+    "Name": "地泉裂勁",
+    "Mp": 29,
+    "Power": 100,
+    "Attack": 0,
+    "Note": "水柱,L2"
+  },
+  {
+    "Sequence": 19,
+    "Code": "R019",
+    "Name": "後伏連兵",
+    "Mp": 30,
+    "Power": 100,
+    "Attack": 0,
+    "Note": "後伏兵,L1"
+  },
+  {
+    "Sequence": 20,
+    "Code": "R020",
+    "Name": "木輪強襲",
+    "Mp": 31,
+    "Power": 100,
+    "Attack": 5,
+    "Note": "側滾筒,L2"
+  },
+  {
+    "Sequence": 21,
+    "Code": "R021",
+    "Name": "炎龍無雙",
+    "Mp": 35,
+    "Power": 100,
+    "Attack": 10,
+    "Note": "火龍,L2"
+  },
+  {
+    "Sequence": 22,
+    "Code": "R022",
+    "Name": "雷光振殺",
+    "Mp": 35,
+    "Power": 100,
+    "Attack": 0,
+    "Note": "電力波及,L2"
+  },
+  {
+    "Sequence": 23,
+    "Code": "R023",
+    "Name": "虎咆陽炎",
+    "Mp": 35,
+    "Power": 100,
+    "Attack": 7,
+    "Note": "主將四周亂爆,L3"
+  },
+  {
+    "Sequence": 24,
+    "Code": "R024",
+    "Name": "火雷爆",
+    "Mp": 36,
+    "Power": 100,
+    "Attack": 6,
+    "Note": "炸彈地雷,L2"
+  },
+  {
+    "Sequence": 25,
+    "Code": "R025",
+    "Name": "黃龍天翔",
+    "Mp": 38,
+    "Power": 100,
+    "Attack": 12,
+    "Note": "召喚龍,L3"
+  },
+  {
+    "Sequence": 26,
+    "Code": "R026",
+    "Name": "地泉鯨浪",
+    "Mp": 38,
+    "Power": 100,
+    "Attack": 0,
+    "Note": "水柱,L3"
+  },
+  {
+    "Sequence": 27,
+    "Code": "R027",
+    "Name": "絕命壩",
+    "Mp": 38,
+    "Power": 100,
+    "Attack": 20,
+    "Note": "退兵阻礙,L2"
+  },
+  {
+    "Sequence": 28,
+    "Code": "R028",
+    "Name": "雷擊閃",
+    "Mp": 39,
+    "Power": 100,
+    "Attack": 0,
+    "Note": "閃電,L2"
+  },
+  {
+    "Sequence": 29,
+    "Code": "R029",
+    "Name": "炎龍殺陣",
+    "Mp": 40,
+    "Power": 100,
+    "Attack": 10,
+    "Note": "火龍,L3"
+  },
+  {
+    "Sequence": 30,
+    "Code": "R030",
+    "Name": "火箭天襲",
+    "Mp": 40,
+    "Power": 100,
+    "Attack": 6,
+    "Note": "火箭支援,L3"
+  },
+  {
+    "Sequence": 31,
+    "Code": "R031",
+    "Name": "後伏兵陣",
+    "Mp": 41,
+    "Power": 100,
+    "Attack": 0,
+    "Note": "後伏兵,L2"
+  },
+  {
+    "Sequence": 32,
+    "Code": "R032",
+    "Name": "火雷星雨",
+    "Mp": 42,
+    "Power": 100,
+    "Attack": 6,
+    "Note": "炸彈地雷,L3"
+  },
+  {
+    "Sequence": 33,
+    "Code": "R033",
+    "Name": "炎龍怒濤",
+    "Mp": 43,
+    "Power": 100,
+    "Attack": 10,
+    "Note": "火龍,L4"
+  },
+  {
+    "Sequence": 34,
+    "Code": "R034",
+    "Name": "赤焰洪流",
+    "Mp": 41,
+    "Power": 100,
+    "Attack": 6,
+    "Note": "放火,L2"
+  },
+  {
+    "Sequence": 35,
+    "Code": "R035",
+    "Name": "木輪濤擊",
+    "Mp": 44,
+    "Power": 100,
+    "Attack": 5,
+    "Note": "側滾筒,L3"
+  },
+  {
+    "Sequence": 36,
+    "Code": "R036",
+    "Name": "赤焰火海",
+    "Mp": 49,
+    "Power": 100,
+    "Attack": 6,
+    "Note": "放火,L3"
+  },
+  {
+    "Sequence": 37,
+    "Code": "R037",
+    "Name": "後伏軍陣",
+    "Mp": 42,
+    "Power": 100,
+    "Attack": 0,
+    "Note": "後伏兵,L3"
+  },
+  {
+    "Sequence": 38,
+    "Code": "R038",
+    "Name": "大地狂嘯",
+    "Mp": 48,
+    "Power": 100,
+    "Attack": 0,
+    "Note": "地震,L1"
+  },
+  {
+    "Sequence": 39,
+    "Code": "R039",
+    "Name": "雷光燋獄",
+    "Mp": 43,
+    "Power": 100,
+    "Attack": 0,
+    "Note": "電力波及,L3"
+  },
+  {
+    "Sequence": 40,
+    "Code": "R040",
+    "Name": "十面埋伏",
+    "Mp": 23,
+    "Power": 100,
+    "Attack": 0,
+    "Note": "退兵阻礙,L3"
+  },
+  {
+    "Sequence": 41,
+    "Code": "R041",
+    "Name": "炎龍絕殺",
+    "Mp": 49,
+    "Power": 100,
+    "Attack": 10,
+    "Note": "火龍,L4"
+  },
+  {
+    "Sequence": 42,
+    "Code": "R042",
+    "Name": "五雷轟頂",
+    "Mp": 45,
+    "Power": 100,
+    "Attack": 40,
+    "Note": "閃電,L3"
+  },
+  {
+    "Sequence": 43,
+    "Code": "R043",
+    "Name": "狂雷天牢",
+    "Mp": 50,
+    "Power": 100,
+    "Attack": 48,
+    "Note": "雷球,L1"
+  },
+  {
+    "Sequence": 44,
+    "Code": "R044",
+    "Name": "天地無用",
+    "Mp": 50,
+    "Power": 100,
+    "Attack": 30,
+    "Note": "丞相組合計,L4"
+  },
+  {
+    "Sequence": 45,
+    "Code": "R045",
+    "Name": "飛矢",
+    "Mp": 18,
+    "Power": 100,
+    "Attack": 5,
+    "Note": "弓箭支援,L1"
+  },
+  {
+    "Sequence": 46,
+    "Code": "R046",
+    "Name": "連弩",
+    "Mp": 20,
+    "Power": 100,
+    "Attack": 20,
+    "Note": "連弩,L1"
+  },
+  {
+    "Sequence": 47,
+    "Code": "R047",
+    "Name": "突石",
+    "Mp": 20,
+    "Power": 100,
+    "Attack": 11,
+    "Note": "突石,L1"
+  },
+  {
+    "Sequence": 48,
+    "Code": "R048",
+    "Name": "落石",
+    "Mp": 18,
+    "Power": 100,
+    "Attack": 9,
+    "Note": "投石車投普通石頭,L1"
+  },
+  {
+    "Sequence": 49,
+    "Code": "R049",
+    "Name": "刀劍亂",
+    "Mp": 18,
+    "Power": 100,
+    "Attack": 7,
+    "Note": "亂刀劍,L1"
+  },
+  {
+    "Sequence": 50,
+    "Code": "R050",
+    "Name": "半月斬",
+    "Mp": 22,
+    "Power": 100,
+    "Attack": 12,
+    "Note": "WAVE,L1"
+  },
+  {
+    "Sequence": 51,
+    "Code": "R051",
+    "Name": "旋龍",
+    "Mp": 22,
+    "Power": 100,
+    "Attack": 0,
+    "Note": "龍捲風,L1"
+  },
+  {
+    "Sequence": 52,
+    "Code": "R052",
+    "Name": "落日弓",
+    "Mp": 22,
+    "Power": 100,
+    "Attack": 25,
+    "Note": "主將射箭,L1"
+  },
+  {
+    "Sequence": 53,
+    "Code": "R053",
+    "Name": "八面火",
+    "Mp": 23,
+    "Power": 100,
+    "Attack": 8,
+    "Note": "主將八方爆裂,L1"
+  },
+  {
+    "Sequence": 54,
+    "Code": "R054",
+    "Name": "旋燈火",
+    "Mp": 23,
+    "Power": 100,
+    "Attack": 8,
+    "Note": "火圈,L1"
+  },
+  {
+    "Sequence": 55,
+    "Code": "R055",
+    "Name": "突石劍",
+    "Mp": 23,
+    "Power": 100,
+    "Attack": 11,
+    "Note": "突石,L2"
+  },
+  {
+    "Sequence": 56,
+    "Code": "R056",
+    "Name": "太極門",
+    "Mp": 23,
+    "Power": 100,
+    "Attack": 8,
+    "Note": "爆炸（太極）,L1"
+  },
+  {
+    "Sequence": 57,
+    "Code": "R057",
+    "Name": "伏兵班陣",
+    "Mp": 21,
+    "Power": 100,
+    "Attack": 0,
+    "Note": "補兵,L2"
+  },
+  {
+    "Sequence": 58,
+    "Code": "R058",
+    "Name": "八門金鎖",
+    "Mp": 20,
+    "Power": 100,
+    "Attack": 0,
+    "Note": "敵兵暫停,L3"
+  },
+  {
+    "Sequence": 59,
+    "Code": "R059",
+    "Name": "鬼戟",
+    "Mp": 24,
+    "Power": 100,
+    "Attack": 14,
+    "Note": "主將射戟,L1"
+  },
+  {
+    "Sequence": 60,
+    "Code": "R060",
+    "Name": "回天術",
+    "Mp": 26,
+    "Power": 100,
+    "Attack": 35,
+    "Note": "主將補血,L2"
+  },
+  {
+    "Sequence": 61,
+    "Code": "R061",
+    "Name": "地茅刺",
+    "Mp": 26,
+    "Power": 100,
+    "Attack": 8,
+    "Note": "地刺茅,L1"
+  },
+  {
+    "Sequence": 62,
+    "Code": "R062",
+    "Name": "連弩激射",
+    "Mp": 26,
+    "Power": 100,
+    "Attack": 32,
+    "Note": "連弩,L2"
+  },
+  {
+    "Sequence": 63,
+    "Code": "R063",
+    "Name": "冰柱刺",
+    "Mp": 26,
+    "Power": 100,
+    "Attack": 8,
+    "Note": "冰柱刺,L1"
+  },
+  {
+    "Sequence": 64,
+    "Code": "R064",
+    "Name": "突劍四方",
+    "Mp": 27,
+    "Power": 100,
+    "Attack": 12,
+    "Note": "突石,L3"
+  },
+  {
+    "Sequence": 65,
+    "Code": "R065",
+    "Name": "衝車",
+    "Mp": 27,
+    "Power": 100,
+    "Attack": 0,
+    "Note": "衝車,L1"
+  },
+  {
+    "Sequence": 66,
+    "Code": "R066",
+    "Name": "神劍",
+    "Mp": 28,
+    "Power": 100,
+    "Attack": 10,
+    "Note": "飛劍,L1"
+  },
+  {
+    "Sequence": 67,
+    "Code": "R067",
+    "Name": "八面火轉",
+    "Mp": 28,
+    "Power": 100,
+    "Attack": 8,
+    "Note": "主將八方爆裂,L2"
+  },
+  {
+    "Sequence": 68,
+    "Code": "R068",
+    "Name": "突襲石",
+    "Mp": 28,
+    "Power": 100,
+    "Attack": 10,
+    "Note": "側滾石,L1"
+  },
+  {
+    "Sequence": 69,
+    "Code": "R069",
+    "Name": "龍砲",
+    "Mp": 29,
+    "Power": 100,
+    "Attack": 8,
+    "Note": "尾紋爆炸,L1"
+  },
+  {
+    "Sequence": 70,
+    "Code": "R070",
+    "Name": "火牛陣",
+    "Mp": 30,
+    "Power": 100,
+    "Attack": 10,
+    "Note": "火牛陣,L1"
+  },
+  {
+    "Sequence": 71,
+    "Code": "R071",
+    "Name": "生死門",
+    "Mp": 31,
+    "Power": 100,
+    "Attack": 0,
+    "Note": "黑洞,L1"
+  },
+  {
+    "Sequence": 72,
+    "Code": "R072",
+    "Name": "亂飛矢",
+    "Mp": 32,
+    "Power": 100,
+    "Attack": 5,
+    "Note": "弓箭支援,L2"
+  },
+  {
+    "Sequence": 73,
+    "Code": "R073",
+    "Name": "地茅亂刺",
+    "Mp": 33,
+    "Power": 100,
+    "Attack": 8,
+    "Note": "地刺茅,L2"
+  },
+  {
+    "Sequence": 74,
+    "Code": "R074",
+    "Name": "龍砲激射",
+    "Mp": 34,
+    "Power": 100,
+    "Attack": 8,
+    "Note": "尾紋爆炸,L2"
+  },
+  {
+    "Sequence": 75,
+    "Code": "R075",
+    "Name": "旋龍合璧",
+    "Mp": 34,
+    "Power": 100,
+    "Attack": 0,
+    "Note": "龍捲風,L2"
+  },
+  {
+    "Sequence": 76,
+    "Code": "R076",
+    "Name": "冰柱群鋒",
+    "Mp": 34,
+    "Power": 100,
+    "Attack": 8,
+    "Note": "冰柱刺,L2"
+  },
+  {
+    "Sequence": 77,
+    "Code": "R077",
+    "Name": "烈火旋燈",
+    "Mp": 35,
+    "Power": 100,
+    "Attack": 8,
+    "Note": "火圈,L2"
+  },
+  {
+    "Sequence": 78,
+    "Code": "R078",
+    "Name": "太極華陣",
+    "Mp": 36,
+    "Power": 100,
+    "Attack": 8,
+    "Note": "爆炸（太極）,L2"
+  },
+  {
+    "Sequence": 79,
+    "Code": "R079",
+    "Name": "滾石遽壓",
+    "Mp": 36,
+    "Power": 100,
+    "Attack": 10,
+    "Note": "側滾石,L2"
+  },
+  {
+    "Sequence": 80,
+    "Code": "R080",
+    "Name": "八卦奇陣",
+    "Mp": 37,
+    "Power": 100,
+    "Attack": 8,
+    "Note": "爆炸（八卦）,L3"
+  },
+  {
+    "Sequence": 81,
+    "Code": "R081",
+    "Name": "伏兵連陣",
+    "Mp": 37,
+    "Power": 100,
+    "Attack": 0,
+    "Note": "補兵,L3"
+  },
+  {
+    "Sequence": 82,
+    "Code": "R082",
+    "Name": "駟衝車",
+    "Mp": 38,
+    "Power": 100,
+    "Attack": 0,
+    "Note": "衝車,L2"
+  },
+  {
+    "Sequence": 83,
+    "Code": "R083",
+    "Name": "三日月斬",
+    "Mp": 38,
+    "Power": 100,
+    "Attack": 12,
+    "Note": "WAVE,L2"
+  },
+  {
+    "Sequence": 84,
+    "Code": "R084",
+    "Name": "神劍閃",
+    "Mp": 38,
+    "Power": 100,
+    "Attack": 10,
+    "Note": "飛劍,L2"
+  },
+  {
+    "Sequence": 85,
+    "Code": "R085",
+    "Name": "連弩狂濤",
+    "Mp": 38,
+    "Power": 100,
+    "Attack": 44,
+    "Note": "連弩,L3"
+  },
+  {
+    "Sequence": 86,
+    "Code": "R086",
+    "Name": "亂刀狂舞",
+    "Mp": 39,
+    "Power": 100,
+    "Attack": 7,
+    "Note": "亂刀劍,L2"
+  },
+  {
+    "Sequence": 87,
+    "Code": "R087",
+    "Name": "飛矢烈震",
+    "Mp": 39,
+    "Power": 100,
+    "Attack": 5,
+    "Note": "弓箭支援,L3"
+  },
+  {
+    "Sequence": 88,
+    "Code": "R088",
+    "Name": "三聖華斬",
+    "Mp": 40,
+    "Power": 100,
+    "Attack": 25,
+    "Note": "會集中攻擊武將的半月斬,L4"
+  },
+  {
+    "Sequence": 89,
+    "Code": "R089",
+    "Name": "神火旋張",
+    "Mp": 40,
+    "Power": 100,
+    "Attack": 8,
+    "Note": "火圈,L1"
+  },
+  {
+    "Sequence": 90,
+    "Code": "R090",
+    "Name": "龍砲滅殺",
+    "Mp": 40,
+    "Power": 100,
+    "Attack": 8,
+    "Note": "尾紋爆炸,L3"
+  },
+  {
+    "Sequence": 91,
+    "Code": "R091",
+    "Name": "炬石轟",
+    "Mp": 41,
+    "Power": 100,
+    "Attack": 11,
+    "Note": "投石車投火石,L2"
+  },
+  {
+    "Sequence": 92,
+    "Code": "R092",
+    "Name": "火牛群舞",
+    "Mp": 42,
+    "Power": 100,
+    "Attack": 10,
+    "Note": "火牛陣,L2"
+  },
+  {
+    "Sequence": 93,
+    "Code": "R093",
+    "Name": "茅刺遍地",
+    "Mp": 42,
+    "Power": 100,
+    "Attack": 8,
+    "Note": "地刺茅,L3"
+  },
+  {
+    "Sequence": 94,
+    "Code": "R094",
+    "Name": "滾石怒衝",
+    "Mp": 43,
+    "Power": 100,
+    "Attack": 10,
+    "Note": "側滾石,L3"
+  },
+  {
+    "Sequence": 95,
+    "Code": "R095",
+    "Name": "劍輪舞",
+    "Mp": 44,
+    "Power": 100,
+    "Attack": 8,
+    "Note": "劍輪舞,L1"
+  },
+  {
+    "Sequence": 96,
+    "Code": "R096",
+    "Name": "分身斬",
+    "Mp": 44,
+    "Power": 100,
+    "Attack": 35,
+    "Note": "分身斬,L3"
+  },
+  {
+    "Sequence": 97,
+    "Code": "R097",
+    "Name": "冰嵐刃舞",
+    "Mp": 44,
+    "Power": 100,
+    "Attack": 8,
+    "Note": "冰柱刺,L3"
+  },
+  {
+    "Sequence": 98,
+    "Code": "R098",
+    "Name": "神劍閃華",
+    "Mp": 45,
+    "Power": 100,
+    "Attack": 10,
+    "Note": "飛劍,L3"
+  },
+  {
+    "Sequence": 99,
+    "Code": "R099",
+    "Name": "炎牆",
+    "Mp": 45,
+    "Power": 100,
+    "Attack": 8,
+    "Note": "火牆（或龍捲風）,L1"
+  },
+  {
+    "Sequence": 100,
+    "Code": "R100",
+    "Name": "旋龍天舞",
+    "Mp": 46,
+    "Power": 100,
+    "Attack": 0,
+    "Note": "龍捲風,L3"
+  },
+  {
+    "Sequence": 101,
+    "Code": "R101",
+    "Name": "地獄之門",
+    "Mp": 46,
+    "Power": 100,
+    "Attack": 0,
+    "Note": "黑洞,L2"
+  },
+  {
+    "Sequence": 102,
+    "Code": "R102",
+    "Name": "集火柱",
+    "Mp": 47,
+    "Power": 100,
+    "Attack": 9,
+    "Note": "集火柱,L1"
+  },
+  {
+    "Sequence": 103,
+    "Code": "R103",
+    "Name": "神火怒張",
+    "Mp": 47,
+    "Power": 100,
+    "Attack": 8,
+    "Note": "火圈,L2"
+  },
+  {
+    "Sequence": 104,
+    "Code": "R104",
+    "Name": "神鬼亂舞",
+    "Mp": 47,
+    "Power": 100,
+    "Attack": 60,
+    "Note": "主將亂砍,L3"
+  },
+  {
+    "Sequence": 105,
+    "Code": "R105",
+    "Name": "炬石煉獄",
+    "Mp": 48,
+    "Power": 100,
+    "Attack": 11,
+    "Note": "投石車投火石,L3"
+  },
+  {
+    "Sequence": 106,
+    "Code": "R106",
+    "Name": "炎牆烈燒",
+    "Mp": 48,
+    "Power": 100,
+    "Attack": 8,
+    "Note": "火牆（或龍捲風）,L2"
+  },
+  {
+    "Sequence": 107,
+    "Code": "R107",
+    "Name": "日月輪斬",
+    "Mp": 49,
+    "Power": 100,
+    "Attack": 12,
+    "Note": "WAVE,L3"
+  },
+  {
+    "Sequence": 108,
+    "Code": "R108",
+    "Name": "火牛烈崩",
+    "Mp": 49,
+    "Power": 100,
+    "Attack": 10,
+    "Note": "火牛陣,L3"
+  },
+  {
+    "Sequence": 109,
+    "Code": "R109",
+    "Name": "五嶽華斬",
+    "Mp": 49,
+    "Power": 100,
+    "Attack": 45,
+    "Note": "會集中攻擊武將的半月斬,L5"
+  },
+  {
+    "Sequence": 110,
+    "Code": "R110",
+    "Name": "鬼哭神號",
+    "Mp": 50,
+    "Power": 100,
+    "Attack": 50,
+    "Note": "將軍組合計,L4"
+  }
+]

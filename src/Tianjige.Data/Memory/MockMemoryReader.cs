@@ -162,23 +162,5 @@ public class MockMemoryReader : IMemoryReader
         _ => "无主/在野"
     };
 
-    private static string GetCityName(int cityId) => cityId switch
-    {
-        1 => "许昌",
-        2 => "洛阳",
-        3 => "长安",
-        4 => "襄阳",
-        5 => "建业",
-        6 => "成都",
-        7 => "邺城",
-        8 => "北平",
-        9 => "下邳",
-        10 => "汉中",
-        11 => "汉寿",
-        12 => "宛城",
-        13 => "江陵",
-        14 => "寿春",
-        15 => "柴桑",
-        _ => $"郡城_{cityId}"
-    };
+    private static string GetCityName(int cityId) => SanguoCityTable.GetCityName(cityId);
 }

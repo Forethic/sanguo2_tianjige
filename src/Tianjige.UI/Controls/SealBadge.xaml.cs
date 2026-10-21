@@ -29,7 +29,7 @@ public partial class SealBadge : UserControl
     public string TierText
     {
         get => (string)GetValue(TierTextProperty);
-        private set => SetValue(TierTextProperty, value);
+        set => SetValue(TierTextProperty, value);
     }
 
     public SealBadge()
@@ -51,6 +51,7 @@ public partial class SealBadge : UserControl
         var clean = rawTier.Trim('【', '】', ' ');
         if (string.IsNullOrWhiteSpace(clean)) clean = "良将";
         TierText = clean;
+        SealText.Text = clean;
 
         switch (clean)
         {
@@ -70,6 +71,15 @@ public partial class SealBadge : UserControl
                 SealEmblem.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#B0D7F8"));
                 SealGlow.Color = (Color)ColorConverter.ConvertFromString("#25629E");
                 SealGlow.Opacity = 0.4;
+                break;
+
+            case "谋士":
+                SealCard.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#12252A"));
+                SealCard.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#3E7E7A"));
+                SealText.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#A5E2DC"));
+                SealEmblem.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#A5E2DC"));
+                SealGlow.Color = (Color)ColorConverter.ConvertFromString("#206963");
+                SealGlow.Opacity = 0.35;
                 break;
 
             case "良将":

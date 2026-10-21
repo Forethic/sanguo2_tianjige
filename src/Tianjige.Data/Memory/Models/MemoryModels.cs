@@ -73,6 +73,14 @@ public sealed record LiveGeneralRecord
     public required int MaxTroopCount { get; init; }
     public required byte Loyalty { get; init; }
     public required GeneralStatus Status { get; init; }
+    public string StatusDisplayName => Status switch
+    {
+        GeneralStatus.Wild => "在野",
+        GeneralStatus.Wandering => "流浪",
+        GeneralStatus.Captured => "被俘",
+        GeneralStatus.Dead => "阵亡",
+        _ => "出仕"
+    };
     public required int LordId { get; init; }
     public required string LordName { get; init; }
     public required int CityId { get; init; }

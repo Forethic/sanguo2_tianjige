@@ -193,20 +193,7 @@ public class SafeMemoryReader : IMemoryReader
         _ => lordId == 0 ? "在野/无主" : $"诸侯_{lordId}"
     };
 
-    private static string GetCityName(int cityId) => cityId switch
-    {
-        1 => "许昌",
-        2 => "洛阳",
-        3 => "长安",
-        4 => "襄阳",
-        5 => "建业",
-        6 => "成都",
-        7 => "邺城",
-        8 => "北平",
-        9 => "下邳",
-        10 => "汉中",
-        _ => cityId == 0 ? "野外" : $"城池_{cityId}"
-    };
+    private static string GetCityName(int cityId) => SanguoCityTable.GetCityName(cityId);
 
     private string GetItemName(int itemId)
     {

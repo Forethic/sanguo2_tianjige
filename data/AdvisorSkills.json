@@ -1,0 +1,471 @@
+﻿[
+  {
+    "Sequence": 1,
+    "Name": "鼓舞士氣(初)",
+    "Execute": 4,
+    "WiseLevel": 1,
+    "Level": 120
+  },
+  {
+    "Sequence": 2,
+    "Name": "降敵士氣(初)",
+    "Execute": 1,
+    "WiseLevel": 1,
+    "Level": 120
+  },
+  {
+    "Sequence": 3,
+    "Name": "後選出陣",
+    "Execute": 34,
+    "WiseLevel": 0,
+    "Level": 130
+  },
+  {
+    "Sequence": 4,
+    "Name": "擾亂敵將(初)",
+    "Execute": 9,
+    "WiseLevel": 1,
+    "Level": 140
+  },
+  {
+    "Sequence": 5,
+    "Name": "減少疲勞(初)",
+    "Execute": 12,
+    "WiseLevel": 1,
+    "Level": 140
+  },
+  {
+    "Sequence": 6,
+    "Name": "離間計(初)",
+    "Execute": 30,
+    "WiseLevel": 1,
+    "Level": 160
+  },
+  {
+    "Sequence": 7,
+    "Name": "減緩集氣(初)",
+    "Execute": 65,
+    "WiseLevel": 1,
+    "Level": 160
+  },
+  {
+    "Sequence": 8,
+    "Name": "保留氣力(初)",
+    "Execute": 61,
+    "WiseLevel": 1,
+    "Level": 160
+  },
+  {
+    "Sequence": 9,
+    "Name": "快速集氣(初)",
+    "Execute": 50,
+    "WiseLevel": 1,
+    "Level": 160
+  },
+  {
+    "Sequence": 10,
+    "Name": "詐敗",
+    "Execute": 45,
+    "WiseLevel": 0,
+    "Level": 170
+  },
+  {
+    "Sequence": 11,
+    "Name": "恢復體力(初)",
+    "Execute": 35,
+    "WiseLevel": 1,
+    "Level": 170
+  },
+  {
+    "Sequence": 12,
+    "Name": "恢復技力(初)",
+    "Execute": 38,
+    "WiseLevel": 1,
+    "Level": 180
+  },
+  {
+    "Sequence": 13,
+    "Name": "增加技力(初)",
+    "Execute": 18,
+    "WiseLevel": 1,
+    "Level": 180
+  },
+  {
+    "Sequence": 14,
+    "Name": "增加體力(初)",
+    "Execute": 15,
+    "WiseLevel": 1,
+    "Level": 180
+  },
+  {
+    "Sequence": 15,
+    "Name": "混亂敵軍(初)",
+    "Execute": 27,
+    "WiseLevel": 1,
+    "Level": 190
+  },
+  {
+    "Sequence": 16,
+    "Name": "強化士兵(初)",
+    "Execute": 24,
+    "WiseLevel": 1,
+    "Level": 190
+  },
+  {
+    "Sequence": 17,
+    "Name": "增強攻擊(初)",
+    "Execute": 21,
+    "WiseLevel": 1,
+    "Level": 190
+  },
+  {
+    "Sequence": 18,
+    "Name": "鼓舞士氣(中)",
+    "Execute": 5,
+    "WiseLevel": 2,
+    "Level": 200
+  },
+  {
+    "Sequence": 19,
+    "Name": "降敵士氣(中)",
+    "Execute": 2,
+    "WiseLevel": 2,
+    "Level": 200
+  },
+  {
+    "Sequence": 20,
+    "Name": "喝阻敵軍(初)",
+    "Execute": 58,
+    "WiseLevel": 1,
+    "Level": 210
+  },
+  {
+    "Sequence": 21,
+    "Name": "增加經驗(初)",
+    "Execute": 53,
+    "WiseLevel": 1,
+    "Level": 220
+  },
+  {
+    "Sequence": 22,
+    "Name": "強化武將(初)",
+    "Execute": 41,
+    "WiseLevel": 1,
+    "Level": 230
+  },
+  {
+    "Sequence": 23,
+    "Name": "逼近敵軍",
+    "Execute": 49,
+    "WiseLevel": 0,
+    "Level": 230
+  },
+  {
+    "Sequence": 24,
+    "Name": "化解計策",
+    "Execute": 57,
+    "WiseLevel": 0,
+    "Level": 230
+  },
+  {
+    "Sequence": 25,
+    "Name": "擾亂敵將(中)",
+    "Execute": 10,
+    "WiseLevel": 2,
+    "Level": 240
+  },
+  {
+    "Sequence": 26,
+    "Name": "包圍敵軍",
+    "Execute": 47,
+    "WiseLevel": 0,
+    "Level": 240
+  },
+  {
+    "Sequence": 27,
+    "Name": "減少疲勞(中)",
+    "Execute": 13,
+    "WiseLevel": 2,
+    "Level": 240
+  },
+  {
+    "Sequence": 28,
+    "Name": "亂陣",
+    "Execute": 7,
+    "WiseLevel": 0,
+    "Level": 250
+  },
+  {
+    "Sequence": 29,
+    "Name": "太公陣",
+    "Execute": 8,
+    "WiseLevel": 0,
+    "Level": 250
+  },
+  {
+    "Sequence": 30,
+    "Name": "偷襲敵軍",
+    "Execute": 48,
+    "WiseLevel": 0,
+    "Level": 250
+  },
+  {
+    "Sequence": 31,
+    "Name": "保護主將",
+    "Execute": 46,
+    "WiseLevel": 0,
+    "Level": 250
+  },
+  {
+    "Sequence": 32,
+    "Name": "勸降",
+    "Execute": 33,
+    "WiseLevel": 0,
+    "Level": 260
+  },
+  {
+    "Sequence": 33,
+    "Name": "金蟬脫殼",
+    "Execute": 56,
+    "WiseLevel": 0,
+    "Level": 270
+  },
+  {
+    "Sequence": 34,
+    "Name": "離間計(中)",
+    "Execute": 31,
+    "WiseLevel": 2,
+    "Level": 270
+  },
+  {
+    "Sequence": 35,
+    "Name": "減緩集氣(中)",
+    "Execute": 66,
+    "WiseLevel": 2,
+    "Level": 280
+  },
+  {
+    "Sequence": 36,
+    "Name": "保留氣力(中)",
+    "Execute": 62,
+    "WiseLevel": 2,
+    "Level": 280
+  },
+  {
+    "Sequence": 37,
+    "Name": "快速集氣(中)",
+    "Execute": 51,
+    "WiseLevel": 2,
+    "Level": 280
+  },
+  {
+    "Sequence": 38,
+    "Name": "鼓舞士氣(高)",
+    "Execute": 6,
+    "WiseLevel": 3,
+    "Level": 300
+  },
+  {
+    "Sequence": 39,
+    "Name": "降敵士氣(高)",
+    "Execute": 3,
+    "WiseLevel": 3,
+    "Level": 300
+  },
+  {
+    "Sequence": 40,
+    "Name": "恢復體力(中)",
+    "Execute": 36,
+    "WiseLevel": 2,
+    "Level": 320
+  },
+  {
+    "Sequence": 41,
+    "Name": "恢復技力(中)",
+    "Execute": 39,
+    "WiseLevel": 2,
+    "Level": 320
+  },
+  {
+    "Sequence": 42,
+    "Name": "增加技力(中)",
+    "Execute": 19,
+    "WiseLevel": 2,
+    "Level": 340
+  },
+  {
+    "Sequence": 43,
+    "Name": "增加體力(中)",
+    "Execute": 16,
+    "WiseLevel": 2,
+    "Level": 340
+  },
+  {
+    "Sequence": 44,
+    "Name": "混亂敵軍(中)",
+    "Execute": 28,
+    "WiseLevel": 2,
+    "Level": 350
+  },
+  {
+    "Sequence": 45,
+    "Name": "強化士兵(中)",
+    "Execute": 25,
+    "WiseLevel": 2,
+    "Level": 360
+  },
+  {
+    "Sequence": 46,
+    "Name": "增強攻擊(中)",
+    "Execute": 22,
+    "WiseLevel": 2,
+    "Level": 360
+  },
+  {
+    "Sequence": 47,
+    "Name": "增加經驗(中)",
+    "Execute": 54,
+    "WiseLevel": 2,
+    "Level": 370
+  },
+  {
+    "Sequence": 48,
+    "Name": "喝阻敵軍(中)",
+    "Execute": 59,
+    "WiseLevel": 2,
+    "Level": 380
+  },
+  {
+    "Sequence": 49,
+    "Name": "強化武將(中)",
+    "Execute": 42,
+    "WiseLevel": 2,
+    "Level": 390
+  },
+  {
+    "Sequence": 50,
+    "Name": "減少疲勞(高)",
+    "Execute": 14,
+    "WiseLevel": 3,
+    "Level": 400
+  },
+  {
+    "Sequence": 51,
+    "Name": "擾亂敵將(高)",
+    "Execute": 11,
+    "WiseLevel": 3,
+    "Level": 400
+  },
+  {
+    "Sequence": 52,
+    "Name": "快速集氣(高)",
+    "Execute": 52,
+    "WiseLevel": 3,
+    "Level": 410
+  },
+  {
+    "Sequence": 53,
+    "Name": "減緩集氣(高)",
+    "Execute": 67,
+    "WiseLevel": 3,
+    "Level": 410
+  },
+  {
+    "Sequence": 54,
+    "Name": "十面埋伏",
+    "Execute": 44,
+    "WiseLevel": 0,
+    "Level": 420
+  },
+  {
+    "Sequence": 55,
+    "Name": "離間計(高)",
+    "Execute": 32,
+    "WiseLevel": 3,
+    "Level": 420
+  },
+  {
+    "Sequence": 56,
+    "Name": "保留氣力(高)",
+    "Execute": 63,
+    "WiseLevel": 3,
+    "Level": 420
+  },
+  {
+    "Sequence": 57,
+    "Name": "恢復體力(高)",
+    "Execute": 37,
+    "WiseLevel": 3,
+    "Level": 430
+  },
+  {
+    "Sequence": 58,
+    "Name": "恢復技力(高)",
+    "Execute": 40,
+    "WiseLevel": 3,
+    "Level": 430
+  },
+  {
+    "Sequence": 59,
+    "Name": "封武將技",
+    "Execute": 64,
+    "WiseLevel": 0,
+    "Level": 450
+  },
+  {
+    "Sequence": 60,
+    "Name": "增加技力(高)",
+    "Execute": 20,
+    "WiseLevel": 3,
+    "Level": 450
+  },
+  {
+    "Sequence": 61,
+    "Name": "增加體力(高)",
+    "Execute": 17,
+    "WiseLevel": 3,
+    "Level": 450
+  },
+  {
+    "Sequence": 62,
+    "Name": "混亂敵軍(高)",
+    "Execute": 29,
+    "WiseLevel": 3,
+    "Level": 460
+  },
+  {
+    "Sequence": 63,
+    "Name": "強化士兵(高)",
+    "Execute": 26,
+    "WiseLevel": 3,
+    "Level": 460
+  },
+  {
+    "Sequence": 64,
+    "Name": "增強攻擊(高)",
+    "Execute": 23,
+    "WiseLevel": 3,
+    "Level": 460
+  },
+  {
+    "Sequence": 65,
+    "Name": "增加經驗(高)",
+    "Execute": 55,
+    "WiseLevel": 3,
+    "Level": 470
+  },
+  {
+    "Sequence": 66,
+    "Name": "喝阻敵軍(高)",
+    "Execute": 60,
+    "WiseLevel": 3,
+    "Level": 480
+  },
+  {
+    "Sequence": 67,
+    "Name": "強化武將(高)",
+    "Execute": 43,
+    "WiseLevel": 3,
+    "Level": 490
+  }
+]

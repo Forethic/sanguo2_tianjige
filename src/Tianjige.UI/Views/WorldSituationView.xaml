@@ -224,7 +224,7 @@
                                             Padding="6,2"
                                             Margin="0,0,10,0"
                                             VerticalAlignment="Center">
-                                        <TextBlock Text="{Binding Status}"
+                                        <TextBlock Text="{Binding StatusDisplayName}"
                                                    FontSize="10"
                                                    Foreground="{StaticResource BrushGoldLight}" />
                                     </Border>
@@ -274,7 +274,21 @@
                                     CornerRadius="4"
                                     Padding="10,8"
                                     Margin="0,0,0,8">
-                                <DockPanel>
+                                <DockPanel LastChildFill="False">
+                                    <!-- 埋藏城池 (置前停靠右侧，避免最后子项拉伸变大；配色改为内敛古风暗金) -->
+                                    <Border DockPanel.Dock="Right"
+                                            Background="#251E17"
+                                            BorderBrush="{StaticResource BrushGoldBorderDark}"
+                                            BorderThickness="1"
+                                            CornerRadius="3"
+                                            Padding="7,2"
+                                            Margin="8,0,0,0"
+                                            VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding CityName, StringFormat='地处【{0}】'}"
+                                                   FontSize="10"
+                                                   Foreground="{StaticResource BrushGoldLight}" />
+                                    </Border>
+
                                     <!-- 宝物图标标记 -->
                                     <Border Background="#3B2E1C"
                                             BorderBrush="{StaticResource BrushGoldBorder}"
@@ -296,19 +310,6 @@
                                                    FontSize="10"
                                                    Foreground="{StaticResource BrushTextSecondary}" />
                                     </StackPanel>
-
-                                    <!-- 埋藏城池 -->
-                                    <Border DockPanel.Dock="Right"
-                                            Background="#1E2A1E"
-                                            BorderBrush="{StaticResource BrushJadeActive}"
-                                            BorderThickness="1"
-                                            CornerRadius="3"
-                                            Padding="8,3"
-                                            VerticalAlignment="Center">
-                                        <TextBlock Text="{Binding CityName, StringFormat='地处【{0}】'}"
-                                                   FontSize="11"
-                                                   Foreground="{StaticResource BrushJadeActive}" />
-                                    </Border>
                                 </DockPanel>
                             </Border>
                         </DataTemplate>

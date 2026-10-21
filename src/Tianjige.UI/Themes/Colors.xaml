@@ -15,6 +15,7 @@
 
     <!-- 砂金古铜·边框与金属装饰 -->
     <Color x:Key="ColorGoldBorder">#C8A355</Color>
+    <Color x:Key="ColorGoldBorderDark">#4A3B2C</Color>
     <Color x:Key="ColorGoldMuted">#6B5832</Color>
     <Color x:Key="ColorGoldLight">#E8C982</Color>
 
@@ -44,6 +45,7 @@
     <SolidColorBrush x:Key="BrushTextMuted" Color="{StaticResource ColorTextMuted}" />
 
     <SolidColorBrush x:Key="BrushGoldBorder" Color="{StaticResource ColorGoldBorder}" />
+    <SolidColorBrush x:Key="BrushGoldBorderDark" Color="{StaticResource ColorGoldBorderDark}" />
     <SolidColorBrush x:Key="BrushGoldMuted" Color="{StaticResource ColorGoldMuted}" />
     <SolidColorBrush x:Key="BrushGoldLight" Color="{StaticResource ColorGoldLight}" />
 

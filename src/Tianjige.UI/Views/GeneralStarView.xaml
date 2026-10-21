@@ -6,6 +6,7 @@
              xmlns:controls="clr-namespace:Tianjige.UI.Controls"
              xmlns:models="clr-namespace:Tianjige.Core.Models;assembly=Tianjige.Core"
              xmlns:services="clr-namespace:Tianjige.Core.Services;assembly=Tianjige.Core"
+             xmlns:vm="clr-namespace:Tianjige.UI.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="380">
     <Grid Background="Transparent">
@@ -18,35 +19,200 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!-- 搜索栏 -->
+        <!-- 搜索栏 (支持输入拼音/文字，带快速清空按钮) -->
         <Border Grid.Row="0" Margin="10,8,10,6">
-            <TextBox Style="{StaticResource StyleAncientSearchBox}"
-                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
-                     Tag="键入拼音秒搜 (如: gy / tsc / 关羽)..." />
+            <Grid>
+                <TextBox Style="{StaticResource StyleAncientSearchBox}"
+                         Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                         Tag="键入拼音秒搜 (如: gy / tsc / 关羽)..."
+                         Padding="8,5,28,5" />
+                <Button Content="✕"
+                        Command="{Binding ClearSearchCommand}"
+                        Visibility="{Binding IsSearching, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Margin="0,0,6,0"
+                        Width="20" Height="20"
+                        Padding="0"
+                        FontSize="11"
+                        Cursor="Hand"
+                        Background="Transparent"
+                        Foreground="{StaticResource BrushGoldLight}"
+                        BorderThickness="0">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="Transparent" CornerRadius="10">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="#FFE299" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
         </Border>
 
-        <!-- 筛选武将快捷横滑条/下拉候选 -->
+        <!-- 武将快速索引区：类别选项卡与精选武将徽章 (告别400武将拥挤) -->
         <Border Grid.Row="1" Margin="10,0,10,8">
-            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
-                <ItemsControl ItemsSource="{Binding FilteredGenerals}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="{x:Type models:GeneralStaticInfo}">
-                            <Button Content="{Binding Name}"
-                                    Command="{Binding DataContext.SelectGeneralCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                    CommandParameter="{Binding}"
-                                    Margin="0,0,6,0"
-                                    Padding="8,3"
-                                    FontSize="12"
-                                    Style="{StaticResource StyleAncientButton}" />
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
+            <StackPanel>
+                <!-- 非检索状态：古风类别选项卡 (星选 / 无双 / 谋主 / 君主 / 良将) -->
+                <Border Background="#1C1612"
+                        BorderBrush="{StaticResource BrushGoldBorderDark}"
+                        BorderThickness="1"
+                        CornerRadius="3"
+                        Padding="2"
+                        Margin="0,0,0,6"
+                        Visibility="{Binding IsBrowsing, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- 星选 -->
+                        <Button Grid.Column="0" Command="{Binding SetCategoryCommand}" CommandParameter="精选"
+                                Content="★ 精选" Margin="1,0" Padding="2,3" FontSize="11" Cursor="Hand">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource StyleAncientButton}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsCategoryFeatured}" Value="True">
+                                            <Setter Property="Background" Value="#4C341F" />
+                                            <Setter Property="BorderBrush" Value="{StaticResource BrushGoldLight}" />
+                                            <Setter Property="Foreground" Value="{StaticResource BrushGoldLight}" />
+                                            <Setter Property="FontWeight" Value="Bold" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+
+                        <!-- 无双 -->
+                        <Button Grid.Column="1" Command="{Binding SetCategoryCommand}" CommandParameter="无双"
+                                Content="⚔ 无双" Margin="1,0" Padding="2,3" FontSize="11" Cursor="Hand">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource StyleAncientButton}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsCategoryWuShuang}" Value="True">
+                                            <Setter Property="Background" Value="#4C341F" />
+                                            <Setter Property="BorderBrush" Value="{StaticResource BrushGoldLight}" />
+                                            <Setter Property="Foreground" Value="{StaticResource BrushGoldLight}" />
+                                            <Setter Property="FontWeight" Value="Bold" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+
+                        <!-- 谋主 -->
+                        <Button Grid.Column="2" Command="{Binding SetCategoryCommand}" CommandParameter="谋主"
+                                Content="📜 谋主" Margin="1,0" Padding="2,3" FontSize="11" Cursor="Hand">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource StyleAncientButton}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsCategoryMouZhu}" Value="True">
+                                            <Setter Property="Background" Value="#4C341F" />
+                                            <Setter Property="BorderBrush" Value="{StaticResource BrushGoldLight}" />
+                                            <Setter Property="Foreground" Value="{StaticResource BrushGoldLight}" />
+                                            <Setter Property="FontWeight" Value="Bold" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+
+                        <!-- 君主 -->
+                        <Button Grid.Column="3" Command="{Binding SetCategoryCommand}" CommandParameter="君主"
+                                Content="👑 君主" Margin="1,0" Padding="2,3" FontSize="11" Cursor="Hand">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource StyleAncientButton}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsCategoryMonarch}" Value="True">
+                                            <Setter Property="Background" Value="#4C341F" />
+                                            <Setter Property="BorderBrush" Value="{StaticResource BrushGoldLight}" />
+                                            <Setter Property="Foreground" Value="{StaticResource BrushGoldLight}" />
+                                            <Setter Property="FontWeight" Value="Bold" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+
+                        <!-- 良将 -->
+                        <Button Grid.Column="4" Command="{Binding SetCategoryCommand}" CommandParameter="良将"
+                                Content="🛡 良将" Margin="1,0" Padding="2,3" FontSize="11" Cursor="Hand">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource StyleAncientButton}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsCategoryLiangJiang}" Value="True">
+                                            <Setter Property="Background" Value="#4C341F" />
+                                            <Setter Property="BorderBrush" Value="{StaticResource BrushGoldLight}" />
+                                            <Setter Property="Foreground" Value="{StaticResource BrushGoldLight}" />
+                                            <Setter Property="FontWeight" Value="Bold" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </Grid>
+                </Border>
+
+                <!-- 检索状态提示栏 -->
+                <DockPanel Visibility="{Binding IsSearching, Converter={StaticResource BooleanToVisibilityConverter}}"
+                           LastChildFill="False"
+                           Margin="2,0,2,6">
+                    <TextBlock Text="{Binding SearchStatusText}"
+                               FontSize="11.5"
+                               Foreground="{StaticResource BrushGoldLight}"
+                               VerticalAlignment="Center" />
+                </DockPanel>
+
+                <!-- 选定分类或搜索候选名录横向微滚动条 (仅限15-25位，告别400武将拥挤) -->
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                    <ItemsControl ItemsSource="{Binding DisplayedGenerals}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type vm:RosterGeneralItem}">
+                                <Button Content="{Binding Name}"
+                                        Command="{Binding DataContext.SelectGeneralCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding General}"
+                                        Margin="0,0,5,0"
+                                        Padding="9,3"
+                                        FontSize="12"
+                                        Cursor="Hand">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource StyleAncientButton}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter Property="Background" Value="#4C341F" />
+                                                    <Setter Property="BorderBrush" Value="{StaticResource BrushGoldLight}" />
+                                                    <Setter Property="Foreground" Value="{StaticResource BrushGoldLight}" />
+                                                    <Setter Property="FontWeight" Value="Bold" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </StackPanel>
         </Border>
 
         <!-- 主内容区：武将主卡与技能时间轴 -->
@@ -280,16 +446,20 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
-                    <!-- 弹窗标题与关闭按钮 -->
-                    <DockPanel Grid.Row="0" Margin="0,0,0,10">
-                        <TextBlock Text="{Binding ReverseLookupSkillName, StringFormat='掌握【{0}】之全图名录'}" 
-                                   Style="{StaticResource StyleTitleMedium}" 
-                                   Foreground="{StaticResource BrushGoldLight}" />
+                    <!-- 弹窗标题与关闭按钮 (避免拉伸变大) -->
+                    <DockPanel Grid.Row="0" Margin="0,0,0,10" LastChildFill="False">
                         <Button Content="✕ 关闭" 
                                 Command="{Binding CloseReverseLookupCommand}" 
                                 DockPanel.Dock="Right"
                                 Style="{StaticResource StyleAncientButton}"
-                                Padding="8,2" />
+                                Padding="10,2"
+                                Height="24"
+                                FontSize="11"
+                                VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding ReverseLookupSkillName, StringFormat='掌握【{0}】之全图名录'}" 
+                                   Style="{StaticResource StyleTitleMedium}" 
+                                   Foreground="{StaticResource BrushGoldLight}"
+                                   VerticalAlignment="Center" />
                     </DockPanel>
 
                     <!-- 逆查名录列表 -->
