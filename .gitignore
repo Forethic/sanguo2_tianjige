@@ -433,4 +433,6 @@ assets/cnc-ddraw/*.exe
 
 # Single file publish outputs
 dist/
+publish/
+*.zip
 
