@@ -49,7 +49,7 @@ public class CncDdrawManager
             ["fullscreen"] = "false",
             ["maintas"] = "false",
             ["savesettings"] = "0",
-            ["center_window"] = "0",
+            ["center_window"] = geometry.IsGameCentered ? "2" : "0",
             ["renderer"] = renderer,
             ["devmode"] = devmode ? "true" : "false",
             ["nonexclusive"] = "true",

@@ -38,4 +38,9 @@ public sealed record GeneralStaticInfo
     public string UnlockTroop { get; init; } = string.Empty;
     public string Avatar { get; init; } = string.Empty; // 头像相对路径 (如: "avatars/guanyu.png")
     public IReadOnlyList<SkillTreeNode> SkillTree { get; init; } = Array.Empty<SkillTreeNode>();
+
+    /// <summary>
+    /// 武将培养潜力综合评估 (懒加载或初始化组装)
+    /// </summary>
+    public Tianjige.Core.Services.GeneralPotentialInfo? Potential { get; init; }
 }

@@ -14,6 +14,7 @@ public partial class LauncherWindow : Window
 {
     private readonly GameLauncherService _launcherService = new();
     private TacticalHudWindow? _currentHudWindow;
+    private DeckWindow? _currentDeckWindow;
     private System.Threading.CancellationTokenSource? _gameWatcherCts;
 
     public LauncherWindow()
@@ -24,7 +25,25 @@ public partial class LauncherWindow : Window
         {
             vm.OnLaunchGameRequested += OnLaunchGame;
             vm.OnOpenOfflineLoreRequested += OnOpenOfflineLore;
+            vm.OnOpenDeckRequested += OnOpenDeck;
         }
+    }
+
+    private void OnOpenDeck(string gameDirectory)
+    {
+        if (_currentDeckWindow != null && _currentDeckWindow.IsLoaded)
+        {
+            if (_currentDeckWindow.WindowState == WindowState.Minimized)
+                _currentDeckWindow.WindowState = WindowState.Normal;
+            _currentDeckWindow.Activate();
+            _currentDeckWindow.Focus();
+            return;
+        }
+
+        var deckVm = new DeckViewModel(gameDirectory);
+        _currentDeckWindow = new DeckWindow(deckVm);
+        _currentDeckWindow.Closed += (s, e) => _currentDeckWindow = null;
+        _currentDeckWindow.Show();
     }
 
     private void OnLaunchGame(DisplayGeometry geometry)
@@ -33,38 +52,67 @@ public partial class LauncherWindow : Window
 
         try
         {
-            // 拉起游戏进程并注入 cnc-ddraw
+            // 拉起游戏进程并注入 cnc-ddraw (devmode = !LockCursor)
+            bool devmode = !vm.LockCursor;
             var process = _launcherService.LaunchGame(
                 vm.GameDirectory,
                 geometry,
                 vm.Renderer,
-                devmode: vm.UnlockCursor,
+                devmode: devmode,
                 border: vm.IsWindowBordered);
 
             var memoryReader = new Tianjige.Data.Memory.SafeMemoryReader();
             memoryReader.TryAttach(process.Id);
 
-            // 升起战局参谋 HUD 并吸附至侧边净黑区
-            _currentHudWindow?.Close();
-            _currentHudWindow = new TacticalHudWindow(this, memoryReader);
-            _currentHudWindow.ApplyGeometry(geometry);
-            _currentHudWindow.Show();
-            _currentHudWindow.EnsureTopmost();
-
-            // 监听 HUD 被用户手动关闭事件
-            _currentHudWindow.Closed += (s, e) =>
+            if (geometry.Mode == LauncherDisplayMode.DualScreenDeck)
             {
-                _gameWatcherCts?.Cancel();
-                _currentHudWindow = null;
-                Show();
-                WindowState = WindowState.Normal;
-                Activate();
-            };
+                // 双屏模式：副屏升起全景指挥台 Deck
+                _currentDeckWindow?.Close();
+                var deckVm = new DeckViewModel(vm.GameDirectory);
+                _currentDeckWindow = new DeckWindow(deckVm);
 
-            // 延迟保鲜置顶：在游戏创建窗体取得焦点后，自动再次浮出到侧边，绝不被遮挡
-            Task.Delay(800).ContinueWith(_ => Dispatcher.Invoke(() => _currentHudWindow?.EnsureTopmost()));
-            Task.Delay(2000).ContinueWith(_ => Dispatcher.Invoke(() => _currentHudWindow?.EnsureTopmost()));
-            Task.Delay(4000).ContinueWith(_ => Dispatcher.Invoke(() => _currentHudWindow?.EnsureTopmost()));
+                if (geometry.DeckMonitor != null)
+                {
+                    _currentDeckWindow.Left = geometry.DeckMonitor.Left + 40;
+                    _currentDeckWindow.Top = geometry.DeckMonitor.Top + 40;
+                    _currentDeckWindow.Width = Math.Min(1440, Math.Max(1000, geometry.DeckMonitor.Width - 80));
+                    _currentDeckWindow.Height = Math.Min(900, Math.Max(650, geometry.DeckMonitor.Height - 80));
+                }
+                _currentDeckWindow.Show();
+
+                _currentDeckWindow.Closed += (s, e) =>
+                {
+                    _gameWatcherCts?.Cancel();
+                    _currentDeckWindow = null;
+                    Show();
+                    WindowState = WindowState.Normal;
+                    Activate();
+                };
+            }
+            else
+            {
+                // 单屏模式：升起战局参谋 HUD 并吸附至侧边净黑区
+                _currentHudWindow?.Close();
+                _currentHudWindow = new TacticalHudWindow(this, memoryReader);
+                _currentHudWindow.ApplyGeometry(geometry);
+                _currentHudWindow.Show();
+                _currentHudWindow.EnsureTopmost();
+
+                // 监听 HUD 被用户手动关闭事件
+                _currentHudWindow.Closed += (s, e) =>
+                {
+                    _gameWatcherCts?.Cancel();
+                    _currentHudWindow = null;
+                    Show();
+                    WindowState = WindowState.Normal;
+                    Activate();
+                };
+
+                // 延迟保鲜置顶：在游戏创建窗体取得焦点后，自动再次浮出到侧边，绝不被遮挡
+                Task.Delay(800).ContinueWith(_ => Dispatcher.Invoke(() => _currentHudWindow?.EnsureTopmost()));
+                Task.Delay(2000).ContinueWith(_ => Dispatcher.Invoke(() => _currentHudWindow?.EnsureTopmost()));
+                Task.Delay(4000).ContinueWith(_ => Dispatcher.Invoke(() => _currentHudWindow?.EnsureTopmost()));
+            }
 
             // 隐藏启动配置台
             Hide();

@@ -7,9 +7,9 @@
         <Setter Property="Foreground" Value="{StaticResource BrushTextPrimary}" />
         <Setter Property="BorderBrush" Value="{StaticResource BrushGoldBorder}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="FontFamily" Value="{StaticResource FontReading}" />
-        <Setter Property="Padding" Value="8,5" />
+        <Setter Property="Padding" Value="6,2" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="CaretBrush" Value="{StaticResource BrushGoldLight}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -48,6 +48,8 @@
         </Setter>
     </Style>
 
+    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource StyleAncientSearchBox}" />
+
     <!-- 古风按钮样式 -->
     <Style x:Key="StyleAncientButton" TargetType="Button">
         <Setter Property="Background" Value="#29211B" />
@@ -76,8 +78,9 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="btnBorder" Property="Background" Value="#382E25" />
+                            <Setter TargetName="btnBorder" Property="Background" Value="#35261A" />
                             <Setter TargetName="btnBorder" Property="BorderBrush" Value="{StaticResource BrushGoldLight}" />
+                            <Setter Property="Foreground" Value="#FFF2D1" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="btnBorder" Property="Background" Value="#1C1612" />
@@ -92,6 +95,9 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!-- 全局 Button 隐式样式（自动将所有常规按钮美化为古风金石按钮） -->
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource StyleAncientButton}" />
 
     <!-- 古风交互 Tab/过滤按钮基础样式 -->
     <Style x:Key="StyleAncientTabButton" TargetType="Button" BasedOn="{StaticResource StyleAncientButton}">
@@ -230,6 +236,8 @@
         <Setter Property="Height" Value="1" />
     </Style>
 
+    <Style TargetType="{x:Type Separator}" BasedOn="{StaticResource StyleAncientSeparator}" />
+
     <!-- 古风复选框样式 -->
     <Style x:Key="StyleAncientCheckBox" TargetType="CheckBox">
         <Setter Property="Foreground" Value="{StaticResource BrushTextPrimary}" />
@@ -289,5 +297,822 @@
     </Style>
 
     <Style TargetType="CheckBox" BasedOn="{StaticResource StyleAncientCheckBox}" />
+
+    <!-- 古风单选框样式 (彻底替换 Windows 原生白底蓝点圆圈) -->
+    <Style x:Key="StyleAncientRadioButton" TargetType="{x:Type RadioButton}">
+        <Setter Property="Foreground" Value="{StaticResource BrushTextPrimary}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontReading}" />
+        <Setter Property="FontSize" Value="11.5" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Grid Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="RadioOuter"
+                                Grid.Column="0"
+                                Width="15" Height="15"
+                                Background="#221B16"
+                                BorderBrush="{StaticResource BrushGoldBorder}"
+                                BorderThickness="1.2"
+                                CornerRadius="7.5"
+                                VerticalAlignment="Center"
+                                Margin="0,0,6,0">
+                            <Ellipse x:Name="RadioInner"
+                                     Width="7" Height="7"
+                                     Fill="{StaticResource BrushGoldLight}"
+                                     HorizontalAlignment="Center"
+                                     VerticalAlignment="Center"
+                                     Visibility="Collapsed" />
+                        </Border>
+                        <ContentPresenter Grid.Column="1"
+                                          VerticalAlignment="Center"
+                                          RecognizesAccessKey="True" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="RadioOuter" Property="Background" Value="#382618" />
+                            <Setter TargetName="RadioOuter" Property="BorderBrush" Value="{StaticResource BrushGoldLight}" />
+                            <Setter TargetName="RadioInner" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="RadioOuter" Property="BorderBrush" Value="{StaticResource BrushGoldLight}" />
+                            <Setter TargetName="RadioOuter" Property="Background" Value="#2A2019" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="RadioOuter" Property="Background" Value="#181412" />
+                            <Setter TargetName="RadioOuter" Property="BorderBrush" Value="#44372D" />
+                            <Setter Property="Foreground" Value="#6A5C50" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource StyleAncientRadioButton}" />
+
+    <!-- 古风卡片式单选框样式 (用于模式选择等磁贴式单选) -->
+    <Style x:Key="StyleAncientRadioCard" TargetType="{x:Type RadioButton}">
+        <Setter Property="Foreground" Value="{StaticResource BrushTextPrimary}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontReading}" />
+        <Setter Property="FontSize" Value="11.5" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Border x:Name="CardBorder"
+                            Background="#201A16"
+                            BorderBrush="#473A2B"
+                            BorderThickness="1.2"
+                            CornerRadius="4"
+                            Padding="10,8"
+                            SnapsToDevicePixels="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="RadioOuter"
+                                    Grid.Column="0"
+                                    Width="16" Height="16"
+                                    Background="#1A1512"
+                                    BorderBrush="{StaticResource BrushGoldBorderDark}"
+                                    BorderThickness="1.2"
+                                    CornerRadius="8"
+                                    VerticalAlignment="Center"
+                                    Margin="0,0,8,0">
+                                <Ellipse x:Name="RadioInner"
+                                         Width="8" Height="8"
+                                         Fill="{StaticResource BrushGoldLight}"
+                                         HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"
+                                         Visibility="Collapsed" />
+                            </Border>
+                            <ContentPresenter Grid.Column="1"
+                                              VerticalAlignment="Center"
+                                              RecognizesAccessKey="True" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="CardBorder" Property="Background" Value="#312217" />
+                            <Setter TargetName="CardBorder" Property="BorderBrush" Value="{StaticResource BrushGoldBorder}" />
+                            <Setter TargetName="RadioOuter" Property="Background" Value="#382618" />
+                            <Setter TargetName="RadioOuter" Property="BorderBrush" Value="{StaticResource BrushGoldLight}" />
+                            <Setter TargetName="RadioInner" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="CardBorder" Property="BorderBrush" Value="{StaticResource BrushGoldLight}" />
+                            <Setter TargetName="CardBorder" Property="Background" Value="#292019" />
+                            <Setter TargetName="RadioOuter" Property="BorderBrush" Value="{StaticResource BrushGoldLight}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="CardBorder" Property="Background" Value="#181412" />
+                            <Setter TargetName="CardBorder" Property="BorderBrush" Value="#382D24" />
+                            <Setter Property="Foreground" Value="#6A5C50" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 古风 ComboBox ToggleButton 模板 -->
+    <ControlTemplate x:Key="ComboBoxToggleButtonTemplate" TargetType="{x:Type ToggleButton}">
+        <Border x:Name="Border"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="3"
+                SnapsToDevicePixels="True">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="20" />
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="1" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Path x:Name="Arrow"
+                          Width="8" Height="5"
+                          Stretch="Fill"
+                          Fill="{StaticResource BrushGoldLight}"
+                          Data="M0,0 L8,0 L4,5 Z"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center" />
+                </Border>
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Border" Property="Background" Value="#33271F" />
+                <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource BrushGoldLight}" />
+            </Trigger>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter TargetName="Border" Property="Background" Value="#2A2019" />
+                <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource BrushGoldLight}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="Border" Property="Background" Value="#17120F" />
+                <Setter TargetName="Border" Property="BorderBrush" Value="#443528" />
+                <Setter TargetName="Arrow" Property="Fill" Value="#665545" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!-- 古风 ComboBoxItem 样式 -->
+    <Style x:Key="StyleAncientComboBoxItem" TargetType="{x:Type ComboBoxItem}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Foreground" Value="{StaticResource BrushTextPrimary}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                    <Border x:Name="Border"
+                            Background="Transparent"
+                            Padding="8,5"
+                            CornerRadius="2"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="#342518" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource BrushGoldBorderDark}" />
+                            <Setter TargetName="Border" Property="BorderThickness" Value="1,0,0,0" />
+                            <Setter Property="Foreground" Value="#FFF0C8" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="#483626" />
+                            <Setter Property="Foreground" Value="{StaticResource BrushGoldLight}" />
+                            <Setter Property="FontWeight" Value="SemiBold" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="#6A5C50" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource StyleAncientComboBoxItem}" />
+
+    <!-- 古风 ComboBox 全局样式 -->
+    <Style x:Key="StyleAncientComboBox" TargetType="{x:Type ComboBox}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
+        <Setter Property="MinHeight" Value="26" />
+        <Setter Property="Foreground" Value="{StaticResource BrushTextPrimary}" />
+        <Setter Property="Background" Value="#221B16" />
+        <Setter Property="BorderBrush" Value="{StaticResource BrushGoldBorder}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Padding" Value="8,2,20,2" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBox}">
+                    <Grid>
+                        <ToggleButton x:Name="ToggleButton"
+                                      Template="{StaticResource ComboBoxToggleButtonTemplate}"
+                                      Focusable="False"
+                                      IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                      ClickMode="Press"
+                                      Background="{TemplateBinding Background}"
+                                      BorderBrush="{TemplateBinding BorderBrush}"
+                                      BorderThickness="{TemplateBinding BorderThickness}" />
+                        <ContentPresenter x:Name="ContentSite"
+                                          IsHitTestVisible="False"
+                                          Content="{TemplateBinding SelectionBoxItem}"
+                                          ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                          ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                          Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          HorizontalAlignment="Left" />
+                        <Popup x:Name="Popup"
+                               Placement="Bottom"
+                               IsOpen="{TemplateBinding IsDropDownOpen}"
+                               AllowsTransparency="True"
+                               Focusable="False"
+                               PopupAnimation="Slide">
+                            <Grid x:Name="DropDown"
+                                  SnapsToDevicePixels="True"
+                                  MinWidth="{TemplateBinding ActualWidth}"
+                                  MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                <Border x:Name="DropDownBorder"
+                                        Background="#1D1713"
+                                        BorderBrush="{StaticResource BrushGoldBorder}"
+                                        BorderThickness="1.2"
+                                        CornerRadius="3"
+                                        Margin="0,2,0,4">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="#000000" BlurRadius="12" ShadowDepth="3" Opacity="0.85" />
+                                    </Border.Effect>
+                                    <ScrollViewer Margin="2,4" SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+                                </Border>
+                            </Grid>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasItems" Value="False">
+                            <Setter TargetName="DropDownBorder" Property="MinHeight" Value="50" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="#6A5C50" />
+                        </Trigger>
+                        <Trigger Property="IsGrouping" Value="True">
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource StyleAncientComboBox}" />
+
+    <!-- 古风 Slider 样式 -->
+    <Style x:Key="StyleAncientSliderThumb" TargetType="{x:Type Thumb}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Ellipse x:Name="ThumbEllipse"
+                             Width="12" Height="12"
+                             Fill="{StaticResource BrushGoldLight}"
+                             Stroke="{StaticResource BrushGoldBorderDark}"
+                             StrokeThickness="1.5">
+                        <Ellipse.Effect>
+                            <DropShadowEffect Color="#C8A355" BlurRadius="4" ShadowDepth="1" Opacity="0.5" />
+                        </Ellipse.Effect>
+                    </Ellipse>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ThumbEllipse" Property="Width" Value="14" />
+                            <Setter TargetName="ThumbEllipse" Property="Height" Value="14" />
+                            <Setter TargetName="ThumbEllipse" Property="Fill" Value="#FFE6A3" />
+                            <Setter TargetName="ThumbEllipse" Property="Stroke" Value="{StaticResource BrushGoldLight}" />
+                        </Trigger>
+                        <Trigger Property="IsDragging" Value="True">
+                            <Setter TargetName="ThumbEllipse" Property="Fill" Value="#FFF2CC" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 滑动条 Track 点击透明 RepeatButton -->
+    <Style x:Key="StyleSliderTrackRepeatButton" TargetType="{x:Type RepeatButton}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Rectangle Fill="Transparent" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="StyleAncientSlider" TargetType="{x:Type Slider}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Slider}">
+                    <Grid VerticalAlignment="Center">
+                        <Border x:Name="Track"
+                                Height="4"
+                                Background="#1D1713"
+                                BorderBrush="#4A3C2D"
+                                BorderThickness="1"
+                                CornerRadius="2" />
+                        <Track x:Name="PART_Track">
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{StaticResource StyleSliderTrackRepeatButton}" />
+                            </Track.DecreaseRepeatButton>
+                            <Track.Thumb>
+                                <Thumb Style="{StaticResource StyleAncientSliderThumb}" />
+                            </Track.Thumb>
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource StyleSliderTrackRepeatButton}" />
+                            </Track.IncreaseRepeatButton>
+                        </Track>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type Slider}" BasedOn="{StaticResource StyleAncientSlider}" />
+
+    <!-- 古风 DataGrid 样式 -->
+    <Style x:Key="StyleAncientDataGrid" TargetType="{x:Type DataGrid}">
+        <!-- 彻底替换系统默认的 Windows 亮蓝高亮画刷，换为温润古木沉香色 -->
+        <Style.Resources>
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#382618" />
+            <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#2E2015" />
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="#FFE6A3" />
+        </Style.Resources>
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="RowBackground" Value="Transparent" />
+        <Setter Property="AlternatingRowBackground" Value="#17120E" />
+        <Setter Property="GridLinesVisibility" Value="Horizontal" />
+        <Setter Property="HorizontalGridLinesBrush" Value="#261E17" />
+        <Setter Property="AutoGenerateColumns" Value="False" />
+        <Setter Property="CanUserAddRows" Value="False" />
+        <Setter Property="CanUserDeleteRows" Value="False" />
+        <Setter Property="CanUserResizeRows" Value="False" />
+        <Setter Property="SelectionMode" Value="Single" />
+        <Setter Property="SelectionUnit" Value="FullRow" />
+        <Setter Property="HeadersVisibility" Value="Column" />
+        <Setter Property="RowHeaderWidth" Value="0" />
+        <Setter Property="RowHeight" Value="68" />
+        
+        <!-- UI 虚拟化与像素平滑滚动标准配置 -->
+        <Setter Property="EnableRowVirtualization" Value="True" />
+        <Setter Property="EnableColumnVirtualization" Value="False" />
+        <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True" />
+        <Setter Property="VirtualizingPanel.VirtualizationMode" Value="Recycling" />
+        <Setter Property="VirtualizingPanel.ScrollUnit" Value="Pixel" />
+        <Setter Property="VirtualizingPanel.CacheLength" Value="2,2" />
+        <Setter Property="VirtualizingPanel.CacheLengthUnit" Value="Page" />
+        <Setter Property="VirtualizingPanel.IsContainerVirtualizable" Value="True" />
+        <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
+        <Setter Property="ScrollViewer.PanningMode" Value="VerticalOnly" />
+        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+
+        <Setter Property="RowHeaderStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type DataGridRowHeader}">
+                    <Setter Property="Width" Value="0" />
+                    <Setter Property="MinWidth" Value="0" />
+                    <Setter Property="MaxWidth" Value="0" />
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ColumnHeaderStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background" Value="#241C16" />
+                    <Setter Property="Foreground" Value="{StaticResource BrushGoldLight}" />
+                    <Setter Property="FontFamily" Value="{StaticResource FontLiSu}" />
+                    <Setter Property="FontSize" Value="13" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="Padding" Value="10,6" />
+                    <Setter Property="BorderBrush" Value="{StaticResource BrushGoldMuted}" />
+                    <Setter Property="BorderThickness" Value="0,0,1,1" />
+                    <Setter Property="Cursor" Value="Hand" />
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#30231A" />
+                            <Setter Property="Foreground" Value="#FFF0C8" />
+                            <Setter Property="BorderBrush" Value="{StaticResource BrushGoldBorder}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="RowStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                    <Setter Property="SnapsToDevicePixels" Value="True" />
+                    <Setter Property="BorderThickness" Value="0,0,0,1" />
+                    <Setter Property="BorderBrush" Value="#261E17" />
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type DataGridRow}">
+                                <Border x:Name="DGR_Border"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        SnapsToDevicePixels="True">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <!-- 左侧汉韵金石竖条指示器 (悬浮淡金微芒，选中曜金尊崇) -->
+                                        <Border x:Name="AccentIndicator"
+                                                Grid.Column="0"
+                                                Width="3"
+                                                Background="Transparent"
+                                                HorizontalAlignment="Left" />
+                                                
+                                        <DataGridCellsPresenter Grid.Column="1"
+                                                                ItemsPanel="{TemplateBinding ItemsPanel}"
+                                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                    </Grid>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="DGR_Border" Property="Background" Value="#2A1F16" />
+                                        <Setter TargetName="DGR_Border" Property="BorderBrush" Value="#5C452E" />
+                                        <Setter TargetName="AccentIndicator" Property="Background" Value="#A07E47" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="DGR_Border" Property="Background" Value="#382618" />
+                                        <Setter TargetName="DGR_Border" Property="BorderBrush" Value="{StaticResource BrushGoldBorder}" />
+                                        <Setter TargetName="AccentIndicator" Property="Background" Value="{StaticResource BrushGoldLight}" />
+                                        <Setter TargetName="AccentIndicator" Property="Width" Value="4" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="CellStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Foreground" Value="{StaticResource BrushTextPrimary}" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter VerticalAlignment="Center" />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Foreground" Value="#FFE6A3" />
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Background" Value="Transparent" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource StyleAncientDataGrid}" />
+
+    <!-- ======================================================== -->
+    <!-- 古风原生控件全面美化系统 (彻底杜绝系统默认 Windows 灰白原生控件) -->
+    <!-- ======================================================== -->
+
+    <!-- 古风提示框全局隐式样式 -->
+    <Style TargetType="{x:Type ToolTip}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="Background" Value="#1C1612" />
+        <Setter Property="Foreground" Value="#FFF0C8" />
+        <Setter Property="BorderBrush" Value="{StaticResource BrushGoldBorder}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontFamily" Value="{StaticResource FontReading}" />
+        <Setter Property="FontSize" Value="11.5" />
+        <Setter Property="Padding" Value="9,6" />
+        <Setter Property="MaxWidth" Value="360" />
+        <Setter Property="HasDropShadow" Value="True" />
+        <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+        <Setter Property="TextBlock.LineHeight" Value="18" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToolTip}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="3"
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="True"
+                            UseLayoutRounding="True">
+                        <Border.Effect>
+                            <DropShadowEffect Color="#000000" BlurRadius="10" ShadowDepth="2" Opacity="0.8" />
+                        </Border.Effect>
+                        <ContentPresenter TextElement.Foreground="{TemplateBinding Foreground}"
+                                          TextElement.FontSize="{TemplateBinding FontSize}"
+                                          TextElement.FontFamily="{TemplateBinding FontFamily}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 古风进度条全局样式 (生命体力/技力条/经验条) -->
+    <Style x:Key="StyleAncientProgressBar" TargetType="{x:Type ProgressBar}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="Background" Value="#1A1410" />
+        <Setter Property="Foreground" Value="{StaticResource BrushGoldLight}" />
+        <Setter Property="BorderBrush" Value="#3D3025" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="MinHeight" Value="6" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                    <Grid x:Name="TemplateRoot" SnapsToDevicePixels="True" ClipToBounds="True">
+                        <Border x:Name="PART_Track"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="2" />
+                        <Border x:Name="PART_Indicator"
+                                HorizontalAlignment="Left"
+                                Background="{TemplateBinding Foreground}"
+                                CornerRadius="2"
+                                Margin="1" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Orientation" Value="Vertical">
+                            <Setter TargetName="PART_Indicator" Property="HorizontalAlignment" Value="Stretch" />
+                            <Setter TargetName="PART_Indicator" Property="VerticalAlignment" Value="Bottom" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type ProgressBar}" BasedOn="{StaticResource StyleAncientProgressBar}" />
+
+    <!-- 古风选项卡容器全局样式 -->
+    <Style TargetType="{x:Type TabControl}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabControl}">
+                    <Grid KeyboardNavigation.TabNavigation="Local" SnapsToDevicePixels="True">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TabPanel Grid.Row="0"
+                                  IsItemsHost="True"
+                                  Margin="0,0,0,-1"
+                                  Panel.ZIndex="1"
+                                  KeyboardNavigation.TabIndex="1" />
+                        <Border Grid.Row="1"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                KeyboardNavigation.DirectionalNavigation="Contained"
+                                KeyboardNavigation.TabIndex="2"
+                                KeyboardNavigation.TabNavigation="Local">
+                            <ContentPresenter x:Name="PART_SelectedContentHost"
+                                              ContentSource="SelectedContent"
+                                              Margin="{TemplateBinding Padding}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 古风标签项全局样式 -->
+    <Style TargetType="{x:Type TabItem}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FontFamily" Value="{StaticResource FontLiSu}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+                    <Border x:Name="TabBorder"
+                            Background="#211A15"
+                            BorderBrush="{StaticResource BrushGoldMuted}"
+                            BorderThickness="1,1,1,0"
+                            CornerRadius="4,4,0,0"
+                            Padding="16,7"
+                            Margin="0,0,4,0"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter x:Name="ContentSite"
+                                          ContentSource="Header"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"
+                                          RecognizesAccessKey="True" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="TabBorder" Property="Background" Value="#332418" />
+                            <Setter TargetName="TabBorder" Property="BorderBrush" Value="{StaticResource BrushGoldLight}" />
+                            <Setter TargetName="TabBorder" Property="BorderThickness" Value="1.5,1.5,1.5,0" />
+                            <Setter Property="TextElement.Foreground" Value="#FFE6A3" />
+                            <Setter Property="TextElement.FontWeight" Value="Bold" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="False">
+                            <Setter Property="TextElement.Foreground" Value="#9E8F80" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="TabBorder" Property="Background" Value="#2D2117" />
+                            <Setter TargetName="TabBorder" Property="BorderBrush" Value="#8C6E3D" />
+                            <Setter Property="TextElement.Foreground" Value="#FFE6A3" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="TabBorder" Property="Background" Value="#171310" />
+                            <Setter Property="TextElement.Foreground" Value="#554639" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 古风列表与列表项全局样式 -->
+    <Style TargetType="{x:Type ListBox}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+    </Style>
+
+    <Style TargetType="{x:Type ListBoxItem}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="6,4" />
+        <Setter Property="Margin" Value="0,0,0,2" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border x:Name="ItemBorder"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="Transparent"
+                            BorderThickness="1"
+                            CornerRadius="3"
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ItemBorder" Property="Background" Value="#2A2017" />
+                            <Setter TargetName="ItemBorder" Property="BorderBrush" Value="#5C452E" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="ItemBorder" Property="Background" Value="#382618" />
+                            <Setter TargetName="ItemBorder" Property="BorderBrush" Value="{StaticResource BrushGoldBorder}" />
+                            <Setter Property="Foreground" Value="#FFE6A3" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 古风右键上下文菜单全局样式 -->
+    <Style TargetType="{x:Type ContextMenu}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Grid.IsSharedSizeScope" Value="True" />
+        <Setter Property="HasDropShadow" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContextMenu}">
+                    <Border Background="#1C1612"
+                            BorderBrush="{StaticResource BrushGoldBorder}"
+                            BorderThickness="1.2"
+                            CornerRadius="3"
+                            Padding="3,4"
+                            SnapsToDevicePixels="True">
+                        <Border.Effect>
+                            <DropShadowEffect Color="#000000" BlurRadius="12" ShadowDepth="3" Opacity="0.85" />
+                        </Border.Effect>
+                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type MenuItem}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Foreground" Value="{StaticResource BrushTextPrimary}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontReading}" />
+        <Setter Property="FontSize" Value="11.5" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type MenuItem}">
+                    <Border x:Name="Border"
+                            Background="Transparent"
+                            BorderBrush="Transparent"
+                            BorderThickness="1"
+                            CornerRadius="2"
+                            Padding="8,5"
+                            SnapsToDevicePixels="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Icon" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Shortcut" />
+                            </Grid.ColumnDefinitions>
+                            <ContentPresenter x:Name="Icon" ContentSource="Icon" Margin="0,0,6,0" VerticalAlignment="Center" />
+                            <ContentPresenter Grid.Column="1"
+                                              ContentSource="Header"
+                                              RecognizesAccessKey="True"
+                                              VerticalAlignment="Center" />
+                            <TextBlock Grid.Column="2"
+                                       Text="{TemplateBinding InputGestureText}"
+                                       Foreground="{StaticResource BrushTextMuted}"
+                                       Margin="12,0,0,0"
+                                       VerticalAlignment="Center" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="#342518" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource BrushGoldMuted}" />
+                            <Setter Property="Foreground" Value="#FFF0C8" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="#6A5C50" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 古风标签全局文本样式 -->
+    <Style TargetType="{x:Type Label}">
+        <Setter Property="Foreground" Value="{StaticResource BrushTextPrimary}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontReading}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
 
 </ResourceDictionary>

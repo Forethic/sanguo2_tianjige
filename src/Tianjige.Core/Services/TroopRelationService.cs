@@ -56,6 +56,13 @@ public class TroopRelationService
             return TroopRelation.Even;
         }
 
+        if (source.AdvantageMatrix != null && source.AdvantageMatrix.TryGetValue(target.TroopName, out int adv))
+        {
+            if (adv > 0) return TroopRelation.Strong;
+            if (adv < 0) return TroopRelation.Weak;
+            return TroopRelation.Even;
+        }
+
         bool sourceStrong = MatchesAny(source.StrongAgainst, target.TroopName) ||
                             MatchesAny(target.WeakAgainst, source.TroopName);
 

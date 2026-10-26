@@ -95,4 +95,19 @@ public sealed record DisplayGeometry
     /// HUD 高度 (铺满全屏高)
     /// </summary>
     public required int HudHeight { get; init; }
+
+    /// <summary>
+    /// 显示模式 (单屏 HUD 或 双屏 Deck)
+    /// </summary>
+    public LauncherDisplayMode Mode { get; init; } = LauncherDisplayMode.SingleScreenHud;
+
+    /// <summary>
+    /// 游戏是否在显示器正中居中呈现
+    /// </summary>
+    public bool IsGameCentered { get; init; } = false;
+
+    /// <summary>
+    /// 双屏模式下的 Deck 副屏规格
+    /// </summary>
+    public MonitorInfo? DeckMonitor { get; init; }
 }

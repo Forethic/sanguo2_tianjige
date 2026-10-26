@@ -77,7 +77,7 @@ public sealed class GeneralStarViewModel : ViewModelBase
     public double RosterMaxHeight => _isRosterExpanded ? 260.0 : 108.0;
     public string RosterToggleText => _isRosterExpanded ? "收起名册 ▲" : "展开名册 ▼";
 
-    public ObservableCollection<RosterGeneralItem> DisplayedGenerals { get; } = new();
+    public RangeObservableCollection<RosterGeneralItem> DisplayedGenerals { get; } = new();
     public ObservableCollection<GeneralStaticInfo> FilteredGenerals { get; } = new();
     public ObservableCollection<SkillTreeNode> DisplayedSkills { get; } = new();
 
@@ -357,14 +357,16 @@ public sealed class GeneralStarViewModel : ViewModelBase
         }
 
         FilteredGenerals.Clear();
-        DisplayedGenerals.Clear();
+        var rosterItems = new List<RosterGeneralItem>(list.Count);
 
         foreach (var g in list)
         {
             var avatarPath = _repository.ResolveAvatarByName(g.Name) ?? _repository.ResolveAvatarPath(g.Avatar);
             FilteredGenerals.Add(g);
-            DisplayedGenerals.Add(new RosterGeneralItem(g, g.Id == _selectedGeneral?.Id, avatarPath));
+            rosterItems.Add(new RosterGeneralItem(g, g.Id == _selectedGeneral?.Id, avatarPath));
         }
+
+        DisplayedGenerals.ReplaceRange(rosterItems);
 
         OnPropertyChanged(nameof(RosterSummaryText));
 

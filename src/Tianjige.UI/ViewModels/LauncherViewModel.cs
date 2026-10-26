@@ -87,11 +87,80 @@ public class LauncherViewModel : ViewModelBase
         }
     }
 
+    private bool _lockCursor = false;
+    public bool LockCursor
+    {
+        get => _lockCursor;
+        set
+        {
+            if (SetProperty(ref _lockCursor, value))
+            {
+                _unlockCursor = !value;
+                OnPropertyChanged(nameof(UnlockCursor));
+            }
+        }
+    }
+
     private bool _unlockCursor = true;
     public bool UnlockCursor
     {
         get => _unlockCursor;
-        set => SetProperty(ref _unlockCursor, value);
+        set
+        {
+            if (SetProperty(ref _unlockCursor, value))
+            {
+                _lockCursor = !value;
+                OnPropertyChanged(nameof(LockCursor));
+            }
+        }
+    }
+
+    private LauncherDisplayMode _displayMode = LauncherDisplayMode.SingleScreenHud;
+    public LauncherDisplayMode DisplayMode
+    {
+        get => _displayMode;
+        set
+        {
+            if (SetProperty(ref _displayMode, value))
+            {
+                OnPropertyChanged(nameof(IsDualScreenDeckMode));
+                OnPropertyChanged(nameof(IsSingleScreenHudMode));
+                RecalculateGeometry();
+            }
+        }
+    }
+
+    public bool IsDualScreenDeckMode
+    {
+        get => _displayMode == LauncherDisplayMode.DualScreenDeck;
+        set
+        {
+            if (value) DisplayMode = LauncherDisplayMode.DualScreenDeck;
+            else DisplayMode = LauncherDisplayMode.SingleScreenHud;
+        }
+    }
+
+    public bool IsSingleScreenHudMode
+    {
+        get => _displayMode == LauncherDisplayMode.SingleScreenHud;
+        set
+        {
+            if (value) DisplayMode = LauncherDisplayMode.SingleScreenHud;
+            else DisplayMode = LauncherDisplayMode.DualScreenDeck;
+        }
+    }
+
+    private MonitorInfo? _selectedDeckMonitor;
+    public MonitorInfo? SelectedDeckMonitor
+    {
+        get => _selectedDeckMonitor;
+        set
+        {
+            if (SetProperty(ref _selectedDeckMonitor, value))
+            {
+                RecalculateGeometry();
+            }
+        }
     }
 
     public string Renderer => _settings.Renderer ?? "auto";
@@ -113,16 +182,20 @@ public class LauncherViewModel : ViewModelBase
     public int MaxHudWidth => CurrentGeometry?.BlackBarWidth > 0 ? CurrentGeometry.BlackBarWidth : 600;
 
     public string GeometrySummaryText => CurrentGeometry != null
-        ? $"4:3 游戏区: {CurrentGeometry.GameWidth}×{CurrentGeometry.GameHeight}  |  右侧净黑边: {CurrentGeometry.BlackBarWidth}px  |  HUD 实际宽: {CurrentGeometry.RecommendedHudWidth}px"
+        ? (CurrentGeometry.Mode == LauncherDisplayMode.DualScreenDeck
+            ? $"【双屏 Deck 模式】主屏游戏居中: {CurrentGeometry.GameWidth}×{CurrentGeometry.GameHeight} (X:{CurrentGeometry.GameLeft})  |  副屏 Deck: {CurrentGeometry.DeckMonitor?.Width}×{CurrentGeometry.DeckMonitor?.Height}"
+            : $"【单屏 HUD 模式】4:3 游戏区: {CurrentGeometry.GameWidth}×{CurrentGeometry.GameHeight}  |  右侧净黑边: {CurrentGeometry.BlackBarWidth}px  |  HUD: {CurrentGeometry.RecommendedHudWidth}px")
         : "正在检测屏幕规格...";
 
     public ICommand SelectMonitorCommand { get; }
     public ICommand BrowseGameDirectoryCommand { get; }
     public ICommand LaunchGameCommand { get; }
     public ICommand OpenOfflineLoreCommand { get; }
+    public ICommand OpenDeckCommand { get; }
 
     public event Action<DisplayGeometry>? OnLaunchGameRequested;
     public event Action? OnOpenOfflineLoreRequested;
+    public event Action<string>? OnOpenDeckRequested;
 
     public LauncherViewModel() : this(null, null)
     {
@@ -137,7 +210,9 @@ public class LauncherViewModel : ViewModelBase
         _gameDirectory = _settings.GameDirectory;
         _customHudWidth = _settings.CustomHudWidth;
         _isWindowBordered = _settings.IsWindowBordered;
-        _unlockCursor = _settings.UnlockCursor;
+        _lockCursor = _settings.LockCursor;
+        _unlockCursor = !_settings.LockCursor;
+        _displayMode = _settings.DisplayMode;
 
         SelectMonitorCommand = new RelayCommand<MonitorInfo>(m =>
         {
@@ -154,10 +229,16 @@ public class LauncherViewModel : ViewModelBase
             _settings.GameDirectory = GameDirectory;
             _settings.CustomHudWidth = CustomHudWidth;
             _settings.IsWindowBordered = IsWindowBordered;
+            _settings.LockCursor = LockCursor;
             _settings.UnlockCursor = UnlockCursor;
+            _settings.DisplayMode = DisplayMode;
             if (SelectedMonitor != null)
             {
                 _settings.SelectedMonitorDeviceName = SelectedMonitor.DeviceName;
+            }
+            if (SelectedDeckMonitor != null)
+            {
+                _settings.SelectedDeckMonitorDeviceName = SelectedDeckMonitor.DeviceName;
             }
             _settingsService.Save(_settings);
 
@@ -167,6 +248,11 @@ public class LauncherViewModel : ViewModelBase
         OpenOfflineLoreCommand = new RelayCommand(() =>
         {
             OnOpenOfflineLoreRequested?.Invoke();
+        });
+
+        OpenDeckCommand = new RelayCommand(() =>
+        {
+            OnOpenDeckRequested?.Invoke(GameDirectory);
         });
 
         LoadMonitors();
@@ -183,13 +269,25 @@ public class LauncherViewModel : ViewModelBase
         SelectedMonitor = Monitors.FirstOrDefault(m => m.DeviceName == _settings.SelectedMonitorDeviceName)
             ?? Monitors.FirstOrDefault(m => m.IsPrimary)
             ?? Monitors.FirstOrDefault();
+
+        SelectedDeckMonitor = Monitors.FirstOrDefault(m => m.DeviceName == _settings.SelectedDeckMonitorDeviceName)
+            ?? Monitors.FirstOrDefault(m => m.DeviceName != SelectedMonitor?.DeviceName)
+            ?? SelectedMonitor;
     }
 
     private void RecalculateGeometry()
     {
         if (SelectedMonitor != null)
         {
-            CurrentGeometry = DisplayGeometryCalculator.Calculate(SelectedMonitor, CustomHudWidth, isBordered: IsWindowBordered);
+            if (DisplayMode == LauncherDisplayMode.DualScreenDeck)
+            {
+                var deckMon = SelectedDeckMonitor ?? Monitors.FirstOrDefault(m => m.DeviceName != SelectedMonitor.DeviceName) ?? SelectedMonitor;
+                CurrentGeometry = DisplayGeometryCalculator.CalculateDualScreenDeck(SelectedMonitor, deckMon, isBordered: IsWindowBordered);
+            }
+            else
+            {
+                CurrentGeometry = DisplayGeometryCalculator.Calculate(SelectedMonitor, CustomHudWidth, isBordered: IsWindowBordered);
+            }
         }
     }
 

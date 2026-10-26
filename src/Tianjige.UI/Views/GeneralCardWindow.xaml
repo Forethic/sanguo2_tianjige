@@ -1,0 +1,535 @@
+<Window x:Class="Tianjige.UI.Views.GeneralCardWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:Tianjige.UI.ViewModels"
+        mc:Ignorable="d"
+        Title="{Binding Name, StringFormat='三国群英名将录 · {0}'}"
+        Width="580" Height="680"
+        MinWidth="540" MinHeight="620"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Topmost="{Binding IsTopmost}"
+        ShowInTaskbar="True"
+        UseLayoutRounding="True"
+        SnapsToDevicePixels="True"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType"
+        Icon="../Resources/app_icon.ico">
+
+    <!-- 外层汉式古风卷轴边框 -->
+    <Border Background="{StaticResource BrushWoodSilkGradient}"
+            BorderBrush="{StaticResource BrushGoldBorder}"
+            BorderThickness="1.8"
+            CornerRadius="6">
+        <Border.Effect>
+            <DropShadowEffect Color="#000000" BlurRadius="24" ShadowDepth="4" Opacity="0.9" />
+        </Border.Effect>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <!-- 0: 顶栏古风标题与窗口控制 -->
+                <RowDefinition Height="38" />
+                <!-- 1: 主卡片工作区 -->
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- 0: 顶栏 (拖拽与控制按钮) -->
+            <Border Grid.Row="0"
+                    Background="#191411"
+                    CornerRadius="5,5,0,0"
+                    BorderBrush="{StaticResource BrushGoldMuted}"
+                    BorderThickness="0,0,0,1"
+                    MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+                <Grid Margin="12,0,8,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- 标题与势力 -->
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="三国名将录 · " FontFamily="{StaticResource FontLiSu}" FontSize="15" Foreground="{StaticResource BrushGoldLight}" VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding Name}" FontFamily="{StaticResource FontLiSu}" FontSize="16" FontWeight="Bold" Foreground="#FFE49E" VerticalAlignment="Center" />
+                        
+                        <Border Background="{Binding FactionColor}" CornerRadius="3" Padding="6,1" Margin="10,0,0,0" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding LordName, StringFormat='{}君主: {0}'}" FontSize="10.5" Foreground="#FFFFFF" FontWeight="Bold" />
+                        </Border>
+
+                        <Border Background="#2C2117" BorderBrush="{StaticResource BrushGoldMuted}" BorderThickness="1" CornerRadius="3" Padding="6,1" Margin="6,0,0,0" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding LocationName, StringFormat='{}📍 {0}'}" FontSize="10" Foreground="{StaticResource BrushGoldLight}" />
+                        </Border>
+                    </StackPanel>
+
+                    <!-- 右侧控制组 (置顶 / 关闭) -->
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                        <!-- 置顶切换图钉按钮 -->
+                        <Button Command="{Binding ToggleTopmostCommand}"
+                                Width="26" Height="22"
+                                Margin="0,0,6,0"
+                                Cursor="Hand">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="PinBorder"
+                                            Background="#251F1A"
+                                            BorderBrush="{StaticResource BrushGoldMuted}"
+                                            BorderThickness="1"
+                                            CornerRadius="3">
+                                        <Path x:Name="PinIcon"
+                                              Width="11" Height="12"
+                                              Stretch="Uniform"
+                                              Fill="{StaticResource BrushGoldLight}"
+                                              Data="M16,12V4H17V2H7V4H8V12L6,14V16H11V22L12,23L13,22V16H18V14L16,12Z" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding IsTopmost}" Value="True">
+                                            <Setter TargetName="PinBorder" Property="Background" Value="#382A1B" />
+                                            <Setter TargetName="PinBorder" Property="BorderBrush" Value="{StaticResource BrushGoldLight}" />
+                                            <Setter TargetName="PinIcon" Property="Fill" Value="#FFE6A3" />
+                                            <Setter Property="ToolTip" Value="窗口已置顶 (点击取消置顶)" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsTopmost}" Value="False">
+                                            <Setter TargetName="PinBorder" Property="Background" Value="#1C1713" />
+                                            <Setter TargetName="PinBorder" Property="BorderBrush" Value="#44372D" />
+                                            <Setter TargetName="PinIcon" Property="Fill" Value="#75675A" />
+                                            <Setter Property="ToolTip" Value="窗口未置顶 (点击固定在最前端)" />
+                                        </DataTrigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+
+                        <!-- 关闭按钮 -->
+                        <Button Click="Close_Click"
+                                Width="26" Height="22"
+                                Style="{StaticResource StyleAncientButton}"
+                                Content="✕"
+                                FontSize="10" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- 1: 主卡片工作区 -->
+            <Grid Grid.Row="1" Margin="12,10,12,12">
+                <Grid.RowDefinitions>
+                    <!-- 上部：画像 + 基础属性与潜力评级 -->
+                    <RowDefinition Height="200" />
+                    <!-- 下部：双技能树长卷 (武将技 / 军师技) -->
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!-- 上半部 -->
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <!-- 大头像区域 -->
+                        <ColumnDefinition Width="150" />
+                        <!-- 属性与潜能信息 -->
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- 左列：大头像与印章 -->
+                    <Border Grid.Column="0"
+                            Background="#181310"
+                            BorderBrush="{StaticResource BrushGoldBorder}"
+                            BorderThickness="1.5"
+                            CornerRadius="4"
+                            Margin="0,0,12,0"
+                            Padding="3">
+                        <Grid>
+                            <!-- 肖像画像 (存在时) -->
+                            <Image Source="{Binding AvatarPath}"
+                                   Stretch="UniformToFill"
+                                   RenderOptions.BitmapScalingMode="HighQuality"
+                                   Visibility="{Binding HasAvatar, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+                            <!-- 古风金石将印 (肖像缺失时代替黑方块) -->
+                            <Border Background="#251C16"
+                                    CornerRadius="3"
+                                    Visibility="{Binding HasNoAvatar, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <Grid>
+                                    <TextBlock Text="☯" FontSize="48" Foreground="#38291D" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    <Border BorderBrush="{StaticResource BrushGoldBorder}" BorderThickness="1.5" CornerRadius="4" Margin="14" Background="#2C2018">
+                                        <TextBlock Text="{Binding FirstChar}"
+                                                   FontFamily="{StaticResource FontLiSu}"
+                                                   FontSize="36"
+                                                   FontWeight="Bold"
+                                                   Foreground="{StaticResource BrushGoldLight}"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center" />
+                                    </Border>
+                                </Grid>
+                            </Border>
+
+                            <!-- 底部姓名与印信横条 -->
+                            <Border Background="#D916120E"
+                                    VerticalAlignment="Bottom"
+                                    Padding="6,4">
+                                <StackPanel HorizontalAlignment="Center">
+                                    <TextBlock Text="{Binding Name}"
+                                               FontFamily="{StaticResource FontLiSu}"
+                                               FontSize="17"
+                                               FontWeight="Bold"
+                                               Foreground="#FFE4A0"
+                                               HorizontalAlignment="Center" />
+                                    <TextBlock Text="{Binding Potential.TierBadge}"
+                                               FontSize="11"
+                                               FontWeight="Bold"
+                                               Foreground="{Binding Potential.TierColor}"
+                                               HorizontalAlignment="Center"
+                                               Margin="0,2,0,0" />
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <!-- 右列：详细属性与潜力雷达面板 -->
+                    <Border Grid.Column="1"
+                            Background="#1F1915"
+                            BorderBrush="{StaticResource BrushGoldMuted}"
+                            BorderThickness="1"
+                            CornerRadius="4"
+                            Padding="12,10">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <!-- 第一排：武力、智力、等级、忠诚 -->
+                            <Grid Grid.Row="0" Margin="0,0,0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="武力" FontSize="10" Foreground="{StaticResource BrushTextMuted}" />
+                                    <TextBlock Text="{Binding Force}" FontSize="18" FontWeight="Bold" Foreground="#FF6B55" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="智力" FontSize="10" Foreground="{StaticResource BrushTextMuted}" />
+                                    <TextBlock Text="{Binding Intellect}" FontSize="18" FontWeight="Bold" Foreground="#4BA3E3" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="等级" FontSize="10" Foreground="{StaticResource BrushTextMuted}" />
+                                    <TextBlock Text="{Binding Level, StringFormat='{}Lv.{0}'}" FontSize="16" FontWeight="Bold" Foreground="{StaticResource BrushGoldLight}" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="3">
+                                    <TextBlock Text="忠诚度" FontSize="10" Foreground="{StaticResource BrushTextMuted}" />
+                                    <TextBlock Text="{Binding Loyalty}" FontSize="16" FontWeight="Bold" Foreground="#70D49E" />
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- 第二排：体力与技力进度 -->
+                            <Grid Grid.Row="1" Margin="0,0,0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <!-- 体力 HP -->
+                                <StackPanel Grid.Column="0" Margin="0,0,6,0">
+                                    <Grid Margin="0,0,0,2">
+                                        <TextBlock Text="生命体力" FontSize="10" Foreground="{StaticResource BrushTextMuted}" />
+                                        <TextBlock HorizontalAlignment="Right" FontSize="10.5" Foreground="#FF8A7A">
+                                            <Run Text="{Binding CurrentHp, Mode=OneWay}" FontWeight="Bold" />/<Run Text="{Binding MaxHp, Mode=OneWay}" />
+                                        </TextBlock>
+                                    </Grid>
+                                    <ProgressBar Value="{Binding CurrentHp, Mode=OneWay}" Maximum="{Binding MaxHp}" Height="7" Background="#2B1A17" Foreground="#C93B2B" BorderThickness="0" />
+                                </StackPanel>
+
+                                <!-- 技力 MP -->
+                                <StackPanel Grid.Column="1" Margin="6,0,0,0">
+                                    <Grid Margin="0,0,0,2">
+                                        <TextBlock Text="法术技力" FontSize="10" Foreground="{StaticResource BrushTextMuted}" />
+                                        <TextBlock HorizontalAlignment="Right" FontSize="10.5" Foreground="#6DB8F2">
+                                            <Run Text="{Binding CurrentMp, Mode=OneWay}" FontWeight="Bold" />/<Run Text="{Binding MaxMp, Mode=OneWay}" />
+                                        </TextBlock>
+                                    </Grid>
+                                    <ProgressBar Value="{Binding CurrentMp, Mode=OneWay}" Maximum="{Binding MaxMp}" Height="7" Background="#162533" Foreground="#2E79B8" BorderThickness="0" />
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- 第三排：兵力与所在地 -->
+                            <Grid Grid.Row="2" Margin="0,0,0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="兵力统御" FontSize="10" Foreground="{StaticResource BrushTextMuted}" />
+                                    <TextBlock FontSize="12.5" Foreground="{StaticResource BrushTextPrimary}">
+                                        <Run Text="{Binding TroopCount, Mode=OneWay}" FontWeight="Bold" />/<Run Text="{Binding MaxTroopCount, Mode=OneWay}" /> 卒 (<Run Text="{Binding StatusDisplayName, Mode=OneWay}" />)
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="驻扎城池" FontSize="10" Foreground="{StaticResource BrushTextMuted}" />
+                                    <TextBlock Text="{Binding LocationName}" FontSize="12.5" FontWeight="Bold" Foreground="{StaticResource BrushGoldLight}" />
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- 第四排：潜力评价与亮点勋章 -->
+                            <Border Grid.Row="3" Background="#181310" CornerRadius="3" Padding="8,6" BorderBrush="#3B2E24" BorderThickness="1">
+                                <StackPanel>
+                                    <Grid>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="培养价值: " FontSize="11" Foreground="{StaticResource BrushTextMuted}" />
+                                            <TextBlock Text="{Binding Potential.OverallScore, StringFormat='{}★ {0} 分'}" FontWeight="Bold" FontSize="12" Foreground="{Binding Potential.TierColor}" />
+                                            <TextBlock Text="{Binding Potential.TierBadge}" FontWeight="Bold" FontSize="11" Foreground="{Binding Potential.TierColor}" Margin="6,0,0,0" />
+                                            <Border Background="#382A1B" CornerRadius="2" Padding="4,1" Margin="6,0,0,0">
+                                                <TextBlock Text="{Binding Potential.GrowthStage}" FontSize="10" Foreground="#FFE6A3" FontWeight="SemiBold" />
+                                            </Border>
+                                        </StackPanel>
+                                        <TextBlock Text="{Binding Potential.MaxSkillLevel, StringFormat='{}技能上限 Lv.{0}'}" HorizontalAlignment="Right" FontSize="10" Foreground="{StaticResource BrushGoldMuted}" />
+                                    </Grid>
+
+                                    <!-- 特色标签组 -->
+                                    <ItemsControl ItemsSource="{Binding Potential.HighlightBadges}" Margin="0,4,0,0">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Orientation="Horizontal" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Background="#2B2117" BorderBrush="{StaticResource BrushGoldMuted}" BorderThickness="0.8" CornerRadius="2" Padding="4,1" Margin="0,0,4,3">
+                                                    <TextBlock Text="{Binding}" FontSize="9.5" Foreground="{StaticResource BrushGoldLight}" />
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+
+                                    <!-- 真实成长阶段剖析 -->
+                                    <TextBlock Text="{Binding Potential.GrowthComment}"
+                                               FontSize="10"
+                                               Foreground="#FFB74D"
+                                               TextWrapping="Wrap"
+                                               Margin="0,3,0,0" />
+
+                                    <TextBlock Text="{Binding Potential.TacticalComment}"
+                                               FontSize="10"
+                                               Foreground="{StaticResource BrushTextSecondary}"
+                                               TextWrapping="Wrap"
+                                               Margin="0,3,0,0" />
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <!-- 下半部：技能长卷 -->
+                <Grid Grid.Row="1" Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <!-- 左列：武将技长卷 -->
+                        <ColumnDefinition Width="*" />
+                        <!-- 右列：军师技长卷 -->
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- 武将技长卷卡片 -->
+                    <Border Grid.Column="0"
+                            Background="#1A1512"
+                            BorderBrush="{StaticResource BrushGoldMuted}"
+                            BorderThickness="1"
+                            CornerRadius="4"
+                            Margin="0,0,6,0"
+                            Padding="8">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <Border Grid.Row="0" BorderBrush="#3B2C22" BorderThickness="0,0,0,1" Padding="0,0,0,6" Margin="0,0,0,6">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="⚔" FontSize="12" Foreground="#FF6B55" Margin="0,0,4,0" />
+                                    <TextBlock Text="武将技长卷" FontFamily="{StaticResource FontLiSu}" FontSize="13" FontWeight="Bold" Foreground="#FF8A7A" />
+                                    <TextBlock Text="（鼠标悬停查看效果与招兵数）" FontSize="9" Foreground="{StaticResource BrushTextMuted}" VerticalAlignment="Bottom" Margin="4,0,0,1" />
+                                </StackPanel>
+                            </Border>
+
+                            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                                <ItemsControl ItemsSource="{Binding GeneralSkills}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border CornerRadius="3"
+                                                    Margin="0,0,0,5"
+                                                    Padding="8,5"
+                                                    ToolTip="{Binding TooltipText}">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="Background" Value="#221C17" />
+                                                        <Setter Property="BorderBrush" Value="#382B21" />
+                                                        <Setter Property="BorderThickness" Value="1" />
+                                                        <Setter Property="Opacity" Value="0.65" />
+                                                        <Style.Triggers>
+                                                            <!-- 已学技能高亮 -->
+                                                            <DataTrigger Binding="{Binding IsLearned}" Value="True">
+                                                                <Setter Property="Background" Value="#3A221B" />
+                                                                <Setter Property="BorderBrush" Value="#A63828" />
+                                                                <Setter Property="Opacity" Value="1.0" />
+                                                            </DataTrigger>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="BorderBrush" Value="{StaticResource BrushGoldLight}" />
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <TextBlock Grid.Column="0" Text="{Binding LevelDisplay}" FontSize="10.5" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,8,0">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Foreground" Value="{StaticResource BrushTextMuted}" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsLearned}" Value="True">
+                                                                        <Setter Property="Foreground" Value="#FFAE9E" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+
+                                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                                        <TextBlock Text="{Binding SkillName}" FontSize="12.5" FontWeight="Bold">
+                                                            <TextBlock.Style>
+                                                                <Style TargetType="TextBlock">
+                                                                    <Setter Property="Foreground" Value="{StaticResource BrushTextSecondary}" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding IsLearned}" Value="True">
+                                                                            <Setter Property="Foreground" Value="#FFF0D0" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </TextBlock.Style>
+                                                        </TextBlock>
+                                                        <TextBlock Text="{Binding DamageDetail}" FontSize="9.5" Foreground="{StaticResource BrushTextMuted}" Margin="0,1,0,0" TextTrimming="CharacterEllipsis" />
+                                                    </StackPanel>
+
+                                                    <Border Grid.Column="2" Background="#261A16" CornerRadius="2" Padding="4,1" VerticalAlignment="Center">
+                                                        <TextBlock Text="{Binding CostDisplay}" FontSize="9" Foreground="#FF9E8C" />
+                                                    </Border>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
+
+                    <!-- 军师技长卷卡片 -->
+                    <Border Grid.Column="1"
+                            Background="#1A1512"
+                            BorderBrush="{StaticResource BrushGoldMuted}"
+                            BorderThickness="1"
+                            CornerRadius="4"
+                            Margin="6,0,0,0"
+                            Padding="8">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <Border Grid.Row="0" BorderBrush="#223344" BorderThickness="0,0,0,1" Padding="0,0,0,6" Margin="0,0,0,6">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="☯" FontSize="12" Foreground="#4BA3E3" Margin="0,0,4,0" />
+                                    <TextBlock Text="军师技长卷" FontFamily="{StaticResource FontLiSu}" FontSize="13" FontWeight="Bold" Foreground="#6DB8F2" />
+                                    <TextBlock Text="（战术谋策客观细则）" FontSize="9" Foreground="{StaticResource BrushTextMuted}" VerticalAlignment="Bottom" Margin="4,0,0,1" />
+                                </StackPanel>
+                            </Border>
+
+                            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                                <ItemsControl ItemsSource="{Binding AdvisorSkills}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border CornerRadius="3"
+                                                    Margin="0,0,0,5"
+                                                    Padding="8,5"
+                                                    ToolTip="{Binding TooltipText}">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="Background" Value="#1A1F26" />
+                                                        <Setter Property="BorderBrush" Value="#252F3B" />
+                                                        <Setter Property="BorderThickness" Value="1" />
+                                                        <Setter Property="Opacity" Value="0.65" />
+                                                        <Style.Triggers>
+                                                            <!-- 已学技能高亮 -->
+                                                            <DataTrigger Binding="{Binding IsLearned}" Value="True">
+                                                                <Setter Property="Background" Value="#1F2F45" />
+                                                                <Setter Property="BorderBrush" Value="#2E7DB8" />
+                                                                <Setter Property="Opacity" Value="1.0" />
+                                                            </DataTrigger>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="BorderBrush" Value="{StaticResource BrushGoldLight}" />
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <TextBlock Grid.Column="0" Text="{Binding LevelDisplay}" FontSize="10.5" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,8,0">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Foreground" Value="{StaticResource BrushTextMuted}" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsLearned}" Value="True">
+                                                                        <Setter Property="Foreground" Value="#9ED5FF" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+
+                                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                                        <TextBlock Text="{Binding SkillName}" FontSize="12.5" FontWeight="Bold">
+                                                            <TextBlock.Style>
+                                                                <Style TargetType="TextBlock">
+                                                                    <Setter Property="Foreground" Value="{StaticResource BrushTextSecondary}" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding IsLearned}" Value="True">
+                                                                            <Setter Property="Foreground" Value="#D8EFFF" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </TextBlock.Style>
+                                                        </TextBlock>
+                                                        <TextBlock Text="{Binding DamageDetail}" FontSize="9.5" Foreground="{StaticResource BrushTextMuted}" Margin="0,1,0,0" TextTrimming="CharacterEllipsis" />
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

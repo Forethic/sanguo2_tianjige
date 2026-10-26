@@ -342,6 +342,48 @@
 
                             <Separator Style="{StaticResource StyleAncientSeparator}" Margin="0,6,0,8" />
 
+                            <!-- 战局呈现模式选择 -->
+                            <Border Background="#16120F" BorderBrush="{StaticResource BrushGoldBorder}" BorderThickness="1" CornerRadius="4" Padding="10,8" Margin="0,0,0,10">
+                                <StackPanel>
+                                    <DockPanel LastChildFill="False" Margin="0,0,0,6">
+                                        <TextBlock Text="战局显示模式选择" FontSize="12" FontWeight="Bold" Foreground="{StaticResource BrushGoldLight}" VerticalAlignment="Center" />
+                                        <Border DockPanel.Dock="Right" Background="#2B2117" CornerRadius="2" Padding="4,1">
+                                            <TextBlock Text="纯硬件几何对齐" FontSize="9" Foreground="{StaticResource BrushGoldMuted}" />
+                                        </Border>
+                                    </DockPanel>
+
+                                    <Grid Margin="0,2,0,4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- 单屏 HUD 模式 -->
+                                        <RadioButton Grid.Column="0"
+                                                     Style="{StaticResource StyleAncientRadioCard}"
+                                                     IsChecked="{Binding IsSingleScreenHudMode}"
+                                                     GroupName="DisplayModeGroup"
+                                                     Margin="0,0,8,0">
+                                            <StackPanel>
+                                                <TextBlock Text="单屏 HUD 侧边栏" FontSize="11.5" FontWeight="Bold" Foreground="#FFE6A3" />
+                                                <TextBlock Text="游戏靠左4:3，右黑边嵌入战局HUD" FontSize="9.5" Foreground="{StaticResource BrushTextMuted}" Margin="0,2,0,0" />
+                                            </StackPanel>
+                                        </RadioButton>
+
+                                        <!-- 双屏 Deck 模式 -->
+                                        <RadioButton Grid.Column="1"
+                                                     Style="{StaticResource StyleAncientRadioCard}"
+                                                     IsChecked="{Binding IsDualScreenDeckMode}"
+                                                     GroupName="DisplayModeGroup">
+                                            <StackPanel>
+                                                <TextBlock Text="双屏全景 Deck 模式 (推荐)" FontSize="11.5" FontWeight="Bold" Foreground="#9ED5FF" />
+                                                <TextBlock Text="主屏游戏纯4:3居中，副屏展开全景Deck" FontSize="9.5" Foreground="{StaticResource BrushTextMuted}" Margin="0,2,0,0" />
+                                            </StackPanel>
+                                        </RadioButton>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+
                             <!-- 运行体验与光标设定 -->
                             <Grid Margin="2,0,2,8">
                                 <Grid.ColumnDefinitions>
@@ -365,15 +407,15 @@
                                     </StackPanel>
                                 </CheckBox>
 
-                                <!-- 光标免锁定自由穿梭选项 -->
+                                <!-- 鼠标锁定配置 (Requirement 1) -->
                                 <CheckBox Grid.Column="1"
-                                          IsChecked="{Binding UnlockCursor, Mode=TwoWay}"
-                                          ToolTip="开启后鼠标不会被强行限制在游戏内，可平滑滑入右侧天机阁HUD点击查看谋略">
+                                          IsChecked="{Binding LockCursor, Mode=TwoWay}"
+                                          ToolTip="勾选后鼠标光标被锁定在游戏窗口内，防止误移出；取消勾选则鼠标可自由滑出游戏进入Deck/HUD">
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                         <Border Background="#2B221A" BorderBrush="{StaticResource BrushGoldMuted}" BorderThickness="0.8" CornerRadius="2" Padding="3,1" Margin="0,0,5,0">
-                                            <TextBlock Text="梭" FontSize="9.5" Foreground="{StaticResource BrushGoldLight}" FontWeight="SemiBold" />
+                                            <TextBlock Text="锁" FontSize="9.5" Foreground="{StaticResource BrushGoldLight}" FontWeight="SemiBold" />
                                         </Border>
-                                        <TextBlock Text="光标自由穿梭 (滑入天机阁免切屏)"
+                                        <TextBlock Text="锁定鼠标在游戏内 (防止滑出窗口)"
                                                    FontSize="11"
                                                    FontWeight="SemiBold"
                                                    Foreground="{StaticResource BrushGoldLight}"
@@ -405,28 +447,48 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <!-- 离线单机速查入口 -->
-                    <Button Grid.Column="0"
-                            Command="{Binding OpenOfflineLoreCommand}"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Padding="14,8"
-                            Cursor="Hand"
-                            SnapsToDevicePixels="True"
-                            UseLayoutRounding="True"
-                            Style="{StaticResource StyleAncientButton}">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <TextBlock Text="◈" FontSize="11" Margin="0,0,5,0" Foreground="{StaticResource BrushGoldLight}" VerticalAlignment="Center" />
-                            <TextBlock Text="翻阅典籍 (单机速查)"
-                                       FontFamily="{StaticResource FontAncient}"
-                                       FontSize="12"
-                                       FontWeight="SemiBold"
-                                       Foreground="{StaticResource BrushTextPrimary}"
-                                       VerticalAlignment="Center"
-                                       TextOptions.TextFormattingMode="Display"
-                                       TextOptions.TextRenderingMode="ClearType" />
-                        </StackPanel>
-                    </Button>
+                    <!-- 左侧速查与Deck入口 -->
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                        <!-- 离线单机速查入口 -->
+                        <Button Command="{Binding OpenOfflineLoreCommand}"
+                                VerticalAlignment="Center"
+                                Padding="12,7"
+                                Margin="0,0,10,0"
+                                Cursor="Hand"
+                                SnapsToDevicePixels="True"
+                                UseLayoutRounding="True"
+                                Style="{StaticResource StyleAncientButton}">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBlock Text="◈" FontSize="11" Margin="0,0,5,0" Foreground="{StaticResource BrushGoldLight}" VerticalAlignment="Center" />
+                                <TextBlock Text="典籍速查"
+                                           FontFamily="{StaticResource FontAncient}"
+                                           FontSize="12"
+                                           FontWeight="SemiBold"
+                                           Foreground="{StaticResource BrushTextPrimary}"
+                                           VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
+
+                        <!-- 全景指挥台 Deck 独立打开入口 -->
+                        <Button Command="{Binding OpenDeckCommand}"
+                                VerticalAlignment="Center"
+                                Padding="12,7"
+                                Cursor="Hand"
+                                SnapsToDevicePixels="True"
+                                UseLayoutRounding="True"
+                                Style="{StaticResource StyleAncientButton}"
+                                ToolTip="无需启动游戏，直接打开副屏全景名将录与存档推演台 (Deck)">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBlock Text="☵" FontSize="11" Margin="0,0,5,0" Foreground="{StaticResource BrushGoldLight}" VerticalAlignment="Center" />
+                                <TextBlock Text="名将指挥台 (Deck)"
+                                           FontFamily="{StaticResource FontAncient}"
+                                           FontSize="12"
+                                           FontWeight="SemiBold"
+                                           Foreground="{StaticResource BrushGoldLight}"
+                                           VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
 
                     <!-- 启程入局启动主按钮 -->
                     <Button Grid.Column="1"

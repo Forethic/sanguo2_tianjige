@@ -1,0 +1,1179 @@
+<Window x:Class="Tianjige.UI.Views.DeckWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:Tianjige.UI.ViewModels"
+        mc:Ignorable="d"
+        Title="群英策 · 天机阁 副屏指挥战台 (Deck)"
+        Width="1480" Height="920"
+        MinWidth="1150" MinHeight="720"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        UseLayoutRounding="True"
+        SnapsToDevicePixels="True"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType"
+        Icon="../Resources/app_icon.ico">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </Window.Resources>
+
+    <!-- 外层汉风边框 -->
+    <Border Background="{StaticResource BrushWoodSilkGradient}"
+            BorderBrush="{StaticResource BrushGoldBorder}"
+            BorderThickness="2"
+            CornerRadius="6">
+        <Border.Effect>
+            <DropShadowEffect Color="#000000" BlurRadius="28" ShadowDepth="4" Opacity="0.95" />
+        </Border.Effect>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <!-- 0: 顶栏 (标题与控制区) -->
+                <RowDefinition Height="46" />
+                <!-- 1: 主体工作区 -->
+                <RowDefinition Height="*" />
+                <!-- 2: 底栏状态提示 -->
+                <RowDefinition Height="28" />
+            </Grid.RowDefinitions>
+
+            <!-- 0: 顶栏 (拖拽区 + 存档快捷信息 + 控制按钮) -->
+            <Border Grid.Row="0"
+                    Background="#191411"
+                    CornerRadius="5,5,0,0"
+                    BorderBrush="{StaticResource BrushGoldMuted}"
+                    BorderThickness="0,0,0,1"
+                    MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+                <Grid Margin="16,0,10,0">
+                    <Grid.ColumnDefinitions>
+                        <!-- 左: 软件标题 -->
+                        <ColumnDefinition Width="Auto" />
+                        <!-- 中: 存档摘要与快速选档按钮 -->
+                        <ColumnDefinition Width="*" />
+                        <!-- 右: 兵机罗盘与窗口控制 -->
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- 左: 软件标题 -->
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="☯" FontSize="18" Foreground="{StaticResource BrushGoldLight}" Margin="0,0,8,0" VerticalAlignment="Center" />
+                        <TextBlock Text="群英策 · 天机阁" FontFamily="{StaticResource FontLiSu}" FontSize="18" FontWeight="Bold" Foreground="#FFE49E" VerticalAlignment="Center" />
+                        <Border Background="#2B2117" BorderBrush="{StaticResource BrushGoldBorder}" BorderThickness="1" CornerRadius="3" Padding="6,1" Margin="8,0,0,0" VerticalAlignment="Center">
+                            <TextBlock Text="副屏指挥台" FontSize="10.5" Foreground="{StaticResource BrushGoldLight}" />
+                        </Border>
+                    </StackPanel>
+
+                    <!-- 中: 顶部状态指示区 (实时自适应：载入存档时 vs 离线大典时) -->
+                    <Grid Grid.Column="1" Margin="20,0,16,0">
+                        <!-- 模式 A: 已载入官方存档 -->
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Visibility="{Binding HasSelectedSave, Converter={StaticResource BoolToVis}}">
+                            <!-- 槽位标签 -->
+                            <Border Background="#2B2117" BorderBrush="{StaticResource BrushGoldBorder}" BorderThickness="1" CornerRadius="3" Padding="8,2" Margin="0,0,8,0" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding SelectedSlotSummary.SlotDisplayName, FallbackValue='进度 01'}" FontSize="11" FontWeight="Bold" Foreground="{StaticResource BrushGoldLight}" />
+                            </Border>
+
+                            <!-- 年份与时期 -->
+                            <Border Background="#241C16" BorderBrush="{StaticResource BrushGoldMuted}" BorderThickness="1" CornerRadius="3" Padding="8,2" Margin="0,0,8,0" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding SelectedSlotSummary.ScenarioPeriodName, StringFormat='{}{0}'}" FontSize="11" Foreground="#FFF3D4" />
+                            </Border>
+
+                            <Border Background="#241C16" BorderBrush="{StaticResource BrushGoldMuted}" BorderThickness="1" CornerRadius="3" Padding="8,2" Margin="0,0,8,0" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding SelectedSlotSummary.GameYear, StringFormat='{}时间: {0}年'}" FontSize="11" Foreground="#FFE18F" />
+                            </Border>
+
+                            <!-- 君主势力 -->
+                            <Border Background="{Binding SelectedSlotSummary.FactionColor, FallbackValue='#8D6E63'}" CornerRadius="3" Padding="8,2" Margin="0,0,8,0" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding SelectedSlotSummary.MonarchName, StringFormat='{}君主: {0}'}" FontSize="11" FontWeight="Bold" Foreground="#FFFFFF" />
+                            </Border>
+
+                            <!-- 城池与武将数 -->
+                            <Border Background="#201A15" BorderBrush="{StaticResource BrushGoldMuted}" BorderThickness="1" CornerRadius="3" Padding="8,2" Margin="0,0,8,0" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding SelectedSlotSummary.CityCount, StringFormat='{}城数: {0}座'}" FontSize="10.5" Foreground="{StaticResource BrushTextSecondary}" />
+                            </Border>
+
+                            <Border Background="#201A15" BorderBrush="{StaticResource BrushGoldMuted}" BorderThickness="1" CornerRadius="3" Padding="8,2" Margin="0,0,12,0" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding SelectedSlotSummary.GeneralCount, StringFormat='{}武将: {0}员'}" FontSize="10.5" Foreground="{StaticResource BrushTextSecondary}" />
+                            </Border>
+
+                            <!-- 切换存档 -->
+                            <Button Command="{Binding SwitchSlotCommand}"
+                                    Style="{StaticResource StyleAncientButton}"
+                                    Height="26"
+                                    Padding="10,0"
+                                    Margin="0,0,6,0"
+                                    ToolTip="查看或切换其他存档槽位">
+                                <TextBlock Text="⇋ 切换存档" FontSize="11" />
+                            </Button>
+
+                            <!-- 刷新当前存档 -->
+                            <Button Command="{Binding RefreshSlotCommand}"
+                                    Style="{StaticResource StyleAncientButton}"
+                                    Height="26"
+                                    Padding="8,0"
+                                    ToolTip="强制重新读取磁盘最新变动">
+                                <TextBlock Text="↻ 刷新" FontSize="11" />
+                            </Button>
+                        </StackPanel>
+
+                        <!-- 模式 B: 离线大典速查模式 (未载入存档时直接可见) -->
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Visibility="{Binding HasNoSelectedSave, Converter={StaticResource BoolToVis}}">
+                            <Border Background="#221C16" BorderBrush="{StaticResource BrushGoldMuted}" BorderThickness="1" CornerRadius="3" Padding="10,2" Margin="0,0,10,0" VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="◈ " Foreground="{StaticResource BrushGoldLight}" FontSize="11" VerticalAlignment="Center"/>
+                                    <TextBlock Text="离线名将大典模式 (全400员名将全景)" FontSize="11" FontWeight="Bold" Foreground="{StaticResource BrushGoldLight}" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Border>
+
+                            <Button Command="{Binding SwitchSlotCommand}"
+                                    Style="{StaticResource StyleAncientButton}"
+                                    Height="26"
+                                    Padding="12,0"
+                                    ToolTip="载入三国群英传2游戏存档，实时映射当前势力、城池与出仕武将">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="💾 " FontSize="11" Foreground="{StaticResource BrushGoldLight}" VerticalAlignment="Center" />
+                                    <TextBlock Text="载入游戏存档透析" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- 右: 兵机罗盘 + 窗口按钮 -->
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                        <!-- 兵种生克独立弹窗按钮 (全部克制免点击直览) -->
+                        <Button Command="{Binding OpenTroopCounterCommand}"
+                                Style="{StaticResource StyleAncientButton}"
+                                Height="28"
+                                Padding="10,0"
+                                Margin="0,0,6,0"
+                                ToolTip="开启全兵种相克大典 (全部克制关系免选直接列出，可置顶)">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="⚔️ 兵种生克" FontSize="11.5" FontWeight="Bold" Foreground="{StaticResource BrushGoldLight}" />
+                            </StackPanel>
+                        </Button>
+
+                        <!-- 阵法生克独立弹窗按钮 (全部克制免点击直览) -->
+                        <Button Command="{Binding OpenFormationCounterCommand}"
+                                Style="{StaticResource StyleAncientButton}"
+                                Height="28"
+                                Padding="10,0"
+                                Margin="0,0,12,0"
+                                ToolTip="开启八门阵法生克大典 (全部克制关系免选直接列出，可置顶)">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="🚩 阵法生克" FontSize="11.5" FontWeight="Bold" Foreground="{StaticResource BrushGoldLight}" />
+                            </StackPanel>
+                        </Button>
+
+                        <!-- 最小化 -->
+                        <Button Click="Minimize_Click" Width="30" Height="26" Style="{StaticResource StyleAncientButton}" Content="━" FontSize="10" Margin="0,0,4,0" />
+                        <!-- 最大化 / 还原 -->
+                        <Button Click="Maximize_Click" Width="30" Height="26" Style="{StaticResource StyleAncientButton}" Content="🗖" FontSize="11" Margin="0,0,4,0" />
+                        <!-- 关闭 -->
+                        <Button Click="Close_Click" Width="30" Height="26" Style="{StaticResource StyleAncientButton}" Content="✕" FontSize="11" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- 1: 主体工作区 (四大标签无缝直达，绝不阻断名将大典) -->
+            <Grid Grid.Row="1" Margin="14,10,14,6">
+                <TabControl SelectedIndex="{Binding SelectedTabIndex}" Background="Transparent" BorderThickness="0">
+                    <TabControl.Resources>
+                        <Style TargetType="TabItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="TabItem">
+                                        <Border x:Name="TabBorder"
+                                                Background="#1F1A16"
+                                                BorderBrush="{StaticResource BrushGoldMuted}"
+                                                BorderThickness="1,1,1,0"
+                                                CornerRadius="4,4,0,0"
+                                                Padding="18,8"
+                                                Margin="0,0,6,0"
+                                                Cursor="Hand">
+                                            <TextBlock x:Name="TabTitle"
+                                                       Text="{TemplateBinding Header}"
+                                                       FontFamily="{StaticResource FontLiSu}"
+                                                       FontSize="15"
+                                                       Foreground="{StaticResource BrushTextMuted}" />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="TabBorder" Property="Background" Value="#2E2319" />
+                                                <Setter TargetName="TabBorder" Property="BorderBrush" Value="{StaticResource BrushGoldBorder}" />
+                                                <Setter TargetName="TabBorder" Property="BorderThickness" Value="1.8,1.8,1.8,0" />
+                                                <Setter TargetName="TabTitle" Property="Foreground" Value="{StaticResource BrushGoldLight}" />
+                                                <Setter TargetName="TabTitle" Property="FontWeight" Value="Bold" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </TabControl.Resources>
+
+                    <!-- 选项卡 1: 天下名将大典 (400武将总表、潜力评级、快速过滤与排序) -->
+                    <TabItem Header="⚔ 天下名将大典">
+                        <Grid Margin="0,8,0,0">
+                            <Grid.RowDefinitions>
+                                <!-- 0: 综合过滤与快捷排序栏 -->
+                                <RowDefinition Height="Auto" />
+                                <!-- 1: 武将全景大表 -->
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <!-- 0: 综合过滤与快捷排序栏 -->
+                            <Border Grid.Row="0"
+                                    Background="#1C1713"
+                                    BorderBrush="{StaticResource BrushGoldMuted}"
+                                    BorderThickness="1"
+                                    CornerRadius="5"
+                                    Padding="12,10"
+                                    Margin="0,0,0,10">
+                                <StackPanel>
+                                    <!-- 第一排过滤项: 关键字搜索与下拉菜单 -->
+                                    <WrapPanel VerticalAlignment="Center">
+                                        <!-- 姓名/拼音搜索 -->
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,16,6">
+                                            <TextBlock Text="武将检索:" FontSize="12" Foreground="{StaticResource BrushGoldLight}" VerticalAlignment="Center" Margin="0,0,6,0" />
+                                            <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                                                     Style="{StaticResource StyleAncientSearchBox}"
+                                                     Width="135" Height="26"
+                                                     Padding="6,2"
+                                                     VerticalContentAlignment="Center"
+                                                     ToolTip="输入武将汉字名称或全拼/首字母拼音 (如 '关羽' 或 'gy')" />
+                                        </StackPanel>
+
+                                        <!-- 势力归属 -->
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,16,6">
+                                            <TextBlock Text="君主势力:" FontSize="12" Foreground="{StaticResource BrushGoldLight}" VerticalAlignment="Center" Margin="0,0,6,0" />
+                                            <ComboBox ItemsSource="{Binding AvailableFactions}"
+                                                      SelectedItem="{Binding SelectedFaction}"
+                                                      Width="110" Height="26" />
+                                        </StackPanel>
+
+                                        <!-- 出仕状态 -->
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,16,6">
+                                            <TextBlock Text="出仕状态:" FontSize="12" Foreground="{StaticResource BrushGoldLight}" VerticalAlignment="Center" Margin="0,0,6,0" />
+                                            <ComboBox ItemsSource="{Binding StatusOptions}"
+                                                      SelectedItem="{Binding SelectedStatus}"
+                                                      Width="95" Height="26" />
+                                        </StackPanel>
+
+                                        <!-- 培养潜力评级 -->
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,16,6">
+                                            <TextBlock Text="潜力档位:" FontSize="12" Foreground="{StaticResource BrushGoldLight}" VerticalAlignment="Center" Margin="0,0,6,0" />
+                                            <ComboBox ItemsSource="{Binding PotentialTierOptions}"
+                                                      SelectedItem="{Binding SelectedPotentialTier}"
+                                                      Width="115" Height="26" />
+                                        </StackPanel>
+
+                                        <!-- 技能特色过滤 -->
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,16,6">
+                                            <TextBlock Text="技能特色:" FontSize="12" Foreground="{StaticResource BrushGoldLight}" VerticalAlignment="Center" Margin="0,0,6,0" />
+                                            <ComboBox ItemsSource="{Binding SkillFilterOptions}"
+                                                      SelectedItem="{Binding SelectedSkillFilter}"
+                                                      Width="115" Height="26" />
+                                        </StackPanel>
+
+                                        <!-- 重置条件 -->
+                                        <Button Command="{Binding ResetFiltersCommand}"
+                                                Style="{StaticResource StyleAncientButton}"
+                                                Height="26"
+                                                Padding="10,0"
+                                                Margin="0,0,16,6">
+                                            <TextBlock Text="重置条件" FontSize="11" />
+                                        </Button>
+
+                                        <!-- 统计计数 -->
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,6">
+                                            <TextBlock Text="当前匹配: " FontSize="11" Foreground="{StaticResource BrushTextMuted}" />
+                                            <TextBlock Text="{Binding FilteredCount}" FontSize="12" FontWeight="Bold" Foreground="{StaticResource BrushGoldLight}" />
+                                            <TextBlock Text=" / " FontSize="11" Foreground="{StaticResource BrushTextMuted}" />
+                                            <TextBlock Text="{Binding TotalCount}" FontSize="11" Foreground="{StaticResource BrushTextMuted}" />
+                                            <TextBlock Text=" 员名将" FontSize="11" Foreground="{StaticResource BrushTextMuted}" />
+                                        </StackPanel>
+                                    </WrapPanel>
+
+                                    <!-- 第二排: 快捷单键排序 + 属性区间滑块 -->
+                                    <DockPanel LastChildFill="False" Margin="0,6,0,0">
+                                        <!-- 快捷单键排序按钮群 -->
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <TextBlock Text="快捷排序: " FontSize="11.5" Foreground="{StaticResource BrushGoldLight}" VerticalAlignment="Center" Margin="0,0,6,0" />
+                                            
+                                            <Button Command="{Binding QuickSortCommand}" CommandParameter="PotentialScore" Style="{StaticResource StyleAncientButton}" Height="24" Padding="8,0" Margin="0,0,5,0">
+                                                <TextBlock Text="★ 潜力评分" FontSize="11" Foreground="{StaticResource BrushGoldLight}" />
+                                            </Button>
+
+                                            <Button Command="{Binding QuickSortCommand}" CommandParameter="Force" Style="{StaticResource StyleAncientButton}" Height="24" Padding="8,0" Margin="0,0,5,0">
+                                                <TextBlock Text="⚔ 武力" FontSize="11" Foreground="#FF8A7A" />
+                                            </Button>
+
+                                            <Button Command="{Binding QuickSortCommand}" CommandParameter="Intellect" Style="{StaticResource StyleAncientButton}" Height="24" Padding="8,0" Margin="0,0,5,0">
+                                                <TextBlock Text="☯ 智力" FontSize="11" Foreground="#9ED5FF" />
+                                            </Button>
+
+                                            <Button Command="{Binding QuickSortCommand}" CommandParameter="Level" Style="{StaticResource StyleAncientButton}" Height="24" Padding="8,0" Margin="0,0,5,0">
+                                                <TextBlock Text="🎖 等级" FontSize="11" Foreground="#FFF0C8" />
+                                            </Button>
+
+                                            <Button Command="{Binding QuickSortCommand}" CommandParameter="Name" Style="{StaticResource StyleAncientButton}" Height="24" Padding="8,0" Margin="0,0,16,0">
+                                                <TextBlock Text="🔤 姓名" FontSize="11" Foreground="{StaticResource BrushTextSecondary}" />
+                                            </Button>
+                                        </StackPanel>
+
+                                        <!-- 属性区间滑块 -->
+                                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                                            <!-- 武力范围 -->
+                                            <StackPanel Orientation="Horizontal" Margin="0,0,20,0">
+                                                <TextBlock Text="武力: " FontSize="11" Foreground="{StaticResource BrushGoldLight}" VerticalAlignment="Center" Margin="0,0,4,0" />
+                                                <TextBlock Text="{Binding MinForce}" FontSize="11" Foreground="#FF8A7A" VerticalAlignment="Center" Width="22" TextAlignment="Right" />
+                                                <Slider Minimum="0" Maximum="100" Value="{Binding MinForce}" Width="70" VerticalAlignment="Center" Margin="4,0" SmallChange="1" />
+                                                <TextBlock Text="~" FontSize="11" Foreground="{StaticResource BrushTextMuted}" VerticalAlignment="Center" Margin="2,0" />
+                                                <Slider Minimum="0" Maximum="100" Value="{Binding MaxForce}" Width="70" VerticalAlignment="Center" Margin="4,0" SmallChange="1" />
+                                                <TextBlock Text="{Binding MaxForce}" FontSize="11" Foreground="#FF8A7A" VerticalAlignment="Center" Width="22" />
+                                            </StackPanel>
+
+                                            <!-- 智力范围 -->
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="智力: " FontSize="11" Foreground="{StaticResource BrushGoldLight}" VerticalAlignment="Center" Margin="0,0,4,0" />
+                                                <TextBlock Text="{Binding MinIntellect}" FontSize="11" Foreground="#9ED5FF" VerticalAlignment="Center" Width="22" TextAlignment="Right" />
+                                                <Slider Minimum="0" Maximum="100" Value="{Binding MinIntellect}" Width="70" VerticalAlignment="Center" Margin="4,0" SmallChange="1" />
+                                                <TextBlock Text="~" FontSize="11" Foreground="{StaticResource BrushTextMuted}" VerticalAlignment="Center" Margin="2,0" />
+                                                <Slider Minimum="0" Maximum="100" Value="{Binding MaxIntellect}" Width="70" VerticalAlignment="Center" Margin="4,0" SmallChange="1" />
+                                                <TextBlock Text="{Binding MaxIntellect}" FontSize="11" Foreground="#9ED5FF" VerticalAlignment="Center" Width="22" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </DockPanel>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- 1: 武将长表 (全列支持点击表头排序，带画像印信与技能勋章) -->
+                            <Border Grid.Row="1"
+                                    Background="#181310"
+                                    BorderBrush="{StaticResource BrushGoldBorder}"
+                                    BorderThickness="1"
+                                    CornerRadius="5"
+                                    Padding="4">
+                                <DataGrid ItemsSource="{Binding FilteredGenerals}"
+                                          AutoGenerateColumns="False"
+                                          CanUserAddRows="False"
+                                          CanUserDeleteRows="False"
+                                          IsReadOnly="True"
+                                          SelectionMode="Single"
+                                          SelectionUnit="FullRow"
+                                          HeadersVisibility="Column"
+                                          RowHeaderWidth="0"
+                                          FocusVisualStyle="{x:Null}"
+                                          RowHeight="68"
+                                          EnableRowVirtualization="True"
+                                          EnableColumnVirtualization="False"
+                                          VirtualizingPanel.IsVirtualizing="True"
+                                          VirtualizingPanel.VirtualizationMode="Recycling"
+                                          VirtualizingPanel.ScrollUnit="Pixel"
+                                          VirtualizingPanel.CacheLength="2,2"
+                                          VirtualizingPanel.CacheLengthUnit="Page"
+                                          VirtualizingPanel.IsContainerVirtualizable="True"
+                                          ScrollViewer.CanContentScroll="True"
+                                          ScrollViewer.PanningMode="VerticalOnly"
+                                          RenderOptions.ClearTypeHint="Enabled">
+                                    <DataGrid.Columns>
+                                        <!-- 画像 (带古风金石 fallback 印信) -->
+                                        <DataGridTemplateColumn Header="画像" Width="74">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Command="{Binding DataContext.OpenGeneralCardCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                            CommandParameter="{Binding}"
+                                                            Padding="0" Background="Transparent" BorderThickness="0" Cursor="Hand"
+                                                            ToolTip="点击展开三国群英名将大典卡">
+                                                        <Border Width="56" Height="60"
+                                                                Background="#15110E"
+                                                                BorderBrush="{StaticResource BrushGoldBorder}"
+                                                                BorderThickness="1.2"
+                                                                CornerRadius="3"
+                                                                HorizontalAlignment="Center"
+                                                                VerticalAlignment="Center">
+                                                            <Grid>
+                                                                <!-- 原版画像肖像 -->
+                                                                <Image Source="{Binding AvatarPath}"
+                                                                       Stretch="UniformToFill"
+                                                                       RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                                                       Visibility="{Binding HasAvatar, Converter={StaticResource BoolToVis}}" />
+
+                                                                <!-- 肖像缺失时的金石汉印 -->
+                                                                <Border Background="#251C16"
+                                                                        Visibility="{Binding HasNoAvatar, Converter={StaticResource BoolToVis}}">
+                                                                    <Grid>
+                                                                        <TextBlock Text="☯" FontSize="28" Foreground="#38291D" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                                        <TextBlock Text="{Binding FirstChar}"
+                                                                                   FontFamily="{StaticResource FontLiSu}"
+                                                                                   FontSize="22"
+                                                                                   FontWeight="Bold"
+                                                                                   Foreground="{StaticResource BrushGoldLight}"
+                                                                                   HorizontalAlignment="Center"
+                                                                                   VerticalAlignment="Center" />
+                                                                    </Grid>
+                                                                </Border>
+                                                            </Grid>
+                                                        </Border>
+                                                    </Button>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
+                                        <!-- 名号与拼音 -->
+                                        <DataGridTemplateColumn Header="名号" Width="95" SortMemberPath="Name">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Command="{Binding DataContext.OpenGeneralCardCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                            CommandParameter="{Binding}"
+                                                            Background="Transparent" BorderThickness="0" Cursor="Hand"
+                                                            HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                        <StackPanel>
+                                                            <TextBlock Text="{Binding Name}" FontFamily="{StaticResource FontLiSu}" FontSize="15" FontWeight="Bold" Foreground="#FFE6A3" />
+                                                            <TextBlock Text="{Binding PinyinIndex}" FontSize="9.5" Foreground="{StaticResource BrushTextMuted}" Margin="0,1,0,0" />
+                                                        </StackPanel>
+                                                    </Button>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
+                                        <!-- 君主势力 -->
+                                        <DataGridTemplateColumn Header="君主势力" Width="95" SortMemberPath="MonarchName">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Border Background="{Binding FactionColor}" CornerRadius="3" Padding="6,2" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                        <TextBlock Text="{Binding MonarchName}" FontSize="11" FontWeight="Bold" Foreground="#FFFFFF" />
+                                                    </Border>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
+                                        <!-- 状态与所在地 -->
+                                        <DataGridTemplateColumn Header="状态 / 驻地" Width="105" SortMemberPath="StatusText">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel VerticalAlignment="Center">
+                                                        <TextBlock Text="{Binding StatusText}" FontSize="11" FontWeight="SemiBold" Foreground="{StaticResource BrushGoldLight}" />
+                                                        <TextBlock Text="{Binding LocationName, StringFormat='{}📍 {0}'}" FontSize="10" Foreground="{StaticResource BrushTextMuted}" Margin="0,2,0,0" />
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
+                                        <!-- 武力 -->
+                                        <DataGridTemplateColumn Header="武力" Width="68" SortMemberPath="Force">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Force}" FontSize="15" FontWeight="Bold" Foreground="#FF6B55" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
+                                        <!-- 智力 -->
+                                        <DataGridTemplateColumn Header="智力" Width="68" SortMemberPath="Intellect">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Intellect}" FontSize="15" FontWeight="Bold" Foreground="#4BA3E3" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
+                                        <!-- 等级 -->
+                                        <DataGridTemplateColumn Header="等级" Width="58" SortMemberPath="Level">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Level, StringFormat='{}Lv.{0}'}" FontSize="11.5" Foreground="{StaticResource BrushTextSecondary}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
+                                        <!-- 培养价值潜力 -->
+                                        <DataGridTemplateColumn Header="培养价值潜力" Width="120" SortMemberPath="PotentialScore">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                        <Border Background="#2B2117" BorderBrush="{Binding PotentialTierColor}" BorderThickness="1.2" CornerRadius="3" Padding="6,2">
+                                                            <TextBlock Text="{Binding PotentialTier}" FontSize="11" FontWeight="Bold" Foreground="{Binding PotentialTierColor}" HorizontalAlignment="Center" />
+                                                        </Border>
+                                                        <TextBlock Text="{Binding PotentialScore, StringFormat='{}评分: {0}分'}" FontSize="9.5" Foreground="{StaticResource BrushGoldLight}" HorizontalAlignment="Center" Margin="0,2,0,0" />
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
+                                        <!-- 成长阶位与技能上限 -->
+                                        <DataGridTemplateColumn Header="成长阶位" Width="95" SortMemberPath="MaxSkillLevel">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="{Binding GrowthComment}">
+                                                        <TextBlock Text="{Binding GrowthStage}" FontSize="11" FontWeight="SemiBold" Foreground="{StaticResource BrushGoldLight}" HorizontalAlignment="Center" />
+                                                        <TextBlock Text="{Binding MaxSkillLevel, StringFormat='{}Lv.{0}终技'}" FontSize="9.5" Foreground="{StaticResource BrushTextMuted}" HorizontalAlignment="Center" Margin="0,1,0,0" />
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
+                                        <!-- 核心神技亮点勋章 -->
+                                        <DataGridTemplateColumn Header="核心神技亮点勋章" Width="*">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel VerticalAlignment="Center" Margin="2,0">
+                                                        <!-- 特色神技彩色徽章行 -->
+                                                        <WrapPanel Margin="0,0,0,3">
+                                                            <!-- 伏兵系 -->
+                                                            <Border Background="#1C3822" BorderBrush="#3CB371" BorderThickness="0.8" CornerRadius="2" Padding="4,1" Margin="0,0,4,2"
+                                                                    Visibility="{Binding HasAmbush, Converter={StaticResource BoolToVis}}">
+                                                                <TextBlock Text="[伏兵]" FontSize="9.5" FontWeight="Bold" Foreground="#85E3A7" />
+                                                            </Border>
+
+                                                            <!-- 体力恢复 -->
+                                                            <Border Background="#381D1A" BorderBrush="#C7483C" BorderThickness="0.8" CornerRadius="2" Padding="4,1" Margin="0,0,4,2"
+                                                                    Visibility="{Binding HasHpRegen, Converter={StaticResource BoolToVis}}">
+                                                                <TextBlock Text="[回体]" FontSize="9.5" FontWeight="Bold" Foreground="#FFA296" />
+                                                            </Border>
+
+                                                            <!-- 技力恢复 -->
+                                                            <Border Background="#182A3A" BorderBrush="#2E6B9E" BorderThickness="0.8" CornerRadius="2" Padding="4,1" Margin="0,0,4,2"
+                                                                    Visibility="{Binding HasMpRegen, Converter={StaticResource BoolToVis}}">
+                                                                <TextBlock Text="[回技]" FontSize="9.5" FontWeight="Bold" Foreground="#89C8F5" />
+                                                            </Border>
+
+                                                            <!-- 终极必杀 (Lv.38+) -->
+                                                            <Border Background="#382C17" BorderBrush="#C8A355" BorderThickness="0.8" CornerRadius="2" Padding="4,1" Margin="0,0,4,2"
+                                                                    Visibility="{Binding HasUltimate, Converter={StaticResource BoolToVis}}">
+                                                                <TextBlock Text="[绝技]" FontSize="9.5" FontWeight="Bold" Foreground="#FFE6A3" />
+                                                            </Border>
+
+                                                            <!-- 金蝉脱壳 -->
+                                                            <Border Background="#2E1B38" BorderBrush="#9C52B8" BorderThickness="0.8" CornerRadius="2" Padding="4,1" Margin="0,0,4,2"
+                                                                    Visibility="{Binding HasEscape, Converter={StaticResource BoolToVis}}">
+                                                                <TextBlock Text="[脱壳]" FontSize="9.5" FontWeight="Bold" Foreground="#E1BEE7" />
+                                                            </Border>
+
+                                                            <!-- 增员/强化 -->
+                                                            <Border Background="#332418" BorderBrush="#A07835" BorderThickness="0.8" CornerRadius="2" Padding="4,1" Margin="0,0,4,2"
+                                                                    Visibility="{Binding HasReinforce, Converter={StaticResource BoolToVis}}">
+                                                                <TextBlock Text="[增援]" FontSize="9.5" FontWeight="Bold" Foreground="#FFE6A3" />
+                                                            </Border>
+                                                        </WrapPanel>
+
+                                                        <!-- 战术客观评语 -->
+                                                        <TextBlock Text="{Binding PotentialComment}" FontSize="9.5" Foreground="{StaticResource BrushTextMuted}" TextTrimming="CharacterEllipsis" />
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
+                                        <!-- 操作 (透析卡片 / 加入编组) -->
+                                        <DataGridTemplateColumn Header="战术操作" Width="125">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                        <Button Command="{Binding DataContext.OpenGeneralCardCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                CommandParameter="{Binding}"
+                                                                Style="{StaticResource StyleAncientButton}"
+                                                                Height="25"
+                                                                Padding="8,0"
+                                                                Margin="0,0,4,0"
+                                                                ToolTip="展开单武将绝学长卷与数值透析">
+                                                            <TextBlock Text="透析" FontSize="10.5" />
+                                                        </Button>
+
+                                                        <Button Command="{Binding DataContext.AddMemberToSquadCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                CommandParameter="{Binding Name}"
+                                                                Style="{StaticResource StyleAncientButton}"
+                                                                Height="25"
+                                                                Padding="7,0"
+                                                                ToolTip="将该名将加入当前选定战队">
+                                                            <TextBlock Text="+入队" FontSize="10.5" Foreground="{StaticResource BrushGoldLight}" />
+                                                        </Button>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Border>
+                        </Grid>
+                    </TabItem>
+
+                    <!-- 选项卡 2: 军团编组运筹 (5人战队编制与协同度) -->
+                    <TabItem Header="☵ 军团战阵编组">
+                        <Grid Margin="0,8,0,0">
+                            <Grid.ColumnDefinitions>
+                                <!-- 左: 编队列表与模式切换 -->
+                                <ColumnDefinition Width="340" />
+                                <!-- 右: 选定战队阵容、协同度与将领调整 -->
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- 左: 编队侧栏 -->
+                            <Border Grid.Column="0" Background="#181310" BorderBrush="{StaticResource BrushGoldBorder}" BorderThickness="1" CornerRadius="5" Padding="10">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <!-- 模式切换: 全局构想 vs 本档实装 -->
+                                    <Border Grid.Row="0" Background="#241C16" BorderBrush="{StaticResource BrushGoldMuted}" BorderThickness="1" CornerRadius="4" Padding="6" Margin="0,0,0,8">
+                                        <StackPanel>
+                                            <DockPanel LastChildFill="False">
+                                                <TextBlock Text="编组模式:" FontSize="11.5" Foreground="{StaticResource BrushGoldLight}" VerticalAlignment="Center" />
+                                                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                                                    <RadioButton Content="全局理想" IsChecked="{Binding IsGlobalSquadMode}" Margin="0,0,10,0" Foreground="#FFE6A3" FontSize="11" VerticalAlignment="Center" />
+                                                    <RadioButton Content="本档实装" IsChecked="{Binding IsSaveSquadMode}" Foreground="#FFE6A3" FontSize="11" VerticalAlignment="Center" />
+                                                </StackPanel>
+                                            </DockPanel>
+                                            <TextBlock Text="※ 全局为大典预设阵容，本档编组针对当前存档武将" FontSize="9" Foreground="{StaticResource BrushTextMuted}" Margin="0,4,0,0" />
+                                        </StackPanel>
+                                    </Border>
+
+                                    <!-- 战队列表 -->
+                                    <ListBox Grid.Row="1"
+                                             ItemsSource="{Binding Squads}"
+                                             SelectedItem="{Binding SelectedSquad, Mode=TwoWay}"
+                                             Background="Transparent"
+                                             BorderThickness="0"
+                                             Padding="0"
+                                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                             ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                        <ListBox.ItemContainerStyle>
+                                            <Style TargetType="{x:Type ListBoxItem}">
+                                                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                                                <Setter Property="Background" Value="Transparent" />
+                                                <Setter Property="BorderThickness" Value="0" />
+                                                <Setter Property="Padding" Value="0" />
+                                                <Setter Property="Margin" Value="0,0,0,6" />
+                                                <Setter Property="Cursor" Value="Hand" />
+                                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                                            <Border x:Name="SquadBorder"
+                                                                    Background="#221C17"
+                                                                    BorderBrush="{StaticResource BrushGoldMuted}"
+                                                                    BorderThickness="1"
+                                                                    CornerRadius="4"
+                                                                    Padding="8,6"
+                                                                    SnapsToDevicePixels="True">
+                                                                <Grid>
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="4" />
+                                                                        <ColumnDefinition Width="*" />
+                                                                        <ColumnDefinition Width="Auto" />
+                                                                    </Grid.ColumnDefinitions>
+                                                                    <Border x:Name="SelectedBar"
+                                                                            Grid.Column="0"
+                                                                            Background="Transparent"
+                                                                            CornerRadius="1"
+                                                                            Margin="0,0,6,0" />
+                                                                    <StackPanel Grid.Column="1">
+                                                                        <TextBlock Text="{Binding Name}"
+                                                                                   FontFamily="{StaticResource FontLiSu}"
+                                                                                   FontSize="14"
+                                                                                   FontWeight="Bold"
+                                                                                   Foreground="{StaticResource BrushGoldLight}" />
+                                                                        <TextBlock Text="{Binding Notes}"
+                                                                                   FontSize="9.5"
+                                                                                   Foreground="{StaticResource BrushTextMuted}"
+                                                                                   Margin="0,2,0,0"
+                                                                                   TextTrimming="CharacterEllipsis" />
+                                                                        <TextBlock Text="{Binding MemberNames.Count, StringFormat='{}编制: {0}/5 员名将'}"
+                                                                                   FontSize="10"
+                                                                                   Foreground="#FFF0C8"
+                                                                                   Margin="0,3,0,0" />
+                                                                    </StackPanel>
+                                                                    <Border Grid.Column="2"
+                                                                            Background="#2C2117"
+                                                                            BorderBrush="{StaticResource BrushGoldBorder}"
+                                                                            BorderThickness="1"
+                                                                            CornerRadius="3"
+                                                                            Padding="6,2"
+                                                                            VerticalAlignment="Center">
+                                                                        <TextBlock Text="{Binding SynergyGrade, StringFormat='{}【{0}】'}"
+                                                                                   FontSize="11"
+                                                                                   FontWeight="Bold"
+                                                                                   Foreground="{StaticResource BrushGoldLight}" />
+                                                                    </Border>
+                                                                </Grid>
+                                                            </Border>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter TargetName="SquadBorder" Property="Background" Value="#2D231B" />
+                                                                    <Setter TargetName="SquadBorder" Property="BorderBrush" Value="{StaticResource BrushGoldLight}" />
+                                                                    <Setter TargetName="SelectedBar" Property="Background" Value="#A07E47" />
+                                                                </Trigger>
+                                                                <Trigger Property="IsSelected" Value="True">
+                                                                    <Setter TargetName="SquadBorder" Property="Background" Value="#382618" />
+                                                                    <Setter TargetName="SquadBorder" Property="BorderBrush" Value="{StaticResource BrushGoldBorder}" />
+                                                                    <Setter TargetName="SelectedBar" Property="Background" Value="{StaticResource BrushGoldLight}" />
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </ListBox.ItemContainerStyle>
+                                    </ListBox>
+
+                                    <!-- 新增编队按钮 -->
+                                    <Button Grid.Row="2" Command="{Binding AddSquadCommand}" Style="{StaticResource StyleAncientButton}" Height="30" Margin="0,8,0,0">
+                                        <TextBlock Text="+ 新建战术梯队" FontSize="11.5" />
+                                    </Button>
+                                </Grid>
+                            </Border>
+
+                            <!-- 右: 战队详情与成员卡 -->
+                            <Border Grid.Column="1" Background="#1A1512" BorderBrush="{StaticResource BrushGoldBorder}" BorderThickness="1" CornerRadius="5" Padding="14" Margin="10,0,0,0">
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <StackPanel>
+                                        <!-- 战队标题与战术评语 -->
+                                        <DockPanel LastChildFill="False" Margin="0,0,0,10">
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding SelectedSquad.Name, FallbackValue='请选择战术编队'}" FontFamily="{StaticResource FontLiSu}" FontSize="20" FontWeight="Bold" Foreground="{StaticResource BrushGoldLight}" />
+                                                <Border Background="#2B2117" BorderBrush="{StaticResource BrushGoldBorder}" BorderThickness="1" CornerRadius="3" Padding="8,2" Margin="12,0,0,0" VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding SelectedSquad.SynergyGrade, StringFormat='{}协同契合: 【{0}】', FallbackValue='【中坚·S】'}" FontSize="11" FontWeight="Bold" Foreground="#FFE6A3" />
+                                                </Border>
+                                            </StackPanel>
+
+                                            <!-- 删除按钮 -->
+                                            <Button DockPanel.Dock="Right"
+                                                    Command="{Binding DeleteSquadCommand}"
+                                                    CommandParameter="{Binding SelectedSquad}"
+                                                    Style="{StaticResource StyleAncientButton}"
+                                                    Height="26"
+                                                    Padding="10,0">
+                                                <TextBlock Text="✕ 解散此队" FontSize="11" Foreground="{StaticResource BrushCinnabarLight}" />
+                                            </Button>
+                                        </DockPanel>
+
+                                        <!-- 评语与指标 -->
+                                        <TextBlock Text="{Binding SelectedSquad.SynergyComment, FallbackValue='5员名将协同作战，兼顾伏兵、治疗与军师技策'}" FontSize="11.5" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,12" />
+
+                                        <!-- 属性面板 -->
+                                        <Border Background="#221C17" BorderBrush="{StaticResource BrushGoldMuted}" BorderThickness="1" CornerRadius="4" Padding="10" Margin="0,0,0,14">
+                                            <UniformGrid Columns="4">
+                                                <StackPanel HorizontalAlignment="Center">
+                                                    <TextBlock Text="均势武力" FontSize="10" Foreground="{StaticResource BrushTextMuted}" />
+                                                    <TextBlock Text="{Binding SelectedSquad.AverageForce, StringFormat='{}{0:F1}', FallbackValue='0'}" FontSize="15" FontWeight="Bold" Foreground="{StaticResource BrushCinnabarLight}" Margin="0,2,0,0" />
+                                                </StackPanel>
+                                                <StackPanel HorizontalAlignment="Center">
+                                                    <TextBlock Text="均势智力" FontSize="10" Foreground="{StaticResource BrushTextMuted}" />
+                                                    <TextBlock Text="{Binding SelectedSquad.AverageIntellect, StringFormat='{}{0:F1}', FallbackValue='0'}" FontSize="15" FontWeight="Bold" Foreground="#9ED5FF" Margin="0,2,0,0" />
+                                                </StackPanel>
+                                                <StackPanel HorizontalAlignment="Center">
+                                                    <TextBlock Text="伏兵战术覆盖" FontSize="10" Foreground="{StaticResource BrushTextMuted}" />
+                                                    <TextBlock Text="{Binding SelectedSquad.AmbushStatusText, FallbackValue='未成型'}" FontSize="12.5" FontWeight="Bold" Foreground="{StaticResource BrushGoldLight}" Margin="0,2,0,0" />
+                                                </StackPanel>
+                                                <StackPanel HorizontalAlignment="Center">
+                                                    <TextBlock Text="体力/技力恢复" FontSize="10" Foreground="{StaticResource BrushTextMuted}" />
+                                                    <TextBlock Text="{Binding SelectedSquad.RegenStatusText, FallbackValue='未成型'}" FontSize="12.5" FontWeight="Bold" Foreground="{StaticResource BrushGoldLight}" Margin="0,2,0,0" />
+                                                </StackPanel>
+                                            </UniformGrid>
+                                        </Border>
+
+                                        <!-- 5位名将卡 -->
+                                        <TextBlock Text="【当前编队成员 (上限5名，可从大典点击 [+入队] 快速编入)】" FontSize="12" FontWeight="Bold" Foreground="{StaticResource BrushGoldLight}" Margin="0,0,0,8" />
+
+                                        <ItemsControl ItemsSource="{Binding SelectedSquadMembers}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <UniformGrid Columns="5" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border Background="#241E19" BorderBrush="{StaticResource BrushGoldBorder}" BorderThickness="1.2" CornerRadius="4" Padding="8,10" Margin="4,0">
+                                                        <Grid>
+                                                            <Grid.RowDefinitions>
+                                                                <!-- 0: 头像 (带金石印信 fallback) -->
+                                                                <RowDefinition Height="Auto" />
+                                                                <!-- 1: 姓名 -->
+                                                                <RowDefinition Height="Auto" />
+                                                                <!-- 2: 属性与潜力标签 -->
+                                                                <RowDefinition Height="Auto" />
+                                                                <!-- 3: 移出按钮 -->
+                                                                <RowDefinition Height="Auto" />
+                                                            </Grid.RowDefinitions>
+
+                                                            <!-- 0: 头像 -->
+                                                            <Button Grid.Row="0"
+                                                                    Command="{Binding DataContext.OpenGeneralCardCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                    CommandParameter="{Binding}"
+                                                                    Padding="0" Background="Transparent" BorderThickness="0" Cursor="Hand"
+                                                                    HorizontalAlignment="Center"
+                                                                    ToolTip="点击展开该名将大典卡">
+                                                                <Border Width="64" Height="68"
+                                                                        Background="#181310"
+                                                                        BorderBrush="{StaticResource BrushGoldBorder}"
+                                                                        BorderThickness="1.2"
+                                                                        CornerRadius="3">
+                                                                    <Grid>
+                                                                        <!-- 原版头像肖像 -->
+                                                                        <Image Source="{Binding AvatarPath}"
+                                                                               Stretch="UniformToFill"
+                                                                               RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                                                               Visibility="{Binding HasAvatar, Converter={StaticResource BoolToVis}}" />
+
+                                                                        <!-- 肖像缺失时的金石汉印 -->
+                                                                        <Border Background="#251C16"
+                                                                                Visibility="{Binding HasNoAvatar, Converter={StaticResource BoolToVis}}">
+                                                                            <Grid>
+                                                                                <TextBlock Text="☯" FontSize="30" Foreground="#38291D" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                                                <TextBlock Text="{Binding FirstChar}"
+                                                                                           FontFamily="{StaticResource FontLiSu}"
+                                                                                           FontSize="24"
+                                                                                           FontWeight="Bold"
+                                                                                           Foreground="{StaticResource BrushGoldLight}"
+                                                                                           HorizontalAlignment="Center"
+                                                                                           VerticalAlignment="Center" />
+                                                                            </Grid>
+                                                                        </Border>
+                                                                    </Grid>
+                                                                </Border>
+                                                            </Button>
+
+                                                            <!-- 1: 姓名 -->
+                                                            <TextBlock Grid.Row="1"
+                                                                       Text="{Binding Name}"
+                                                                       FontFamily="{StaticResource FontLiSu}"
+                                                                       FontSize="16"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="#FFE6A3"
+                                                                       HorizontalAlignment="Center"
+                                                                       Margin="0,8,0,0" />
+
+                                                            <!-- 2: 武力与智力速览 + 潜力徽章 -->
+                                                            <StackPanel Grid.Row="2" HorizontalAlignment="Center" Margin="0,4,0,8">
+                                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                                    <TextBlock Text="{Binding Force, StringFormat='{}武 {0}'}" FontSize="11" FontWeight="Bold" Foreground="#FF8A7A" Margin="0,0,6,0" />
+                                                                    <TextBlock Text="{Binding Intellect, StringFormat='{}智 {0}'}" FontSize="11" FontWeight="Bold" Foreground="#9ED5FF" />
+                                                                </StackPanel>
+                                                                <Border Background="#2F2318" BorderBrush="{StaticResource BrushGoldMuted}" BorderThickness="0.8" CornerRadius="2" Padding="4,1" Margin="0,3,0,0" HorizontalAlignment="Center">
+                                                                    <TextBlock Text="{Binding PotentialTier}" FontSize="9.5" FontWeight="Bold" Foreground="{StaticResource BrushGoldLight}" />
+                                                                </Border>
+                                                            </StackPanel>
+
+                                                            <!-- 3: 移出队伍按钮 -->
+                                                            <Button Grid.Row="3"
+                                                                    Command="{Binding DataContext.RemoveMemberFromSquadCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                    CommandParameter="{Binding Name}"
+                                                                    Style="{StaticResource StyleAncientButton}"
+                                                                    Height="24"
+                                                                    Padding="8,0"
+                                                                    HorizontalAlignment="Stretch">
+                                                                <TextBlock Text="移出队伍" FontSize="10.5" Foreground="{StaticResource BrushCinnabarLight}" />
+                                                            </Button>
+                                                        </Grid>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </Border>
+                        </Grid>
+                    </TabItem>
+
+                    <!-- 选项卡 3: 势力与城池图谱 (Requirement 5: 展现势力版图、城池驻防与太守) -->
+                    <TabItem Header="🏰 势力与城池图谱">
+                        <Grid Margin="0,8,0,0">
+                            <!-- 已载入存档时的全景版图数据 -->
+                            <Grid Visibility="{Binding HasCities, Converter={StaticResource BoolToVis}}">
+                                <Grid.ColumnDefinitions>
+                                    <!-- 左: 诸侯势力一览 -->
+                                    <ColumnDefinition Width="380" />
+                                    <!-- 右: 城池驻军与城防详情 -->
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <!-- 左: 势力一览 -->
+                                <Border Grid.Column="0" Background="#181310" BorderBrush="{StaticResource BrushGoldBorder}" BorderThickness="1" CornerRadius="5" Padding="10">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+
+                                        <Border Grid.Row="0" Background="#241C16" BorderBrush="{StaticResource BrushGoldMuted}" BorderThickness="1" CornerRadius="4" Padding="8,6" Margin="0,0,0,8">
+                                            <DockPanel LastChildFill="False">
+                                                <TextBlock Text="各路诸侯势力版图" FontFamily="{StaticResource FontLiSu}" FontSize="14" FontWeight="Bold" Foreground="{StaticResource BrushGoldLight}" VerticalAlignment="Center" />
+                                                <TextBlock DockPanel.Dock="Right" Text="{Binding FactionsSummary.Count, StringFormat='{}共 {0} 方割据'}" FontSize="11" Foreground="{StaticResource BrushTextMuted}" VerticalAlignment="Center" />
+                                            </DockPanel>
+                                        </Border>
+
+                                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                                            <ItemsControl ItemsSource="{Binding FactionsSummary}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Border Background="#221C17" BorderBrush="{StaticResource BrushGoldMuted}" BorderThickness="1" CornerRadius="4" Padding="10,8" Margin="0,0,0,6">
+                                                            <Grid>
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="Auto" />
+                                                                    <RowDefinition Height="Auto" />
+                                                                    <RowDefinition Height="Auto" />
+                                                                </Grid.RowDefinitions>
+
+                                                                <DockPanel Grid.Row="0" LastChildFill="False">
+                                                                    <Border Background="{Binding FactionColor}" CornerRadius="3" Padding="6,2">
+                                                                        <TextBlock Text="{Binding MonarchName}" FontSize="12" FontWeight="Bold" Foreground="#FFFFFF" />
+                                                                    </Border>
+                                                                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                                                                        <TextBlock Text="{Binding CityCount, StringFormat='{}城池 {0}座'}" FontSize="11" Foreground="{StaticResource BrushGoldLight}" FontWeight="SemiBold" Margin="0,0,8,0" />
+                                                                        <TextBlock Text="{Binding GeneralCount, StringFormat='{}武将 {0}员'}" FontSize="11" Foreground="#FFE6A3" />
+                                                                    </StackPanel>
+                                                                </DockPanel>
+
+                                                                <UniformGrid Grid.Row="1" Columns="2" Margin="0,6,0,4">
+                                                                    <TextBlock Text="{Binding TotalTroops, StringFormat='{}总兵力: {0:N0} 卒'}" FontSize="10.5" Foreground="{StaticResource BrushTextSecondary}" />
+                                                                    <TextBlock Text="{Binding TotalReserveTroops, StringFormat='{}预备兵: {0:N0} 卒'}" FontSize="10.5" Foreground="{StaticResource BrushTextSecondary}" HorizontalAlignment="Right" />
+                                                                </UniformGrid>
+
+                                                                <TextBlock Grid.Row="2" Text="{Binding CityNamesDisplay, StringFormat='{}据点: {0}'}" FontSize="10" Foreground="{StaticResource BrushTextMuted}" TextTrimming="CharacterEllipsis" Margin="0,2,0,0" />
+                                                            </Grid>
+                                                        </Border>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Border>
+
+                                <!-- 右: 城池驻防详表 -->
+                                <Border Grid.Column="1" Background="#1A1512" BorderBrush="{StaticResource BrushGoldBorder}" BorderThickness="1" CornerRadius="5" Padding="12" Margin="10,0,0,0">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+
+                                        <Border Grid.Row="0" Background="#241C16" BorderBrush="{StaticResource BrushGoldMuted}" BorderThickness="1" CornerRadius="4" Padding="10,6" Margin="0,0,0,8">
+                                            <DockPanel LastChildFill="False">
+                                                <TextBlock Text="天下城池全貌与守将布防" FontFamily="{StaticResource FontLiSu}" FontSize="14" FontWeight="Bold" Foreground="{StaticResource BrushGoldLight}" VerticalAlignment="Center" />
+                                                <TextBlock DockPanel.Dock="Right" Text="{Binding CitiesSummary.Count, StringFormat='{}总计 {0} 座城池关卡'}" FontSize="11" Foreground="{StaticResource BrushTextMuted}" VerticalAlignment="Center" />
+                                            </DockPanel>
+                                        </Border>
+
+                                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+                                            <ItemsControl ItemsSource="{Binding CitiesSummary}"
+                                                          VirtualizingPanel.IsVirtualizing="True"
+                                                          VirtualizingPanel.VirtualizationMode="Recycling"
+                                                          VirtualizingPanel.ScrollUnit="Pixel">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <VirtualizingStackPanel />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Border Background="#201A16" BorderBrush="{StaticResource BrushGoldMuted}" BorderThickness="1" CornerRadius="4" Padding="10,8" Margin="0,0,0,8">
+                                                            <Grid>
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="Auto" />
+                                                                    <RowDefinition Height="Auto" />
+                                                                    <RowDefinition Height="Auto" />
+                                                                </Grid.RowDefinitions>
+
+                                                                <!-- 第一行: 城名、君主、防守度、预备兵 -->
+                                                                <DockPanel Grid.Row="0" LastChildFill="False">
+                                                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                                        <TextBlock Text="🏰 " FontSize="12" Foreground="{StaticResource BrushGoldLight}" />
+                                                                        <TextBlock Text="{Binding CityName}" FontFamily="{StaticResource FontLiSu}" FontSize="15" FontWeight="Bold" Foreground="{StaticResource BrushGoldLight}" Margin="0,0,8,0" />
+                                                                        <Border Background="{Binding FactionColor}" CornerRadius="2" Padding="5,1" VerticalAlignment="Center">
+                                                                            <TextBlock Text="{Binding LordName, StringFormat='{}归属: {0}'}" FontSize="10" Foreground="#FFFFFF" FontWeight="Bold" />
+                                                                        </Border>
+                                                                    </StackPanel>
+
+                                                                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                                                                        <TextBlock Text="{Binding Defense, StringFormat='{}城防: {0}'}" FontSize="11" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,10,0" />
+                                                                        <TextBlock Text="{Binding ReserveTroops, StringFormat='{}预备: {0}卒'}" FontSize="11" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,10,0" />
+                                                                        <TextBlock Text="{Binding GeneralCount, StringFormat='{}驻将: {0}员'}" FontSize="11" FontWeight="Bold" Foreground="#FFE6A3" />
+                                                                    </StackPanel>
+                                                                </DockPanel>
+
+                                                                <!-- 第二行: 驻防武将列表 -->
+                                                                <ItemsControl Grid.Row="1" ItemsSource="{Binding Generals}" Margin="0,6,0,0">
+                                                                    <ItemsControl.ItemsPanel>
+                                                                        <ItemsPanelTemplate>
+                                                                            <WrapPanel />
+                                                                        </ItemsPanelTemplate>
+                                                                    </ItemsControl.ItemsPanel>
+                                                                    <ItemsControl.ItemTemplate>
+                                                                        <DataTemplate>
+                                                                            <Button Command="{Binding DataContext.OpenGeneralCardCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                                    CommandParameter="{Binding}"
+                                                                                    Style="{StaticResource StyleAncientButton}"
+                                                                                    Height="24"
+                                                                                    Padding="6,0"
+                                                                                    Margin="0,0,6,4"
+                                                                                    ToolTip="点击查看此武将详实卡片">
+                                                                                <StackPanel Orientation="Horizontal">
+                                                                                    <TextBlock Text="{Binding Name}" FontSize="11" FontWeight="SemiBold" Foreground="{StaticResource BrushGoldLight}" />
+                                                                                    <TextBlock Text="{Binding Force, StringFormat='{} 武{0}'}" FontSize="9.5" Foreground="#FF8A7A" />
+                                                                                    <TextBlock Text="{Binding Intellect, StringFormat='{} 智{0}'}" FontSize="9.5" Foreground="#9ED5FF" />
+                                                                                    <TextBlock Text="{Binding Level, StringFormat='{} Lv.{0}'}" FontSize="9.5" Foreground="{StaticResource BrushTextMuted}" />
+                                                                                </StackPanel>
+                                                                            </Button>
+                                                                        </DataTemplate>
+                                                                    </ItemsControl.ItemTemplate>
+                                                                </ItemsControl>
+                                                            </Grid>
+                                                        </Border>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+
+                            <!-- 未载入存档时的典雅引导卡 -->
+                            <Border Visibility="{Binding HasNoSelectedSave, Converter={StaticResource BoolToVis}}"
+                                    Background="#1A1512" BorderBrush="{StaticResource BrushGoldBorder}" BorderThickness="1.5" CornerRadius="6"
+                                    HorizontalAlignment="Center" VerticalAlignment="Center" Padding="40,30">
+                                <StackPanel HorizontalAlignment="Center">
+                                    <TextBlock Text="🏰" FontSize="42" Foreground="{StaticResource BrushGoldLight}" HorizontalAlignment="Center" Margin="0,0,0,10" />
+                                    <TextBlock Text="【当前处于三国群英离线大典速查模式】" FontFamily="{StaticResource FontLiSu}" FontSize="18" FontWeight="Bold" Foreground="{StaticResource BrushGoldLight}" HorizontalAlignment="Center" />
+                                    <TextBlock Text="载入游戏存档后，将在此自动透析全天下各路诸侯势力版图、城池防御、预备兵员与驻扎守将。" FontSize="12" Foreground="{StaticResource BrushTextMuted}" HorizontalAlignment="Center" Margin="0,8,0,20" />
+                                    <Button Command="{Binding SwitchSlotCommand}"
+                                            Style="{StaticResource StyleAncientButton}"
+                                            Height="36"
+                                            Padding="24,0"
+                                            HorizontalAlignment="Center">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="💾 " FontSize="14" Foreground="{StaticResource BrushGoldLight}" VerticalAlignment="Center"/>
+                                            <TextBlock Text="立即前往选取游戏存档进行推演" FontSize="13" FontWeight="Bold" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </TabItem>
+
+                    <!-- 选项卡 4: 游戏存档透析 (1~10 槽位磁贴直观选择与自动热更新) -->
+                    <TabItem Header="💾 游戏存档透析">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <StackPanel Margin="16,14,16,20">
+                                <!-- 引导标题 -->
+                                <StackPanel HorizontalAlignment="Center" Margin="0,0,0,16">
+                                    <TextBlock Text="请选择《三国群英传2》游戏存档进行全面推演"
+                                               FontFamily="{StaticResource FontLiSu}"
+                                               FontSize="22"
+                                               FontWeight="Bold"
+                                               Foreground="{StaticResource BrushGoldLight}"
+                                               HorizontalAlignment="Center" />
+                                    <TextBlock Text="支持自动侦测 SAVES/ 目录，存档在游戏内保存后将无缝毫秒级自动热更新"
+                                               FontSize="12"
+                                               Foreground="{StaticResource BrushTextMuted}"
+                                               HorizontalAlignment="Center"
+                                               Margin="0,6,0,0" />
+
+                                    <Button Command="{Binding EnterFreeModeCommand}"
+                                            Style="{StaticResource StyleAncientButton}"
+                                            Height="32"
+                                            Padding="18,0"
+                                            HorizontalAlignment="Center"
+                                            Margin="0,12,0,0"
+                                            Cursor="Hand"
+                                            ToolTip="无需存档，直接以离线大典模式浏览 400 位名将全技能与潜力排名">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="⚔ " FontSize="13" Foreground="{StaticResource BrushGoldLight}" VerticalAlignment="Center"/>
+                                            <TextBlock Text="直接进入 · 天下名将大典（免存档离线速查）" FontSize="12.5" FontWeight="Bold" FontFamily="{StaticResource FontLiSu}" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+
+                                <!-- 10个槽位卡片 (2行 x 5列) -->
+                                <ItemsControl ItemsSource="{Binding SaveSlots}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <UniformGrid Columns="5" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Button Command="{Binding DataContext.SelectSlotCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                    CommandParameter="{Binding}"
+                                                    Margin="6,8"
+                                                    Height="210"
+                                                    Cursor="Hand">
+                                                <Button.Template>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Border x:Name="CardBorder"
+                                                                Background="#1F1A16"
+                                                                BorderBrush="{StaticResource BrushGoldMuted}"
+                                                                BorderThickness="1.5"
+                                                                CornerRadius="6"
+                                                                Padding="12,10">
+                                                            <Border.Effect>
+                                                                <DropShadowEffect Color="#000000" BlurRadius="12" ShadowDepth="2" Opacity="0.6" />
+                                                            </Border.Effect>
+                                                            <Grid>
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="Auto" />
+                                                                    <RowDefinition Height="*" />
+                                                                    <RowDefinition Height="Auto" />
+                                                                </Grid.RowDefinitions>
+
+                                                                <!-- 卡片头: 槽位号与状态 -->
+                                                                <DockPanel Grid.Row="0" LastChildFill="False">
+                                                                    <TextBlock Text="{Binding SlotDisplayName}" FontFamily="{StaticResource FontLiSu}" FontSize="16" FontWeight="Bold" Foreground="{StaticResource BrushGoldLight}" />
+                                                                    <Border DockPanel.Dock="Right" Background="{Binding FactionColor}" CornerRadius="3" Padding="6,1">
+                                                                        <TextBlock Text="{Binding MonarchName}" FontSize="10.5" FontWeight="Bold" Foreground="#FFFFFF" />
+                                                                    </Border>
+                                                                </DockPanel>
+
+                                                                <!-- 卡片中: 存档内容概要 -->
+                                                                <StackPanel Grid.Row="1" VerticalAlignment="Center" Margin="0,10,0,10">
+                                                                    <TextBlock Text="{Binding ScenarioPeriodName}" FontSize="13" FontWeight="Bold" Foreground="#FFE6A3" Margin="0,0,0,4" />
+                                                                    <TextBlock Text="{Binding GameYear, StringFormat='{}纪元时间: {0} 年'}" FontSize="11" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,4" />
+                                                                    <TextBlock Text="{Binding CityCount, StringFormat='{}拥有城池: {0} 座'}" FontSize="11" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,2" />
+                                                                    <TextBlock Text="{Binding GeneralCount, StringFormat='{}统领武将: {0} 员'}" FontSize="11" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,6" />
+                                                                    <TextBlock Text="{Binding ModifiedDisplay, StringFormat='{}存档写入: {0}'}" FontSize="9" Foreground="{StaticResource BrushTextMuted}" />
+                                                                </StackPanel>
+
+                                                                <!-- 卡片底: 载入按钮提示 -->
+                                                                <Border Grid.Row="2" Background="#2B2117" BorderBrush="{StaticResource BrushGoldBorder}" BorderThickness="1" CornerRadius="3" Padding="0,6">
+                                                                    <TextBlock Text="◈ 点击载入推演 ◈" FontSize="11" FontWeight="Bold" Foreground="{StaticResource BrushGoldLight}" HorizontalAlignment="Center" />
+                                                                </Border>
+                                                            </Grid>
+                                                        </Border>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter TargetName="CardBorder" Property="Background" Value="#30241A" />
+                                                                <Setter TargetName="CardBorder" Property="BorderBrush" Value="{StaticResource BrushGoldLight}" />
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Button.Template>
+                                            </Button>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+                </TabControl>
+            </Grid>
+
+            <!-- 2: 底栏状态提示 -->
+            <Border Grid.Row="2" Background="#14100D" BorderBrush="{StaticResource BrushGoldMuted}" BorderThickness="0,1,0,0" Padding="16,0">
+                <DockPanel LastChildFill="False" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding StatusMessage}" FontSize="10.5" Foreground="{StaticResource BrushTextMuted}" VerticalAlignment="Center" />
+                    <TextBlock DockPanel.Dock="Right" Text="三国群英传2 · 天机阁 客观决策辅政引擎" FontSize="10" Foreground="{StaticResource BrushGoldMuted}" VerticalAlignment="Center" />
+                </DockPanel>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

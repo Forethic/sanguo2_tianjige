@@ -109,14 +109,15 @@ public class StaticRepository
                 {
                     var skillName = AvatarResolver.ToSimplified(gSkill.Name);
                     var skill = _skillsByName.GetValueOrDefault(skillName) ?? _skillsByName.GetValueOrDefault(gSkill.Name);
+                    var enriched = Tianjige.Core.Services.SkillDetailDictionary.Enrich(skillName, skill?.Description ?? "武将技", skill?.DamageDetail ?? string.Empty);
                     skillNodes.Add(new SkillTreeNode
                     {
                         Level = gSkill.Level,
                         SkillName = skillName,
                         Category = SkillCategory.General,
                         MpCost = skill?.MpCost ?? (byte)20,
-                        Description = skill?.Description ?? "武将技",
-                        DamageDetail = skill?.DamageDetail ?? string.Empty
+                        Description = enriched.Description,
+                        DamageDetail = enriched.DamageDetail
                     });
                 }
 
@@ -124,20 +125,21 @@ public class StaticRepository
                 {
                     var skillName = AvatarResolver.ToSimplified(aSkill.Name);
                     var skill = _skillsByName.GetValueOrDefault(skillName) ?? _skillsByName.GetValueOrDefault(aSkill.Name);
+                    var enriched = Tianjige.Core.Services.SkillDetailDictionary.Enrich(skillName, skill?.Description ?? "军师技", skill?.DamageDetail ?? string.Empty);
                     skillNodes.Add(new SkillTreeNode
                     {
                         Level = aSkill.Level,
                         SkillName = skillName,
                         Category = SkillCategory.Military,
                         MpCost = 0,
-                        Description = skill?.Description ?? "军师技",
-                        DamageDetail = skill?.DamageDetail ?? string.Empty
+                        Description = enriched.Description,
+                        DamageDetail = enriched.DamageDetail
                     });
                 }
 
                 var avatarPath = _avatarResolver.ResolveByName(raw.Name) ?? $"avatars/{simpName}.bmp";
 
-                var general = new GeneralStaticInfo
+                var generalTemp = new GeneralStaticInfo
                 {
                     Id = raw.Sequence,
                     Name = simpName,
@@ -149,6 +151,9 @@ public class StaticRepository
                     Avatar = avatarPath,
                     SkillTree = skillNodes.OrderBy(s => s.Level).ToList()
                 };
+
+                var potential = Tianjige.Core.Services.GeneralPotentialService.Evaluate(generalTemp);
+                var general = generalTemp with { Potential = potential };
 
                 _generals.Add(general);
                 _generalsById[general.Id] = general;
@@ -186,15 +191,16 @@ public class StaticRepository
             foreach (var raw in rawGeneralSkills)
             {
                 var simpName = AvatarResolver.ToSimplified(raw.Name);
+                var enriched = Tianjige.Core.Services.SkillDetailDictionary.Enrich(simpName, raw.Note, $"基础威力: {raw.Power} | 杀伤: {raw.Attack}");
                 var skill = new SkillInfo
                 {
                     Id = raw.Sequence,
                     Name = simpName,
                     Category = SkillCategory.General,
                     MpCost = raw.Mp,
-                    Description = raw.Note,
+                    Description = enriched.Description,
                     Tag = "武将技",
-                    DamageDetail = $"基础威力: {raw.Power} | 杀伤: {raw.Attack}"
+                    DamageDetail = enriched.DamageDetail
                 };
                 _skills.Add(skill);
                 _skillsByName[skill.Name] = skill;
@@ -207,15 +213,16 @@ public class StaticRepository
                 foreach (var raw in rawAdvisorSkills)
                 {
                     var simpName = AvatarResolver.ToSimplified(raw.Name);
+                    var enriched = Tianjige.Core.Services.SkillDetailDictionary.Enrich(simpName, $"军师策谋（指令:{raw.Execute}，要求等级:{raw.WiseLevel}）", $"策谋熟练要求: {raw.Level}");
                     var skill = new SkillInfo
                     {
                         Id = raw.Sequence + 1000,
                         Name = simpName,
                         Category = SkillCategory.Military,
                         MpCost = 0,
-                        Description = $"军师策谋（指令:{raw.Execute}，要求等级:{raw.WiseLevel}）",
+                        Description = enriched.Description,
                         Tag = "军师技",
-                        DamageDetail = $"策谋熟练要求: {raw.Level}"
+                        DamageDetail = enriched.DamageDetail
                     };
                     _skills.Add(skill);
                     _skillsByName[skill.Name] = skill;
@@ -432,6 +439,7 @@ public class StaticRepository
     }
 
     public IReadOnlyList<GeneralStaticInfo> GetAllGenerals() => _generals;
+    public IReadOnlyList<GeneralStaticInfo> GetGenerals() => _generals;
     public GeneralStaticInfo? GetGeneralById(int id) => _generalsById.GetValueOrDefault(id);
     public GeneralStaticInfo? GetGeneralByName(string name) => _generalsByName.GetValueOrDefault(name);
 

@@ -41,7 +41,42 @@ public class UserSettings
     public bool IsWindowBordered { get; set; } = true;
 
     /// <summary>
-    /// 是否开启免锁定光标模式 (devmode=true，鼠标可在游戏与HUD间自由穿梭)
+    /// 是否锁定光标在游戏窗口内 (true 时 devmode=false，鼠标无法滑出游戏；false 时鼠标自由穿梭)
     /// </summary>
-    public bool UnlockCursor { get; set; } = true;
+    public bool LockCursor { get; set; } = false;
+
+    /// <summary>
+    /// 是否开启免锁定光标模式 (devmode=true，兼容旧属性)
+    /// </summary>
+    public bool UnlockCursor
+    {
+        get => !LockCursor;
+        set => LockCursor = !value;
+    }
+
+    /// <summary>
+    /// 战局显示模式 (0: 单屏 HUD 侧边栏, 1: 双屏 Deck 扩展模式)
+    /// </summary>
+    public LauncherDisplayMode DisplayMode { get; set; } = LauncherDisplayMode.SingleScreenHud;
+
+    /// <summary>
+    /// 双屏模式下选定的 Deck 副屏设备名称
+    /// </summary>
+    public string SelectedDeckMonitorDeviceName { get; set; } = string.Empty;
+}
+
+/// <summary>
+/// 战局呈现模式
+/// </summary>
+public enum LauncherDisplayMode
+{
+    /// <summary>
+    /// 单屏并排：游戏 4:3 靠左，右侧黑边驻留 HUD
+    /// </summary>
+    SingleScreenHud = 0,
+
+    /// <summary>
+    /// 双屏联动：主屏 4:3 居中游戏，副屏横屏呈现 Deck 军师台
+    /// </summary>
+    DualScreenDeck = 1
 }

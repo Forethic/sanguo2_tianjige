@@ -69,7 +69,7 @@ public class StaticDataTests
     public void FormationsAndCounters_ShouldMatchGameRules()
     {
         var formations = _repository.GetFormations();
-        formations.Should().HaveCount(8);
+        formations.Should().HaveCount(9);
 
         var troopCounters = _repository.GetTroopCounters();
         troopCounters.Should().NotBeEmpty();
@@ -77,11 +77,11 @@ public class StaticDataTests
         var pudao = troopCounters.FirstOrDefault(t => t.TroopName == "朴刀兵");
         pudao.Should().NotBeNull();
         pudao!.StrongAgainst.Should().Contain("弓箭兵");
-        pudao.WeakAgainst.Should().Contain("铁骑兵");
+        pudao.WeakAgainst.Should().Contain("长枪兵");
 
         var changqiang = troopCounters.FirstOrDefault(t => t.TroopName == "长枪兵");
         changqiang.Should().NotBeNull();
-        changqiang!.StrongAgainst.Should().Contain("铁骑兵");
+        changqiang!.StrongAgainst.Should().Contain("朴刀兵");
         changqiang.WeakAgainst.Should().Contain("弓箭兵");
     }
 
@@ -99,4 +99,22 @@ public class StaticDataTests
             File.Exists(avatarPath).Should().BeTrue();
         }
     }
+
+    [Fact]
+    public void AllGenerals_ShouldHaveValidNamesAndAttributes()
+    {
+        var generals = _repository.GetAllGenerals();
+        generals.Should().NotBeEmpty();
+        foreach (var g in generals)
+        {
+            g.Name.Should().NotBeNullOrWhiteSpace();
+            g.BaseForce.Should().BeInRange(0, 105);
+            g.BaseIntellect.Should().BeInRange(0, 105);
+        }
+    }
 }
+
+
+
+
+

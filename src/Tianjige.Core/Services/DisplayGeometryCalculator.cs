@@ -67,7 +67,69 @@ public static class DisplayGeometryCalculator
             RecommendedHudWidth = finalHudWidth,
             HudLeft = hudLeft,
             HudTop = monitor.Top,
-            HudHeight = hScreen
+            HudHeight = hScreen,
+            Mode = LauncherDisplayMode.SingleScreenHud,
+            IsGameCentered = false
+        };
+    }
+
+    /// <summary>
+    /// 依据双屏规格推导：主屏 4:3 游戏居中，副屏横屏呈现 Deck 军师台
+    /// </summary>
+    public static DisplayGeometry CalculateDualScreenDeck(MonitorInfo gameMonitor, MonitorInfo? deckMonitor, bool isBordered = false)
+    {
+        ArgumentNullException.ThrowIfNull(gameMonitor);
+
+        int hScreen = gameMonitor.Height;
+        int wScreen = gameMonitor.Width;
+
+        int hGame;
+        int wGame;
+
+        if (isBordered)
+        {
+            int maxAvailableH = Math.Max(480, hScreen - 90);
+            hGame = (maxAvailableH >= 960 && hScreen <= 1200) ? 960 : (maxAvailableH / 4) * 4;
+            wGame = (int)Math.Floor(hGame * 4.0 / 3.0);
+            if (wGame > wScreen)
+            {
+                wGame = wScreen / 4 * 4;
+                hGame = (int)Math.Floor(wGame * 3.0 / 4.0);
+            }
+        }
+        else
+        {
+            hGame = hScreen;
+            wGame = (int)Math.Floor(hScreen * 4.0 / 3.0);
+            if (wGame > wScreen)
+            {
+                wGame = wScreen;
+            }
+        }
+
+        // 居中坐标计算
+        int gameLeft = gameMonitor.Left + Math.Max(0, (wScreen - wGame) / 2);
+        int gameTop = isBordered
+            ? gameMonitor.Top + Math.Max(20, (hScreen - 48 - hGame) / 2)
+            : gameMonitor.Top;
+
+        int blackBarWidth = Math.Max(0, wScreen - wGame);
+
+        return new DisplayGeometry
+        {
+            Monitor = gameMonitor,
+            GameWidth = wGame,
+            GameHeight = hGame,
+            GameLeft = gameLeft,
+            GameTop = gameTop,
+            BlackBarWidth = blackBarWidth,
+            RecommendedHudWidth = 0,
+            HudLeft = 0,
+            HudTop = 0,
+            HudHeight = 0,
+            Mode = LauncherDisplayMode.DualScreenDeck,
+            IsGameCentered = true,
+            DeckMonitor = deckMonitor
         };
     }
 }
